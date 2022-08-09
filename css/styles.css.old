@@ -1,0 +1,235 @@
+.grid {
+  display: grid;
+  grid-gap: 1.5vw;
+  min-height: 100vh;
+  padding: 1.5vw;
+}
+
+.grid {
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: 50vh 30vh repeat(2, minmax(20vh, 1fr));
+  grid-template-areas:
+    "hero   hero"
+    "big1   big1"
+    "med1   med1"
+    "med2   med2"
+    "small1 small2"
+    "small3 small4"
+    "small5 small6"
+    "small7 small8"
+    "small9 small10";
+}
+
+@media screen and (min-width: 750px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 25vh);
+    grid-template-areas:
+      "hero   hero   hero   med1   med1"
+      "hero   hero   hero   med2   med2"
+      "big1   big1   big1   big1   big1"
+      "small1 small2 small3 small4 small5"
+      "small6 small7 small8 small9 small10";
+  }
+}
+
+@media screen and (min-width: 1400px) {
+  .grid {
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: auto;
+    grid-template-areas:
+      "small1 hero   hero hero med1   med1"
+      "small2 hero   hero hero med2   med2"
+      "small3 small5 big1 big1 small7 small8"
+      "small4 small6 big1 big1 small9 small10";
+  }
+}
+
+.grid .item:nth-child(1) {
+  grid-area: hero;
+}
+
+.grid .item:nth-child(2) {
+  grid-area: big1;
+}
+
+.grid .item:nth-child(3) {
+  grid-area: med1;
+}
+
+.grid .item:nth-child(4) {
+  grid-area: med2;
+}
+
+
+
+/* Styles, just for fun */
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  background: #fff;
+}
+
+.header {
+  color: #cedfe9;
+  background: #253A5E;
+  padding: 1.5vw;
+}
+
+.header h1,
+.header h2 {
+  margin: 0;
+  letter-spacing: 0.1em;
+  line-height: 1;
+}
+
+.header h1 {
+  position: relative;
+  padding-bottom: 0.5em;
+  color: #ffffff;
+  font-size: 2rem;
+}
+
+@media screen and (min-width: 750px) {
+
+  .header h1 {
+    font-size: 3.75rem;
+  }
+
+  .header h2 {
+    font-weight: normal;
+  }
+}
+
+@media screen and (min-width: 1400px) {
+
+  .header h1 {
+    font-size: 2rem;
+  }
+
+  .header h2 {
+    font-weight: normal;
+    font-size: 1.2rem;
+  }
+}
+
+.box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.diamond {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+  width: 50px;
+  height: 50px;
+  border-radius: 5px;
+  border: 1px solid #ffffff;
+  box-shadow: 1px 1px 0px rgba(0, 0, 0, 0.2);
+  background-image: linear-gradient(to top left, #ddd 0%, #fff 100%);
+  text-align: center;
+  transform-origin: center;
+  transform: rotateZ(45deg);
+  transition: box-shadow 250ms, transform 250ms;
+}
+
+.diamond span {
+  font-weight: bold;
+  transform: rotateZ(-45deg)
+}
+
+.grid .item:hover .diamond,
+.grid .item:focus .diamond {
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
+  transform: rotateZ(45deg) scale(1.2);
+}
+
+.tooltip {
+  position: absolute;
+  z-index: 1;
+  padding: 0.25rem 1rem;
+  border-radius: 5px;
+  background: #29343d;
+  opacity: 0;
+  color: #cedfe9;
+  font-size: 0.875rem;
+  transition: opacity 500ms, transform 500ms;
+}
+
+.tooltip:before {
+  content: '';
+  position: absolute;
+  top: -9px;
+  left: calc(50% - 10px);
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid #29343d;
+}
+
+.grid .item:hover .tooltip,
+.grid .item:focus .tooltip {
+  opacity: 1;
+  transform: translateY(70px);
+}
+
+.grid .item {
+  position: relative;
+  padding: 1vw;
+  background-position: left bottom;
+  background-size: 150% 100%;
+  transition: background 500ms, outline 500ms;
+  background-position: top left;
+  outline: transparent;
+}
+
+.grid .item:hover,
+.grid .item:focus {
+  background-position: top right;
+}
+
+.grid .item:focus {
+  outline: 2px solid #3eabfa;
+}
+
+.grid .item:nth-child(1) {
+  background-image: linear-gradient(45deg, #cbabfb 0%, #fb7ef6 60%);
+}
+
+.grid .item:nth-child(2) {
+  background-image: linear-gradient(45deg, #fb7ef6 0%, #cbabfb 60%);
+}
+
+.grid .item:nth-child(3) {
+  background-image: linear-gradient(45deg, #70c1fb 0%, #79ebe0 60%);
+}
+
+.grid .item:nth-child(4) {
+  background-image: linear-gradient(45deg, #79ebe0 0%, #70c1fb 60%);
+}
+
+.grid .item:nth-child(5),
+.grid .item:nth-child(6),
+.grid .item:nth-child(7),
+.grid .item:nth-child(8),
+.grid .item:nth-child(9),
+.grid .item:nth-child(10),
+.grid .item:nth-child(11),
+.grid .item:nth-child(12),
+.grid .item:nth-child(13),
+.grid .item:nth-child(14) {
+  background-image: linear-gradient(45deg, #feeeab 0%, #fb7eb3 60%);
+}
