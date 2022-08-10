@@ -61,7 +61,7 @@
   .navbar ul {
     list-style: none;
     display: grid;
-    grid-template-columns: repeat(2,1fr);
+    grid-template-columns: repeat(3,auto);
     justify-self: end;    
   }
   
@@ -71,7 +71,7 @@
     font-weight: 400;
     text-decoration: none;
     transition: color 0.3s ease-out;
-    margin-right: 10px;
+    margin-right: 20px;
   }
   
   .nav-item a:hover {
@@ -106,12 +106,18 @@
     color: #fff;
     border: 1px solid #ededed;
   }
+
+  .feature-container h2 {
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
   
   .feature-container p {
     color: #fff;
-    text-align: center;
+    text-align: justify;
     line-height: 1.4;
     margin-bottom: 15px;
+    padding: 0px 25px 0px 25px;
   }
   
   .feature-container img {
