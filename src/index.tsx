@@ -2,6 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 // import reportWebVitals from './reportWebVitals';
+import packageJson from '../package.json';
+
+declare global {
+  var appVersion: string;
+}
+
+global.appVersion = packageJson.version;
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

@@ -56,12 +56,6 @@ function Search() {
     };
 
     const filterContentItems = () => {
-        // if (!searchText.length) {
-        //     setItems(originalItems);
-        //     return;
-        // }
-
-        // Check if searchText has a non-empty value
         let filteredItems = originalItems;
         if (searchText.length) {
             filteredItems = originalItems.filter(item => {
@@ -89,10 +83,11 @@ function Search() {
 
     useEffect(() => {
         filterContentItems();
+        // eslint-disable-next-line
     }, [searchText, types, cloudCategories, services]);
 
     useEffect(() => {
-        fetch('/data/items.json')
+        fetch('/MicrosoftCloud/data/items.json')
             .then(response => response.json())
             .then(data => {
                 const items = data.items.sort((a: ContentItem, b: ContentItem) => a.title.localeCompare(b.title));
@@ -103,7 +98,7 @@ function Search() {
                 console.log(error);
             }
             );
-    }, []);
+    });
 
     return (
         <div className="search-container">
@@ -154,7 +149,7 @@ function Search() {
                 <div className="search-results-list">
                     {items && items.map((item, index) => (
                         <div className="search-result" key={index}>
-                            <a href={item.url} target="_blank">
+                            <a href={item.url} target="_blank" rel="noreferrer">
                                 <div className="search-result-title">
                                     {item.type === 'Code Sample' &&
                                         <svg className="search-result-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2048 2048">

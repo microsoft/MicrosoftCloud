@@ -84,12 +84,17 @@ h3 {
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-areas: "feature-1 feature-2 feature-3";
     grid-gap: 2rem;  
-    justify-content: center;
+    justify-items: center;
     padding: 30px 20px 0px 20px;
 }
 
 .feature {
-    max-height: 400px;
+    max-height: 450px;
+    max-width: 700px;
+}
+
+.feature a {
+    text-decoration: none;
 }
 
 .feature img {
@@ -124,7 +129,7 @@ h3 {
     background-color: #0091FF;
     color: #fff;
     padding: 15px;
-    min-height: 100px;
+    min-height: 80px;
 }
 
 .feature-footer p {
@@ -132,8 +137,14 @@ h3 {
     text-align: center;
 }
 
+.feature-footer .icon {
+    height: 18px;
+    width: 18px;
+    margin-right: 5px;
+}
+
 .content {
-    margin: 30px 20px 0px 20px;
+    margin: 10px 20px 0px 20px;
 }
 
 .footer {
