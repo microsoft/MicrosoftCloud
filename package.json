@@ -1,26 +1,43 @@
 {
-    "name": "microft-cloud",
-    "version": "1.0.0",
-    "description": "Microsoft Cloud integration scenarios.",
-    "scripts": {
-        "build": "webpack --mode production",
-        "build:dev": "webpack --mode development",
-        "build:dev-w": "webpack --mode development --watch",
-        "start": "webpack serve --mode development --open"
-    },
-    "author": "Dan Wahlin",
-    "private": true,
-    "license": "MIT",
-    "dependencies": {
-        "@microsoft/fast-components": "^2.30.6",
-        "@microsoft/fast-element": "^1.10.4"
-    },
-    "devDependencies": {
-        "clean-webpack-plugin": "^4.0.0",
-        "html-webpack-plugin": "^5.5.0",
-        "ts-loader": "^9.3.1",
-        "typescript": "^4.7.4",
-        "webpack-cli": "^4.10.0",
-        "webpack-dev-server": "^4.10.0"
-    }
+  "name": "test-react",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.3.0",
+    "@testing-library/user-event": "^13.5.0",
+    "@types/jest": "^27.5.2",
+    "@types/node": "^16.11.48",
+    "@types/react": "^18.0.17",
+    "@types/react-dom": "^18.0.6",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-scripts": "5.0.1",
+    "typescript": "^4.7.4",
+    "web-vitals": "^2.1.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
 }
