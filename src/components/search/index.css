@@ -17,12 +17,12 @@
 .search-input {
     grid-area: search-input;
     width: 100%;
-    margin: 12px 0px 0px 30px
+    margin: 12px 0px 0px 25px
 }
 
 .search-input input {
     transform: scale(1.3);  
-    width: 85%; 
+    width: 84%; 
 }
 
 .search-filter {
