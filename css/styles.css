@@ -1,0 +1,163 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+body {
+    background-color: #fff;    
+}
+
+h1 {
+    color: #fff;
+    text-align: left;
+    line-height: 1.4;
+    font-size: 2.2rem;
+    letter-spacing: 2px;
+}
+
+h4 {
+    letter-spacing: 1px;
+}
+
+h3 {
+    color: #fff;
+    line-height: 1.4;
+    
+}
+
+.container {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 45px 200px 1fr 1fr;
+    grid-template-areas: 
+        "navbar"
+        "header"
+        "features"
+        "footer";
+    width: 100%;
+}
+
+.navbar {
+    grid-area: navbar;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: "logo nav";
+    overflow: hidden;
+    margin: 0px 20px 0px 20px;
+}
+
+.navbar-left {
+    grid-area: logo;
+}
+
+.navbar-right {
+    grid-area: nav;
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    justify-self: end;
+}
+
+.nav-item a {
+    color: #000;
+    font-size: 0.9rem;
+    font-weight: 400;
+    text-decoration: none;
+    transition: color 0.3s ease-out;
+    margin-right: 20px;
+}
+
+.nav-item a:hover {
+    color: #3498db;
+}
+
+.header {
+    grid-area: header;
+    background-color: #253A5E;
+    color: #fff;
+    display: grid;
+    padding-left: 20px;
+    background: #253A5E;
+    align-content: center;
+}
+
+.header h4 {
+    margin-top: 20px;
+}
+
+.features {
+    grid-area: features;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-areas: "feature-1 feature-2 feature-3";
+    grid-gap: 2rem;  
+    justify-content: center;
+    padding: 30px 20px 10px 20px;
+}
+
+.feature img {
+    width: 100%;
+    height: 100%;
+}
+
+.feature-1 {
+    grid-area: feature-1;
+    width: 100%;
+}
+
+.feature-2 {
+    grid-area: feature-2;
+    width: 100%;
+}
+
+.feature-3 {
+    grid-area: feature-3;
+    width: 100%;
+}
+
+.feature-header {
+    border: 1px solid #dcdcdc;
+    color: #000;
+    width: 100%;
+    height: 75%;
+}
+
+.feature-footer {
+    text-align: center;
+    background-color: #0091FF;
+    color: #fff;
+    padding: 15px;
+    min-height: 115px;
+}
+
+.feature-footer p {
+    margin-top: 5px;
+    text-align: center;
+}
+
+.content {
+    margin: 30px 20px 0px 20px;
+}
+
+.footer {
+    grid-area: footer;
+    margin: 20px 20px 0px 20px;
+}
+
+.item {
+    align-items: center;
+}
+
+@media only screen and (max-width: 760px) { 
+    .features {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr 1fr;
+        grid-template-areas: 
+            "feature-1"
+            "feature-2"
+            "feature-3";
+        row-gap: 2rem;
+    }
+}
