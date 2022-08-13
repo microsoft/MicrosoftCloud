@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "pretty": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "target": "es2020",
+    "module": "es2020",
+    "moduleResolution": "Node",
+    "importHelpers": true,
+    "experimentalDecorators": true,
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "noEmitOnError": true,
+    "strict": true,
+    "outDir": "dist",
+    "rootDir": "src",
+    "lib": [
+      "dom",
+      "es2020"
+    ]
+  },
+  "include": [
+    "src"
+  ]
+}
