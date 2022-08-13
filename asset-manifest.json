@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/MicrosoftCloud/static/css/main.333779ae.css",
-    "main.js": "/MicrosoftCloud/static/js/main.394dad99.js",
+    "main.js": "/MicrosoftCloud/static/js/main.866443ac.js",
     "index.html": "/MicrosoftCloud/index.html",
     "main.333779ae.css.map": "/MicrosoftCloud/static/css/main.333779ae.css.map",
-    "main.394dad99.js.map": "/MicrosoftCloud/static/js/main.394dad99.js.map"
+    "main.866443ac.js.map": "/MicrosoftCloud/static/js/main.866443ac.js.map"
   },
   "entrypoints": [
     "static/css/main.333779ae.css",
-    "static/js/main.394dad99.js"
+    "static/js/main.866443ac.js"
   ]
 }
