@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { CheckboxItem, ContentItem } from '../../shared/interfaces';
-import Checkbox from './checkbox';
-import './index.css';
+import Checkbox from '../checkbox/checkbox';
+import './search.css';
 
 function Search() {
     const [items, setItems] = useState<ContentItem[]>([]);
@@ -145,7 +145,7 @@ function Search() {
                 </div>
             </div>
             <div className="search-results">
-                <h2>Microsoft Cloud Integration Content</h2>
+                <h2>Content</h2>
                 <div className="search-results-list">
                     {items && items.map((item, index) => (
                         <div className="search-result" key={index}>
