@@ -109,8 +109,16 @@
             <noscript>You need to enable JavaScript to run this app.</noscript>
             <div id="root"></div>
         </section>
-        <section class="item footer"></section>
+        <section class="footer">
+            <div id="app-version"></div>
+        </section>
     </div>
+
+    <script>
+        window.onload = function() {
+            document.getElementById('app-version').innerHTML = `v${appVersion}`;
+        }
+    </script>
 </body>
 
 </html>

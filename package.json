@@ -1,9 +1,11 @@
 {
   "name": "test-react",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "homepage": "https://microsoft.github.io/MicrosoftCloud",
   "scripts": {
+    "generate-build-version": "node generate-build-version",
+    "prebuild": "npm run generate-build-version",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build", 
     "start": "react-scripts start",
