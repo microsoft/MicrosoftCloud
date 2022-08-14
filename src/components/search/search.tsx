@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { CheckboxItem, ContentItem } from '../../shared/interfaces';
-import Checkbox from '../checkbox/checkbox';
-import './search.css';
+import Checkbox from './Checkbox';
+import './Search.css';
 
 function Search() {
     const [items, setItems] = useState<ContentItem[]>([]);
@@ -10,32 +10,6 @@ function Search() {
     const [cloudCategories, setCloudCategories] = useState<CheckboxItem[]>([]);
     const [types, setTypes] = useState<CheckboxItem[]>([]);
     const [services, setServices] = useState<CheckboxItem[]>([]);
-
-    const getCategories = (items: ContentItem[]) => {
-        // Get unique item.cloudCategories values
-        const cloudCategories = getUniqueCategories(items, 'cloudCategories');
-        setCloudCategories(cloudCategories);
-
-        // Get unique item.type values
-        const types = getUniqueCategories(items, 'type')
-        setTypes(types);
-
-        // Get unique item.services values
-        const services = getUniqueCategories(items, 'services');
-        setServices(services);
-    }
-
-    const getUniqueCategories = (items: ContentItem[], property: string) => {
-        return items.map(item => {
-            // Object key will contain a union of all property names for `item`
-            type ObjectKey = keyof typeof item;
-            return item[property as ObjectKey];
-        })
-            .flat()
-            .filter((value, index, self) => self.indexOf(value) === index).sort()
-            .map((category, index) => addCheckedProperty(category, index))
-            .sort((a, b) => a.category.localeCompare(b.category));
-    }
 
     const addCheckedProperty = (category: string, index: number) => {
         return {
@@ -87,21 +61,51 @@ function Search() {
     }, [searchText, types, cloudCategories, services]);
 
     useEffect(() => {
+        const getUniqueCategories = (items: ContentItem[], property: string) => {
+            return items.map(item => {
+                // Object key will contain a union of all property names for `item`
+                type ObjectKey = keyof typeof item;
+                return item[property as ObjectKey];
+            })
+                .flat()
+                .filter((value, index, self) => self.indexOf(value) === index).sort()
+                .map((category, index) => addCheckedProperty(category, index))
+                .sort((a, b) => a.category.localeCompare(b.category));
+        }
+
+        const createCategories = (items: ContentItem[]) => {
+            // Get unique item.cloudCategories values
+            const cloudCategories = getUniqueCategories(items, 'cloudCategories');
+            setCloudCategories(cloudCategories);
+    
+            // Get unique item.type values
+            const types = getUniqueCategories(items, 'type');
+            console.log(types);
+            setTypes(types);
+    
+            // Get unique item.services values
+            const services = getUniqueCategories(items, 'services');
+            setServices(services);
+        }
+
         fetch('/MicrosoftCloud/data/items.json')
             .then(response => response.json())
             .then(data => {
                 const items = data.items.sort((a: ContentItem, b: ContentItem) => a.title.localeCompare(b.title));
                 setOriginalItems(items);
-                getCategories(items);
+                createCategories(items);
                 setItems(items);
             }).catch(error => {
                 console.log(error);
             }
             );
-    });
+    }, []);
 
     return (
         <div className="search-container">
+            <div className="search-input-header">
+                <h2>Content Filter</h2>
+            </div>
             <div className="search-input">
                 <input type="text" title="Search" placeholder="Filter Results"
                     onChange={(e) => setSearchText(e.target.value)} />
@@ -144,8 +148,10 @@ function Search() {
                     ))}
                 </div>
             </div>
+            <div className="search-results-header">
+                <h2>Content Results</h2>
+            </div>
             <div className="search-results">
-                <h2>Content</h2>
                 <div className="search-results-list">
                     {items && items.map((item, index) => (
                         <div className="search-result" key={index}>
@@ -168,8 +174,8 @@ function Search() {
                                     }
                                     {item.title}
                                 </div>
-                                <div className="search-result-description">{item.description}</div>
                                 <div className="search-result-cloud-categories">{item.cloudCategories.join(', ')}</div>
+                                <div className="search-result-description">{item.description}</div>
                             </a>
                         </div>
                     ))}

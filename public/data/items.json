@@ -44,6 +44,15 @@
             "services": ["Microsoft Graph Toolkit", "Microsoft Graph", "Azure Active Directory", "Microsoft Teams"],
             "technologies": ["JavaScript", "React"],
             "description": "One Productivity Hub sample shows you how to build a tab for viewing your calendar events, to-do tasks and files by using Microsoft Graph Toolkit components and TeamsFx Provider."
+        },
+        {
+            "title": "Build applications on the Microsoft Cloud",
+            "url": "https://docs.microsoft.com/en-us/azure/architecture/guide/microsoft-cloud/overview",
+            "type": "Document",
+            "cloudCategories": ["Azure", "Microsoft 365", "Power Platform"],
+            "services": [],
+            "technologies": [],
+            "description": "This guide describes the big picture of Microsoft Cloud from an application development perspective, focusing on what leaders must do to be successful."
         }
     ]
 }

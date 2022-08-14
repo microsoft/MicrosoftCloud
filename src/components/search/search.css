@@ -1,45 +1,67 @@
 .search-container {
     display: grid;
-    grid-template-columns: 200px 1fr;
+    grid-template-columns: 250px 1fr;
+    grid-template-rows: 40px 40px 1fr;    
     grid-template-areas: 
+        "search-input-header search-results-header"
         "search-input search-results"
         "search-filter search-results";
-    grid-gap: 2rem;  
     justify-content: center;
-    padding-left: 20px;
-    border: 1px solid #dcdcdc;
+    border: 1px solid var(--border-color);
 }
 
 .search-container h3 {
-    color: #000;
+    color: var(--black);
+}
+
+.search-input-header {
+    grid-area: search-input-header;
+}
+
+.search-input-header h2 {
+    font-size: 1.2rem;
+    background-color: var(--light-background-color);
+    color: var(--black);
+    padding: 10px 0px 10px 15px;
+    border-right: 1px solid var(--border-color);
 }
 
 .search-input {
     grid-area: search-input;
-    width: 100%;
-    margin: 12px 0px 0px 20px;
+    padding: 20px 0px 0px 30px;
+    border-right: 1px solid var(--border-color);
 }
 
 .search-input input {
-    transform: scale(1.3);  
-    width: 84%; 
+    transform: scale(1.3);
 }
 
 .search-filter {
     grid-area: search-filter;
-    width: 100%;
+    margin-left: 15px;
+    padding: 20px 0px 10px 0px;
+    border-right: 1px solid var(--border-color);
+}
+
+.search-filter label {
+    text-wrap: nowrap;
+}
+
+.search-results-header {
+    grid-area: search-results-header;
 }
 
 .search-results {
     grid-area: search-results;
     width: 100%;
-    border-left: 1px solid #dcdcdc;
+    padding-top: 10px;
 }
 
-.search-results h2 {
+.search-results-header h2 {
     font-size: 1.2rem;
-    background-color: #ededed;
-    padding: 10px 20px 10px 20px;
+    background-color: var(--light-background-color);
+    color: var(--black);
+    padding: 10px 20px 10px 15px;
     margin-bottom: 20px;
 }
 
@@ -53,13 +75,18 @@
     cursor: pointer;
 }
 
+.search-result-cloud-categories {
+    margin-bottom: 10px;
+    font-style: italic;
+}
+
 .search-result:hover {
-    background-color: #efefef;
+    background-color: var(--border-color);
 }
 
 .search-result a {
     text-decoration: none;
-    color: #000;
+    color: var(--black);
 }
 
 .search-result-icon {
@@ -76,7 +103,6 @@
 
 .search-result-description {
     font-size: 1rem;
-    margin-bottom: 20px;
 }
 
 .checkbox-group {
