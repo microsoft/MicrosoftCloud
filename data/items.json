@@ -21,7 +21,7 @@
         {
             "title": "Real-time collaboration with Azure and Microsoft 365",
             "url": "https://docs.microsoft.com/azure/architecture/solution-ideas/articles/collaboration-microsoft-365",
-            "type": "Document",
+            "type": "Documentation",
             "cloudCategories": ["Azure", "Microsoft 365"],
             "services": ["Fluid Framework", "Fluid Relay Service", "Azure Active Directory", "Microsoft Graph", "Microsoft Graph Toolkit"],
             "technologies": ["TypeScript", "React"],
@@ -30,7 +30,7 @@
         {
             "title": "Real-time presence with Microsoft 365, Azure, and Power Platform",
             "url": "https://docs.microsoft.com/azure/architecture/solution-ideas/articles/presence-microsoft-365-power-platform",
-            "type": "Document",
+            "type": "Documentation",
             "cloudCategories": ["Azure", "Microsoft 365", "Power Platform"],
             "services": ["Event Hubs", "Key Vault", "Azure Active Directory", "Azure Functions", "SignalR", "Power Automate", "Microsoft Teams"],
             "technologies": ["TypeScript", "React"],
@@ -48,7 +48,7 @@
         {
             "title": "Build applications on the Microsoft Cloud",
             "url": "https://docs.microsoft.com/en-us/azure/architecture/guide/microsoft-cloud/overview",
-            "type": "Document",
+            "type": "Documentation",
             "cloudCategories": ["Azure", "Microsoft 365", "Power Platform"],
             "services": [],
             "technologies": [],

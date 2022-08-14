@@ -1,11 +1,11 @@
 :root {
-    --border-color: #efefef;
+    --border-color: #e1e1e1;
     --light-background-color: #eeeeee;
     --light-blue: #3498db;
     --dark-blue: #253A5E;
     --white: #fff;
     --page-margins: 0px 30px 0px 30px;
-  }
+}
 
 * {
     margin: 0;
@@ -92,11 +92,13 @@ h3 {
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-areas: "feature-1 feature-2 feature-3";
     grid-gap: 2rem;  
+    justify-items: center;
     padding: 30px 30px 0px 30px;
 }
 
 .feature {
-    max-height: 450px;
+    max-height: 800px;
+    max-width: 1400px;
 }
 
 .feature a {
