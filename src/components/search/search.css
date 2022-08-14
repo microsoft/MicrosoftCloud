@@ -6,7 +6,7 @@
         "search-input-header search-results-header"
         "search-input search-results"
         "search-filter search-results";
-    border: 1px solid var(--border-color);    
+    border: 1px solid var(--border-color);   
 }
 
 .search-container h3 {

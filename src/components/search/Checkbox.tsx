@@ -5,11 +5,11 @@ function Checkbox({ isChecked, label, checkHandler, index }: { isChecked: boolea
         <div className="checkbox">
             <input
                 type="checkbox"
-                id={`checkbox-${index}`}
+                id={`${label}-${index}`}
                 checked={isChecked}
                 onChange={checkHandler}
             />
-            <label htmlFor={`checkbox-${index}`}>{label}</label>
+            <label htmlFor={`${label}-${index}`}>{label}</label>
         </div>
     )
 }
