@@ -1,3 +1,11 @@
+:root {
+    --border-color: #efefef;
+    --light-background-color: #eeeeee;
+    --light-blue: #3498db;
+    --dark-blue: #253A5E;
+    --white: #fff;
+  }
+
 * {
     margin: 0;
     padding: 0;
@@ -6,11 +14,11 @@
 }
 
 body {
-    background-color: #fff;    
+    background-color: var(--white);    
 }
 
 h1 {
-    color: #fff;
+    color: var(--white);
     text-align: left;
     line-height: 1.4;
     font-size: 2.2rem;
@@ -22,7 +30,7 @@ h4 {
 }
 
 h3 {
-    color: #fff;
+    color: var(--white);
     line-height: 1.4;
     
 }
@@ -53,7 +61,7 @@ h3 {
 }
 
 .nav-item a {
-    color: #000;
+    color: var(--black);
     font-size: 0.9rem;
     font-weight: 400;
     text-decoration: none;
@@ -62,15 +70,14 @@ h3 {
 }
 
 .nav-item a:hover {
-    color: #3498db;
+    color: var(--light-blue);
 }
 
 .header {
     display: grid;
-    background-color: #253A5E;
-    color: #fff;
+    background-color: var(--dark-blue);
+    color: var(--white);
     padding-left: 20px;
-    background: #253A5E;
     align-content: center;
     height: 150px;
 }
@@ -90,7 +97,6 @@ h3 {
 
 .feature {
     max-height: 450px;
-    max-width: 700px;
 }
 
 .feature a {
@@ -104,30 +110,27 @@ h3 {
 
 .feature-1 {
     grid-area: feature-1;
-    width: 100%;
 }
 
 .feature-2 {
     grid-area: feature-2;
-    width: 100%;
 }
 
 .feature-3 {
     grid-area: feature-3;
-    width: 100%;
 }
 
 .feature-header {
-    border: 1px solid #dcdcdc;
-    color: #000;
+    border: 1px solid var(--border-color);
+    color: var(--black);
     width: 100%;
     height: 75%;
 }
 
 .feature-footer {
     text-align: center;
-    background-color: #0091FF;
-    color: #fff;
+    background-color: var(--light-blue);
+    color: var(--white);
     padding: 15px;
     min-height: 80px;
 }
