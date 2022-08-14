@@ -104,7 +104,7 @@ function Search() {
     return (
         <div className="search-container">
             <div className="search-input-header">
-                <h2>Content Filter</h2>
+                <h2>Filter</h2>
             </div>
             <div className="search-input">
                 <input type="text" title="Search" placeholder="Filter Results"
