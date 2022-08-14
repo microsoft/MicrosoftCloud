@@ -4,6 +4,7 @@
     --light-blue: #3498db;
     --dark-blue: #253A5E;
     --white: #fff;
+    --page-margins: 0px 30px 0px 30px;
   }
 
 * {
@@ -44,7 +45,7 @@ h3 {
     grid-template-columns: 1fr 1fr;
     grid-template-areas: "logo nav";
     overflow: hidden;
-    margin: 0px 20px 0px 20px;
+    margin: var(--page-margins);
     height: 50px;
 }
 
@@ -77,7 +78,7 @@ h3 {
     display: grid;
     background-color: var(--dark-blue);
     color: var(--white);
-    padding-left: 20px;
+    padding-left: 30px;
     align-content: center;
     height: 150px;
 }
@@ -91,8 +92,7 @@ h3 {
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-areas: "feature-1 feature-2 feature-3";
     grid-gap: 2rem;  
-    justify-items: center;
-    padding: 30px 20px 0px 20px;
+    padding: 30px 30px 0px 30px;
 }
 
 .feature {
@@ -147,11 +147,11 @@ h3 {
 }
 
 .content {
-    margin: 10px 20px 0px 20px;
+    margin: var(--page-margins);
 }
 
 .footer {
-    margin: 20px 20px 20px 20px;
+    margin: 20px 30px 20px 30px;
 }
 
 .item {
