@@ -7,6 +7,7 @@ export interface ContentItem {
     services: string[];
     technologies: string[];
     description: string;
+    relatedContentItems?: string[];
 }
 
 export interface CheckboxItem {

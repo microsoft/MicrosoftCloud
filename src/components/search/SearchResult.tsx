@@ -1,10 +1,30 @@
 import React from 'react';
 import { ContentItem } from '../../shared/interfaces';
+import './SearchResult.css';
 
-function SearchResult({ item, index }: { item: ContentItem, index: number }) {
+type SearchResultProps = {
+    item: ContentItem;
+    index: number; 
+    isSelected?: boolean;
+    viewRelatedItems: (item: ContentItem) => void;
+    clearRelatedContent?: (item: ContentItem) => void;
+}
+
+function SearchResult({ item, index, isSelected, viewRelatedItems, clearRelatedContent }: SearchResultProps) {
+    const viewRelatedContentItems = (item: ContentItem) => {
+        // Call parent function to display related content items
+        viewRelatedItems(item);
+    };
+
+    const clearRelatedContentItems = (item: ContentItem) => {
+        if (clearRelatedContent) {
+            clearRelatedContent(item);
+        }
+    };
+
     return (
-        <div className="search-result" key={index}>
-            <a href={item.url} target="_blank" rel="noreferrer">
+        <div className={`search-result ${isSelected ? 'search-result-highlight' : ''}`} key={index}>
+            <a href={item.url} target="_blank" rel="noreferrer" onClick={() => clearRelatedContentItems(item)}>
                 <div className="search-result-title">
                     {item.type === 'Code Sample' &&
                         <svg className="search-result-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2048 2048">
@@ -26,6 +46,9 @@ function SearchResult({ item, index }: { item: ContentItem, index: number }) {
                 <div className="search-result-cloud-categories">{item.cloudCategories.join(', ')}</div>
                 <div className="search-result-description">{item.description}</div>
             </a>
+            {item.relatedContentItems && item.relatedContentItems.length > 0 &&
+                <div className="search-result-related-content" onClick={() => viewRelatedContentItems(item) }>View Related Content</div>
+            }
         </div>
     )
 }

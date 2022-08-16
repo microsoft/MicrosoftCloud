@@ -1,11 +1,11 @@
 .search-container {
     display: grid;
-    grid-template-columns: 250px 1fr;
+    grid-template-columns: 250px auto-fit;
     grid-template-rows: 40px 40px 1fr;    
     grid-template-areas: 
-        "search-input-header search-results-header"
-        "search-input search-results"
-        "search-filter search-results";
+        "search-input-header search-results-header related-content-header"
+        "search-input search-results related-content"
+        "search-filter search-results related-content";
     border: 1px solid var(--border-color);   
 }
 
@@ -50,12 +50,6 @@
     grid-area: search-results-header;
 }
 
-.search-results {
-    grid-area: search-results;
-    width: 100%;
-    padding-top: 10px;
-}
-
 .search-results-header h2 {
     font-size: 1.2rem;
     background-color: var(--light-background-color);
@@ -64,44 +58,30 @@
     margin-bottom: 20px;
 }
 
-.search-results-list {
-    padding: 0px 20px 20px 20px;
+.related-content-header {
+    grid-area: related-content-header;
 }
 
-.search-result {
-    padding: 10px 5px 10px 5px;
-    margin-bottom: 10px;
-    cursor: pointer;
-}
-
-.search-result-cloud-categories {
-    margin-bottom: 10px;
-    font-style: italic;
-}
-
-.search-result:hover {
-    background-color: var(--border-color);
-}
-
-.search-result a {
-    text-decoration: none;
-    color: var(--black);
-}
-
-.search-result-icon {
-    height: 18px;
-    width: 18px;
-    margin-right: 10px;
-}
-
-.search-result-title {
+.related-content-header h2 {
     font-size: 1.2rem;
-    font-weight: bold;
-    margin-bottom: 10px;
+    background-color: var(--light-background-color);
+    color: var(--black);
+    padding: 10px 20px 10px 15px;
+    margin-bottom: 20px;
+    border-left: 1px solid var(--border-color);
 }
 
-.search-result-description {
-    font-size: 1rem;
+.related-content {
+    grid-area: related-content;
+    padding: 10px 20px 10px 15px;
+    border-left: 1px solid var(--border-color);
+}
+
+.search-result-related-content {
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 15px;
+    color: var(--light-blue);
 }
 
 .checkbox-group {

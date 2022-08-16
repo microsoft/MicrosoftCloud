@@ -7,18 +7,12 @@ import './Search.css';
 function Search() {
     const [items, setItems] = useState<ContentItem[]>([]);
     const [originalItems, setOriginalItems] = useState<ContentItem[]>([]);
+    const [relatedContent, setRelatedContent] = useState<ContentItem[]>([]);
+    const [selectedItem, setSelectedItem] = useState<ContentItem | null>();
     const [searchText, setSearchText] = useState('');
     const [cloudCategories, setCloudCategories] = useState<CheckboxItem[]>([]);
     const [types, setTypes] = useState<CheckboxItem[]>([]);
     const [services, setServices] = useState<CheckboxItem[]>([]);
-
-    const addCheckedProperty = (category: string, index: number) => {
-        return {
-            id: index,
-            category,
-            checked: false
-        };
-    };
 
     const updateCheckStatus = (index: any, items: CheckboxItem[], setFunc: any) => {
         const updatedItems = items.map(item => {
@@ -34,7 +28,8 @@ function Search() {
         let filteredItems = originalItems;
         if (searchText.length) {
             filteredItems = originalItems.filter(item => {
-                return item.title.toLowerCase().includes(searchText.toLowerCase()) || item.description.toLowerCase().includes(searchText.toLowerCase());
+                return item.title.toLowerCase()
+                    .includes(searchText.toLowerCase()) || item.description.toLowerCase().includes(searchText.toLowerCase());
             });
         }
         if (types.filter(item => item.checked).length) {
@@ -54,7 +49,25 @@ function Search() {
         }
 
         setItems(filteredItems);
-    }
+    };
+
+    const viewRelatedItems = (item: ContentItem) => {
+        setSelectedItem(item);
+        // Get item.relatedContentItems and find matches in originalItems
+        if (item.relatedContentItems) {
+            const relatedContentItems = item.relatedContentItems.map(relatedItem => {
+                return originalItems.find(originalItem => originalItem.id === relatedItem);
+            })
+                .filter(relatedItem => relatedItem !== undefined)
+                .sort((a, b) => a!.title.localeCompare(b!.title)) as ContentItem[];
+            setRelatedContent(relatedContentItems);
+        }
+    };
+
+    const clearRelatedContent = (item: ContentItem) => {
+        setSelectedItem(null);
+        setRelatedContent([]);
+    };
 
     useEffect(() => {
         filterContentItems();
@@ -62,29 +75,35 @@ function Search() {
     }, [searchText, types, cloudCategories, services]);
 
     useEffect(() => {
-        const getUniqueCategories = (items: ContentItem[], property: string) => {
+        const getUniqueValues = (items: ContentItem[], property: string) => {
             return items.map(item => {
                 // Object key will contain a union of all property names for `item`
                 type ObjectKey = keyof typeof item;
-                return item[property as ObjectKey];
+                return item[property as ObjectKey] ?? [];
             })
                 .flat()
                 .filter((value, index, self) => self.indexOf(value) === index).sort()
-                .map((category, index) => addCheckedProperty(category, index))
+                .map((value, index) => {
+                    return {
+                        id: index,
+                        category: value,
+                        checked: false
+                    };
+                })
                 .sort((a, b) => a.category.localeCompare(b.category));
         }
 
         const createCategories = (items: ContentItem[]) => {
             // Get unique item.cloudCategories values
-            const cloudCategories = getUniqueCategories(items, 'cloudCategories');
+            const cloudCategories = getUniqueValues(items, 'cloudCategories');
             setCloudCategories(cloudCategories);
-    
+
             // Get unique item.type values
-            const types = getUniqueCategories(items, 'type');
+            const types = getUniqueValues(items, 'type');
             setTypes(types);
-    
+
             // Get unique item.services values
-            const services = getUniqueCategories(items, 'services');
+            const services = getUniqueValues(items, 'services');
             setServices(services);
         }
 
@@ -154,11 +173,35 @@ function Search() {
             <div className="search-results">
                 <div className="search-results-list">
                     {items && items.map((item, index) => (
-                        <SearchResult key={index} item={item} index={index} />
+                        <SearchResult 
+                            key={index} 
+                            item={item} 
+                            index={index} 
+                            isSelected={item.id === selectedItem?.id}
+                            viewRelatedItems={viewRelatedItems}
+                            clearRelatedContent={clearRelatedContent} />
                     ))}
                     {!items.length && <div className="search-result-title">No Content Results</div>}
                 </div>
             </div>
+            {relatedContent && relatedContent.length > 0 &&
+                <>
+                    <div className="related-content-header">
+                        <h2>Related Content</h2>
+                    </div>
+                    <div className="related-content">
+                        <div className="search-results-list">
+                            {relatedContent && relatedContent.map((item, index) => (
+                                <SearchResult 
+                                    key={index} 
+                                    item={item} 
+                                    index={index}
+                                    viewRelatedItems={viewRelatedItems} />
+                            ))}
+                        </div>
+                    </div>
+                </>
+            }
         </div>
     );
 }
