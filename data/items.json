@@ -1,42 +1,67 @@
 {
     "items": [
         {
+            "id": "0a2d4f5dd0f34a619a214d8b8b5a5f4c",
             "title": "Building Real-time Collaborative Apps",
             "url": "https://github.com/microsoft/brainstorm-fluidframework-m365-azure",
             "type": "Code Sample",
             "cloudCategories": ["Azure", "Microsoft 365", "Power Platform"],
             "services": ["Fluid Framework", "Fluid Relay Service", "Key Vault", "Event Hubs", "Azure Functions", "SignalR", "Power Automate", "Microsoft Teams", "Microsoft Graph", "Microsoft Graph Toolkit"],
             "technologies": ["TypeScript", "React"],
-            "description": "Brainstorm is an example of using the Fluid Framework to build a collaborative line of business application. In this example each user can create their own sticky notes that is managed on a board. Ideas that have been \"liked\" appear in a list and are sorted based upon the number likes."
+            "description": "Brainstorm is an example of using the Fluid Framework to build a collaborative line of business application. In this example each user can create their own sticky notes that is managed on a board. Ideas that have been \"liked\" appear in a list and are sorted based upon the number likes.",
+            "relatedContentItems": [
+                "1c1e92e5f136495da132e16fd362540c",
+                "8c5e92e5f856715da132e16fd362540c",
+                "51af92476dc24a9ca26acd85cb36bd7c"
+            ]
         },
         {
+            "id": "1c1e92e5f136495da132e16fd362540c",
             "title": "Building Real-time Collaborative Apps with Azure, Microsoft 365, and Power Platform",
             "url": "https://mybuild.microsoft.com/sessions/a330735b-d4cf-4be0-a8bc-4ceb17c49558?source=sessions",
             "type": "Video",
             "cloudCategories": ["Azure", "Microsoft 365", "Power Platform"],
             "services": ["Fluid Framework", "Fluid Relay Service", "Azure Active Directory", "Key Vault", "Event Hubs", "Azure Functions", "SignalR", "Power Automate", "Microsoft Teams"],
             "technologies": ["TypeScript", "React"],
-            "description": "It’s no secret that collaboration is key to enhancing business operations and increasing overall productivity but how do you add real-time collaboration features into your custom apps? In this session, Dan Wahlin and Ayca Bas will discuss how technologies across Azure, Microsoft 365, and Power Platform can be used together to create a collaborative solution. Technologies covered include the Fluid Framework and Azure Fluid Relay, Power Automate, Azure Active Directory, the Microsoft Graph presence API and Microsoft Graph Toolkit, Event Hubs, Azure Functions, and Azure SignalR. Throughout the session you’ll see an example of a front-end application that integrates these technologies and services together to allow for real-time data collaboration as well as real-time person presence."
+            "description": "It’s no secret that collaboration is key to enhancing business operations and increasing overall productivity but how do you add real-time collaboration features into your custom apps? In this session, Dan Wahlin and Ayca Bas will discuss how technologies across Azure, Microsoft 365, and Power Platform can be used together to create a collaborative solution. Technologies covered include the Fluid Framework and Azure Fluid Relay, Power Automate, Azure Active Directory, the Microsoft Graph presence API and Microsoft Graph Toolkit, Event Hubs, Azure Functions, and Azure SignalR. Throughout the session you’ll see an example of a front-end application that integrates these technologies and services together to allow for real-time data collaboration as well as real-time person presence.",
+            "relatedContentItems": [
+                "0a2d4f5dd0f34a619a214d8b8b5a5f4c",
+                "8c5e92e5f856715da132e16fd362540c",
+                "51af92476dc24a9ca26acd85cb36bd7c"
+            ]
         },
         {
+            "id": "8c5e92e5f856715da132e16fd362540c",
             "title": "Real-time collaboration with Azure and Microsoft 365",
             "url": "https://docs.microsoft.com/azure/architecture/solution-ideas/articles/collaboration-microsoft-365",
             "type": "Documentation",
             "cloudCategories": ["Azure", "Microsoft 365"],
             "services": ["Fluid Framework", "Fluid Relay Service", "Azure Active Directory", "Microsoft Graph", "Microsoft Graph Toolkit"],
             "technologies": ["TypeScript", "React"],
-            "description": "This solution shows how you can use libraries and Azure services to meet custom collaboration requirements."
+            "description": "This solution shows how you can use libraries and Azure services to meet custom collaboration requirements.",
+            "relatedContentItems": [
+                "0a2d4f5dd0f34a619a214d8b8b5a5f4c",
+                "1c1e92e5f136495da132e16fd362540c",
+                "51af92476dc24a9ca26acd85cb36bd7c"
+            ]
         },
         {
+            "id": "51af92476dc24a9ca26acd85cb36bd7c",
             "title": "Real-time presence with Microsoft 365, Azure, and Power Platform",
             "url": "https://docs.microsoft.com/azure/architecture/solution-ideas/articles/presence-microsoft-365-power-platform",
             "type": "Documentation",
             "cloudCategories": ["Azure", "Microsoft 365", "Power Platform"],
             "services": ["Event Hubs", "Key Vault", "Azure Active Directory", "Azure Functions", "SignalR", "Power Automate", "Microsoft Teams"],
             "technologies": ["TypeScript", "React"],
-            "description": "This solution provides presence for a JavaScript front-end application. It uses Microsoft Graph and Azure Active Directory (Azure AD) to provide real-time presence information. It also uses Power Automate, Azure Event Hubs, Azure Functions, and Azure SignalR Service."
+            "description": "This solution provides presence for a JavaScript front-end application. It uses Microsoft Graph and Azure Active Directory (Azure AD) to provide real-time presence information. It also uses Power Automate, Azure Event Hubs, Azure Functions, and Azure SignalR Service.",
+            "relatedContentItems": [
+                "0a2d4f5dd0f34a619a214d8b8b5a5f4c",
+                "1c1e92e5f136495da132e16fd362540c",
+                "8c5e92e5f856715da132e16fd362540c"
+            ]
         },
         {
+            "id": "07b406ade21047efa1420f4190d9805b",
             "title": "Getting Started with One Productivity Hub Sample",
             "url": "https://github.com/OfficeDev/TeamsFx-Samples/tree/dev/graph-toolkit-one-productivity-hub",
             "type": "Code Sample",
@@ -46,6 +71,7 @@
             "description": "One Productivity Hub sample shows you how to build a tab for viewing your calendar events, to-do tasks and files by using Microsoft Graph Toolkit components and TeamsFx Provider."
         },
         {
+            "id": "5cdc5e15f43a44288abfbcace1b8b8b8",
             "title": "Build applications on the Microsoft Cloud",
             "url": "https://docs.microsoft.com/en-us/azure/architecture/guide/microsoft-cloud/overview",
             "type": "Documentation",
