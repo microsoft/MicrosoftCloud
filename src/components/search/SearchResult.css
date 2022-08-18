@@ -9,7 +9,7 @@
 }
 
 .search-result {
-    padding: 10px 5px 10px 5px;
+    padding: 10px 10px 15px 10px;
     margin-bottom: 10px;
     cursor: pointer;
 }
@@ -19,14 +19,8 @@
     font-style: italic;
 }
 
-.search-result:hover, .search-result-highlight {
+.search-result-highlight {
     background-color: var(--border-color);
-}
-
-.search-result a {
-    text-decoration: none;
-    color: var(--black);
-    cursor: pointer;
 }
 
 .search-result-icon {
@@ -43,4 +37,17 @@
 
 .search-result-description {
     font-size: 1rem;
+}
+
+.search-result-button-container {
+    margin-top: 20px;
+}
+
+.search-result-button {
+    background-color: var(--light-blue);
+    color: #fff;
+    text-decoration: none;
+    padding: 5px 10px 5px 10px;
+    margin: 20px 0px 20px 0px;
+    cursor: pointer;
 }

@@ -21,6 +21,7 @@ function Search() {
             }
             return item;
         }).sort((a, b) => a.category.localeCompare(b.category));
+        setSelectedItem(null);
         setFunc(updatedItems);
     };
 
@@ -51,8 +52,7 @@ function Search() {
         setItems(filteredItems);
     };
 
-    const viewRelatedItems = (item: ContentItem) => {
-        setSelectedItem(item);
+    const getRelatedItems = (item: ContentItem) => {
         // Get item.relatedContentItems and find matches in originalItems
         if (item.relatedContentItems) {
             const relatedContentItems = item.relatedContentItems.map(relatedItem => {
@@ -62,12 +62,15 @@ function Search() {
                 .sort((a, b) => a!.title.localeCompare(b!.title)) as ContentItem[];
             setRelatedContent(relatedContentItems);
         }
+        else {
+            setRelatedContent([]);
+        }
     };
 
-    const clearRelatedContent = (item: ContentItem) => {
-        setSelectedItem(null);
-        setRelatedContent([]);
-    };
+    const searchResultClick = (item: ContentItem) => {
+        setSelectedItem(item);
+        getRelatedItems(item);
+    }
 
     useEffect(() => {
         filterContentItems();
@@ -178,26 +181,37 @@ function Search() {
                             item={item} 
                             index={index} 
                             isSelected={item.id === selectedItem?.id}
-                            viewRelatedItems={viewRelatedItems}
-                            clearRelatedContent={clearRelatedContent} />
+                            onClick={() => searchResultClick(item)} />
                     ))}
                     {!items.length && <div className="search-result-title">No Content Results</div>}
                 </div>
             </div>
-            {relatedContent && relatedContent.length > 0 &&
+            {selectedItem &&
                 <>
                     <div className="related-content-header">
-                        <h2>Related Content</h2>
+                        <h2>&nbsp;</h2>
                     </div>
                     <div className="related-content">
+                        <SearchResult 
+                            key={selectedItem?.id} 
+                            item={selectedItem!} 
+                            index={0} 
+                            showButton={true} />
+
                         <div className="search-results-list">
-                            {relatedContent && relatedContent.map((item, index) => (
-                                <SearchResult 
-                                    key={index} 
-                                    item={item} 
-                                    index={index}
-                                    viewRelatedItems={viewRelatedItems} />
-                            ))}
+                            {relatedContent && relatedContent.length > 0 &&
+                                <div>
+                                    <h3>Related Content</h3>  
+                                    {relatedContent.map((item, index) => (
+                                        <SearchResult 
+                                            key={index} 
+                                            item={item} 
+                                            index={index}
+                                            showButton={true} />
+                                    ))}
+                                </div> 
+                            }
+                            
                         </div>
                     </div>
                 </>
