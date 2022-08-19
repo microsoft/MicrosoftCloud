@@ -1,15 +1,11 @@
 import React from 'react';
+import { Header as HeaderType } from '../../shared/interfaces';
 
-type HeaderProps = {
-    title: string;
-    subtitle: string;
-}
-
-function Header(header : HeaderProps) {
+function Header({ data } : { data: HeaderType }) {
     return (
         <section className="item header">
-            <h1>{header.title}</h1>
-            <h4>{header.subtitle}</h4>
+            <h1>{data.title}</h1>
+            <h4>{data.subtitle}</h4>
         </section>
     )
 }

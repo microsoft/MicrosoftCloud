@@ -4,7 +4,7 @@ import Checkbox from './Checkbox';
 import SearchResult from './SearchResult';
 import './Search.css';
 
-function Search() {
+function Search({ data }: { data: ContentItem[] }) {
     const [items, setItems] = useState<ContentItem[]>([]);
     const [originalItems, setOriginalItems] = useState<ContentItem[]>([]);
     const [relatedContent, setRelatedContent] = useState<ContentItem[]>([]);
@@ -89,7 +89,7 @@ function Search() {
                 .map((value, index) => {
                     return {
                         id: index,
-                        category: value,
+                        category: value as string,
                         checked: false
                     };
                 })
@@ -110,113 +110,109 @@ function Search() {
             setServices(services);
         }
 
-        fetch('/MicrosoftCloud/data/items.json')
-            .then(response => response.json())
-            .then(data => {
-                const items = data.items.sort((a: ContentItem, b: ContentItem) => a.title.localeCompare(b.title));
-                setOriginalItems(items);
-                createCategories(items);
-                setItems(items);
-            }).catch(error => {
-                console.log(error);
-            }
-            );
+        const items = data.sort((a: ContentItem, b: ContentItem) => a.title.localeCompare(b.title));
+        setOriginalItems(items);
+        createCategories(items);
+        setItems(items);
+
     }, []);
 
     return (
-        <div className="search-container">
-            <div className="search-input-header">
-                <h2>Filter</h2>
-            </div>
-            <div className="search-input">
-                <input type="text" title="Search" placeholder="Filter Results"
-                    onChange={(e) => setSearchText(e.target.value)} />
-            </div>
-            <div className="search-filter">
-                <div className="checkbox-group">
-                    <h4>Content Type</h4>
-                    {types && types.map((type, index) => (
-                        <Checkbox
-                            key={type.id}
-                            isChecked={type.checked}
-                            checkHandler={() => updateCheckStatus(index, types, setTypes)}
-                            label={type.category}
-                            index={index}
-                        />
-                    ))}
+        <section className="content">
+            <div className="search-container">
+                <div className="search-input-header">
+                    <h2>Filter</h2>
                 </div>
-                <div className="checkbox-group">
-                    <h4>Cloud</h4>
-                    {cloudCategories && cloudCategories.map((cloudCat, index) => (
-                        <Checkbox
-                            key={cloudCat.id}
-                            isChecked={cloudCat.checked}
-                            checkHandler={() => updateCheckStatus(index, cloudCategories, setCloudCategories)}
-                            label={cloudCat.category}
-                            index={index}
-                        />
-                    ))}
+                <div className="search-input">
+                    <input type="text" title="Search" placeholder="Filter Results"
+                        onChange={(e) => setSearchText(e.target.value)} />
                 </div>
-                <div className="checkbox-group">
-                    <h4>Cloud Services</h4>
-                    {services && services.map((svc, index) => (
-                        <Checkbox
-                            key={svc.id}
-                            isChecked={svc.checked}
-                            checkHandler={() => updateCheckStatus(index, services, setServices)}
-                            label={svc.category}
-                            index={index}
-                        />
-                    ))}
-                </div>
-            </div>
-            <div className="search-results-header">
-                <h2>Content Results</h2>
-            </div>
-            <div className="search-results">
-                <div className="search-results-list">
-                    {items && items.map((item, index) => (
-                        <SearchResult 
-                            key={index} 
-                            item={item} 
-                            index={index} 
-                            isSelected={item.id === selectedItem?.id}
-                            onClick={() => searchResultClick(item)} />
-                    ))}
-                    {!items.length && <div className="search-result-title">No Content Results</div>}
-                </div>
-            </div>
-            {selectedItem &&
-                <>
-                    <div className="related-content-header">
-                        <h2>&nbsp;</h2>
+                <div className="search-filter">
+                    <div className="checkbox-group">
+                        <h4>Content Type</h4>
+                        {types && types.map((type, index) => (
+                            <Checkbox
+                                key={type.id}
+                                isChecked={type.checked}
+                                checkHandler={() => updateCheckStatus(index, types, setTypes)}
+                                label={type.category}
+                                index={index}
+                            />
+                        ))}
                     </div>
-                    <div className="related-content">
-                        <SearchResult 
-                            key={selectedItem?.id} 
-                            item={selectedItem!} 
-                            index={0} 
-                            showButton={true} />
-
-                        <div className="search-results-list">
-                            {relatedContent && relatedContent.length > 0 &&
-                                <div>
-                                    <h3>Related Content</h3>  
-                                    {relatedContent.map((item, index) => (
-                                        <SearchResult 
-                                            key={index} 
-                                            item={item} 
-                                            index={index}
-                                            showButton={true} />
-                                    ))}
-                                </div> 
-                            }
-                            
+                    <div className="checkbox-group">
+                        <h4>Cloud</h4>
+                        {cloudCategories && cloudCategories.map((cloudCat, index) => (
+                            <Checkbox
+                                key={cloudCat.id}
+                                isChecked={cloudCat.checked}
+                                checkHandler={() => updateCheckStatus(index, cloudCategories, setCloudCategories)}
+                                label={cloudCat.category}
+                                index={index}
+                            />
+                        ))}
+                    </div>
+                    <div className="checkbox-group">
+                        <h4>Cloud Services</h4>
+                        {services && services.map((svc, index) => (
+                            <Checkbox
+                                key={svc.id}
+                                isChecked={svc.checked}
+                                checkHandler={() => updateCheckStatus(index, services, setServices)}
+                                label={svc.category}
+                                index={index}
+                            />
+                        ))}
+                    </div>
+                </div>
+                <div className="search-results-header">
+                    <h2>Content Results</h2>
+                </div>
+                <div className="search-results">
+                    <div className="search-results-list">
+                        {items && items.map((item, index) => (
+                            <SearchResult
+                                key={index}
+                                item={item}
+                                index={index}
+                                isSelected={item.id === selectedItem?.id}
+                                onClick={() => searchResultClick(item)} />
+                        ))}
+                        {!items.length && <div className="search-result-title">No Content Results</div>}
+                    </div>
+                </div>
+                {selectedItem &&
+                    <>
+                        <div className="related-content-header">
+                            <h2>&nbsp;</h2>
                         </div>
-                    </div>
-                </>
-            }
-        </div>
+                        <div className="related-content">
+                            <SearchResult
+                                key={selectedItem?.id}
+                                item={selectedItem!}
+                                index={0}
+                                showButton={true} />
+
+                            <div className="search-results-list">
+                                {relatedContent && relatedContent.length > 0 &&
+                                    <div>
+                                        <h3>Related Content</h3>
+                                        {relatedContent.map((item, index) => (
+                                            <SearchResult
+                                                key={index}
+                                                item={item}
+                                                index={index}
+                                                showButton={true} />
+                                        ))}
+                                    </div>
+                                }
+
+                            </div>
+                        </div>
+                    </>
+                }
+            </div>
+        </section>
     );
 }
 

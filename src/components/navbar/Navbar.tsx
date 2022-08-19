@@ -1,24 +1,14 @@
 import React from 'react';
+import { Navbar as NavbarType } from '../../shared/interfaces';
 
-type NavbarLink = {
-    title: string;
-    url: string;
-}
-
-type NavbarProps = {
-    imageUrl: string;
-    imageAlt: string;
-    links: NavbarLink[];
-}
-
-function Navbar(navbar : NavbarProps) {
+function Navbar({ data } : {data: NavbarType}) {
     return (
         <nav className="item navbar">
             <div aria-hidden="true" className="navbar-left">
-                <img src={navbar.imageUrl} alt={navbar.imageAlt} />
+                <img src={data.imageUrl} alt={data.imageAlt} />
             </div>
             <ul className="navbar-right">
-                {navbar.links.map((link, index) => (
+                {data.links.map((link, index) => (
                     <li className="nav-item" key={index}>
                         <a href={link.url} target="_blank" 
                             rel="noopener noreferrer" title={link.title}>{link.title}</a>

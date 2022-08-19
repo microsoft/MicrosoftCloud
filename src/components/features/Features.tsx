@@ -1,19 +1,11 @@
 import React from 'react';
-import { ContentItemType } from '../../shared/interfaces';
+import { Feature } from '../../shared/interfaces';
 
-type Feature = {
-    imageUrl: string;
-    url: string;
-    title: string;
-    description: string;
-    type: ContentItemType;
-}
-
-function Features(features: Feature[]) {
+function Features({ data }: { data: Feature[] }) {
     return (
         <section className="features">
-            {features.map((feature, index) => (
-                <div className={`feature feature-${index + 1}`}>
+            {data.map((feature, index) => (
+                <div className={`feature feature-${index + 1}`} key={index}>
                     <a href={feature.url} target="_blank" rel="noopener">
                         <div className="feature-header">
                             <img src={feature.imageUrl} alt={feature.title} />
