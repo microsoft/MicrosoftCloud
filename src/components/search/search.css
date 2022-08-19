@@ -19,8 +19,8 @@
 
 .search-input-header h2 {
     font-size: 1.2rem;
-    background-color: var(--light-background-color);
-    color: var(--black);
+    background-color: var(--light-blue);
+    color: var(--white);
     padding: 10px 0px 10px 15px;
     border-right: 1px solid var(--border-color);
 }
@@ -48,8 +48,8 @@
 
 .search-results-header h2 {
     font-size: 1.2rem;
-    background-color: var(--light-background-color);
-    color: var(--black);
+    background-color: var(--light-blue);
+    color: var(--white);
     padding: 10px 20px 10px 15px;
     margin-bottom: 20px;
 }
@@ -60,7 +60,7 @@
 
 .related-content-header h2 {
     font-size: 1.2rem;
-    background-color: var(--light-background-color);
+    background-color: var(--light-blue);
     color: var(--black);
     padding: 10px 20px 10px 15px;
     margin-bottom: 20px;

@@ -1,9 +1,12 @@
 :root {
     --border-color: #e1e1e1;
-    --light-background-color: #eeeeee;
+    --light-gray: #f0f0f0;
     --light-blue: #3498db;
     --dark-blue: #253A5E;
+    --dark-gray: #8c8c8c;
+    --green: #4db42b;
     --white: #fff;
+    --black: #000;
     --page-margins: 0px 30px 0px 30px;
 }
 
@@ -31,7 +34,7 @@ h4 {
 }
 
 h3 {
-    color: var(--white);
+    color: var(--black);
     line-height: 1.4;
     
 }
@@ -92,17 +95,15 @@ h3 {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-areas: "feature-1 feature-2 feature-3";
-    grid-gap: 2rem;  
+    grid-gap: 1rem;  
     justify-items: center;
     padding: 30px 30px 0px 30px;
     margin-bottom: 30px;
 }
 
 .feature {
-    /* max-height: 400px;
-    max-width: 700px; */
     border: 1px solid var(--border-color);
-    background-color: var(--light-blue);
+    background-color: var(--light-gray);
 }
 
 .feature a {
@@ -113,6 +114,7 @@ h3 {
     object-fit: cover;
     width: 100%;
     height: auto;
+    border-bottom: 1px solid var(--border-color);
 }
 
 .feature-1 {
@@ -135,15 +137,16 @@ h3 {
 
 .feature-footer {
     text-align: center;
-    background-color: var(--light-blue);
-    color: var(--white);
-    padding: 20px 10px 20px 10px;
-    min-height: 100px;
+    background-color: var(--light-gray);
+    color: var(--black);
+    padding: 10px 10px 5px 10px;
+    height: 80px;
 }
 
 .feature-footer p {
     margin-top: 5px;
     text-align: center;
+    color: var(--black);
 }
 
 .feature-footer .icon {
