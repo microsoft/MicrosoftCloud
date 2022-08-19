@@ -1,4 +1,26 @@
 {
+    "metadata": {
+        "title": "Microsoft Cloud Integration Scenarios",
+        "description": "Microsoft Cloud Integration Scenarios: Learn how to integrate services across the Microsoft Cloud (Azure, Microsoft 365, Power Platform, GitHub)."
+    },
+    "navbar": {
+        "imageUrl": "/MicrosoftCloud/images/microsoft-logo.svg",
+        "imageAlt": "Microsoft Logo",
+        "links": [
+            {
+                "title": "Cloud Builder",
+                "url": "https://lively-sea-0d0f53e1e.1.azurestaticapps.net/"
+            },
+            {
+                "title": "GitHub",
+                "url": "https://github.com/microsoft/MicrosoftCloud"
+            }
+        ]
+    },
+    "header": {
+        "title": "Microsoft Cloud Integration Scenarios",
+        "subtitle": "Learn how to integrate services across the Microsoft Cloud (Azure, Microsoft 365, Power Platform, GitHub)."
+    },
     "items": [
         {
             "id": "0a2d4f5dd0f34a619a214d8b8b5a5f4c",
@@ -28,7 +50,13 @@
                 "0a2d4f5dd0f34a619a214d8b8b5a5f4c",
                 "8c5e92e5f856715da132e16fd362540c",
                 "51af92476dc24a9ca26acd85cb36bd7c"
-            ]
+            ],
+            "feature": {
+                "imageUrl": "/MicrosoftCloud/images/build-collaborative-apps.png",
+                "url": "https://mybuild.microsoft.com/sessions/a330735b-d4cf-4be0-a8bc-4ceb17c49558?source=sessions",
+                "title": "Building Real-time Collaborative Apps",
+                "description": "Real-time Collaboration using the Microsoft Cloud"
+            }
         },
         {
             "id": "8c5e92e5f856715da132e16fd362540c",
@@ -68,17 +96,29 @@
             "cloudCategories": ["Azure", "Microsoft 365"],
             "services": ["Microsoft Graph Toolkit", "Microsoft Graph", "Azure Active Directory", "Microsoft Teams"],
             "technologies": ["JavaScript", "React"],
-            "description": "One Productivity Hub sample shows you how to build a tab for viewing your calendar events, to-do tasks and files by using Microsoft Graph Toolkit components and TeamsFx Provider."
+            "description": "One Productivity Hub sample shows you how to build a tab for viewing your calendar events, to-do tasks and files by using Microsoft Graph Toolkit components and TeamsFx Provider.",
+            "feature": {
+                "imageUrl": "/MicrosoftCloud/images/productivity-hub.png",
+                "url": "https://github.com/OfficeDev/TeamsFx-Samples/tree/dev/graph-toolkit-one-productivity-hub",
+                "title": "Build a Personal Productivity Hub",
+                "description": "uild a personal productivity hub"
+            }
         },
         {
             "id": "5cdc5e15f43a44288abfbcace1b8b8b8",
             "title": "Build applications on the Microsoft Cloud",
-            "url": "https://docs.microsoft.com/en-us/azure/architecture/guide/microsoft-cloud/overview",
+            "url": "https://docs.microsoft.com/azure/architecture/guide/microsoft-cloud/overview",
             "type": "Documentation",
             "cloudCategories": ["Azure", "Microsoft 365", "Power Platform"],
             "services": [],
             "technologies": [],
-            "description": "This guide describes the big picture of Microsoft Cloud from an application development perspective, focusing on what leaders must do to be successful."
+            "description": "This guide describes the big picture of Microsoft Cloud from an application development perspective, focusing on what leaders must do to be successful.",
+            "feature": {
+                "imageUrl": "/MicrosoftCloud/images/microsoft-cloud.png",
+                "url": "https://docs.microsoft.com/azure/architecture/guide/microsoft-cloud/overview",
+                "title": "Build Applications on the Microsoft Cloud",
+                "description": "Learn how you can leverage services across the Microsoft Cloud"
+            }
         }
     ]
 }

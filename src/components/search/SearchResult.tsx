@@ -36,7 +36,8 @@ function SearchResult({ item, index, isSelected, showButton, onClick }: SearchRe
             <div className="search-result-description">{item.description}</div>
             {showButton &&
                 <div className="search-result-button-container">
-                    <a className="search-result-button" href={item.url} target="_blank" rel="noreferrer">View Content</a>
+                    <a className="search-result-button" href={item.url} target="_blank" 
+                        rel="noopener noreferrer" title="View Content">View Content</a>
                 </div>
             }
         </div>

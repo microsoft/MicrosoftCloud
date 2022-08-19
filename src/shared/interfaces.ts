@@ -15,3 +15,5 @@ export interface CheckboxItem {
     category: string;
     checked: boolean;
 }
+
+export type ContentItemType = 'Code Sample' | 'Documentation' | 'Video';
