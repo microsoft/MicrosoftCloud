@@ -1,5 +1,6 @@
 import React from 'react';
 import { Header as HeaderType } from '../../shared/interfaces';
+import './Header.css';
 
 function Header({ data } : { data: HeaderType }) {
     return (

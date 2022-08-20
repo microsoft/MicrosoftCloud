@@ -1,7 +1,18 @@
 {
     "metadata": {
         "title": "Microsoft Cloud Integration Scenarios",
-        "description": "Microsoft Cloud Integration Scenarios: Learn how to integrate services across the Microsoft Cloud (Azure, Microsoft 365, Power Platform, GitHub)."
+        "description": "Microsoft Cloud Integration Scenarios: Learn how to integrate services across the Microsoft Cloud (Azure, Microsoft 365, Power Platform, GitHub).",
+        "themeColors": {
+            "border-color": "#f5f5f5",
+            "light-gray": "#f0f0f0",
+            "light-blue": "#3498db",
+            "dark-blue": "#253A5E",
+            "dark-gray": "#8c8c8c",
+            "green": "#4db42b",
+            "white": "#fff",
+            "black": "#000",
+            "page-margins": "0px 30px 0px 30px"
+        }
     },
     "navbar": {
         "imageUrl": "/MicrosoftCloud/images/microsoft-logo.svg",

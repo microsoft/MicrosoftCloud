@@ -115,7 +115,7 @@ function Search({ data }: { data: ContentItem[] }) {
         createCategories(items);
         setItems(items);
 
-    }, []);
+    }, [data]);
 
     return (
         <section className="content">

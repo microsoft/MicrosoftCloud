@@ -1,5 +1,6 @@
 import React from 'react';
 import { Feature } from '../../shared/interfaces';
+import './Features.css';
 
 function Features({ data }: { data: Feature[] }) {
     return (

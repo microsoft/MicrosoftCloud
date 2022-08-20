@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 // import reportWebVitals from './reportWebVitals';
 import packageJson from '../package.json';
+import './index.css';
 
 declare global {
   var appVersion: string;

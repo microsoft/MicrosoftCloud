@@ -8,6 +8,7 @@ export interface SiteContent {
 export interface Metadata {
     title: string;
     description: string;
+    themeColors: any;
 }
 
 export interface Navbar {

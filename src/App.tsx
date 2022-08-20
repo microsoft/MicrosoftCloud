@@ -23,11 +23,22 @@ function App() {
     setFeatures(features);
   };
 
+  const setCssVariables = (data: SiteContent) => {
+    // iterate through data.metadata.themeColors and set css variables
+    if (data.metadata.themeColors) {
+      for (const key in data.metadata.themeColors) {
+          const value = data.metadata.themeColors[key];
+          document.documentElement.style.setProperty(`--${key}`, value);
+      }
+    }
+  };
+
   useEffect(() => {
-    fetch('/MicrosoftCloud/data/items.json')
+    fetch('/MicrosoftCloud/data/siteContent.json')
       .then(response => response.json())
       .then(data => {
         document.title = data.metadata.title;
+        setCssVariables(data);
         setIsLoading(false);
         setSiteContent(data);
         getFeatures(data);
