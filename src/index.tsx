@@ -5,11 +5,16 @@ import App from './App';
 import './index.scss';
 
 const rootElement = document.getElementById('root') as HTMLElement;
-const feedUrl = rootElement.dataset.feed as string; // get data-feed attribute from root element
+
+// Get data-feed attribute from root element
+const feedUrl = rootElement.dataset.feed as string;
+if (!feedUrl) {
+  throw new Error('No feed URL provided. Add <div id="root" data-feed="<path_to-data_file>"></div>');
+}
 const root = ReactDOM.createRoot(rootElement); 
 
 root.render(
-  // React 18 will call useEffect twice in development mode on the initial render so removing <React.StrictMode> for now.
+  // React 18 will call useEffect twice in development mode on the initial render due to <React.StrictMode>.
   // https://www.techiediaries.com/react-18-useeffect/
   <React.StrictMode>
     <App dataSource={feedUrl} />

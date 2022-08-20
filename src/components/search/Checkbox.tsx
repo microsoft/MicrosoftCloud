@@ -1,7 +1,9 @@
 import React from 'react';
 import './Checkbox.scss';
 
-function Checkbox({ isChecked, label, checkHandler, index }: { isChecked: boolean, label: string, checkHandler: () => void, index: number }) {
+type CheckboxProps = { isChecked: boolean, label: string, checkHandler: () => void, index: number };
+
+const Checkbox = ({ isChecked, label, checkHandler, index }: CheckboxProps) => {
     const id = `${label}-checkbox-${index}`;
     return (
         <div className="checkbox">

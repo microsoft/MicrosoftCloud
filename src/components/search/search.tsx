@@ -4,7 +4,7 @@ import Checkbox from './Checkbox';
 import SearchResult from './SearchResult';
 import './Search.scss';
 
-function Search({ data }: { data: ContentItem[] }) {
+const Search = ({ data }: { data: ContentItem[] }) => {
     const [items, setItems] = useState<ContentItem[]>([]);
     const [originalItems, setOriginalItems] = useState<ContentItem[]>([]);
     const [relatedContent, setRelatedContent] = useState<ContentItem[]>([]);

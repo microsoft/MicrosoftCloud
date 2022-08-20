@@ -10,7 +10,7 @@ type SearchResultProps = {
     onClick?: () => void;
 }
 
-function SearchResult({ item, index, isSelected, showButton, onClick }: SearchResultProps) {
+const SearchResult = ({ item, index, isSelected, showButton, onClick }: SearchResultProps) => {
     return (
         <div className={`search-result ${isSelected ? 'search-result-highlight' : ''}`} 
              key={index}

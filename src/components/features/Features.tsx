@@ -2,7 +2,7 @@ import React from 'react';
 import { Feature } from '../../shared/interfaces';
 import './Features.scss';
 
-function Features({ data }: { data: Feature[] }) {
+const Features = ({ data }: { data: Feature[] }) => {
     return (
         <section className="features">
             {data.map((feature, index) => (

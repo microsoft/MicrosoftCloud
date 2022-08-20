@@ -2,7 +2,7 @@ import React from 'react';
 import { Navbar as NavbarType } from '../../shared/interfaces';
 import './Navbar.scss';
 
-function Navbar({ data } : {data: NavbarType}) {
+const Navbar = ({ data } : {data: NavbarType}) => {
     return (
         <nav className="item navbar">
             <div aria-hidden="true" className="navbar-left">

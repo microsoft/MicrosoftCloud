@@ -6,7 +6,7 @@ import Search from './components/search/Search';
 import { Feature, SiteContent } from './shared/interfaces';
 import packageJson from '../package.json';
 
-function App({ dataSource }: { dataSource: string }) {
+const App = ({ dataSource }: { dataSource: string }) => {
   const [siteContent, setSiteContent] = useState<SiteContent>({} as SiteContent);
   const [features, setFeatures] = useState<Feature[]>([]);
   const [isLoading, setIsLoading] = useState(true);
