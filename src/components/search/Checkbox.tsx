@@ -1,5 +1,5 @@
 import React from 'react';
-import './Checkbox.css';
+import './Checkbox.scss';
 
 function Checkbox({ isChecked, label, checkHandler, index }: { isChecked: boolean, label: string, checkHandler: () => void, index: number }) {
     const id = `${label}-checkbox-${index}`;

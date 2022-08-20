@@ -1,0 +1,34 @@
+.navbar {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: "logo nav";
+    overflow: hidden;
+    margin: var(--page-margins);
+    height: 50px;
+
+    .navbar-left {
+        grid-area: logo;
+    }
+    
+    .navbar-right {
+        grid-area: nav;
+        list-style: none;
+        display: grid;
+        grid-template-columns: repeat(3, auto);
+        justify-self: end;
+    }
+    
+    .nav-item a {
+        color: var(--black);
+        font-size: 0.9rem;
+        font-weight: 400;
+        text-decoration: none;
+        transition: color 0.3s ease-out;
+        margin-right: 20px;
+    }
+    
+    .nav-item a:hover {
+        color: var(--light-blue);
+    }
+}
+

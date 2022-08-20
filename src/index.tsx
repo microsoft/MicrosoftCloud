@@ -2,23 +2,17 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 // import reportWebVitals from './reportWebVitals';
-import packageJson from '../package.json';
-import './index.css';
+import './index.scss';
 
-declare global {
-  var appVersion: string;
-}
+const rootElement = document.getElementById('root') as HTMLElement;
+const feedUrl = rootElement.dataset.feed as string; // get data-feed attribute from root element
+const root = ReactDOM.createRoot(rootElement); 
 
-global.appVersion = packageJson.version;
-
-const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
-);
 root.render(
   // React 18 will call useEffect twice in development mode on the initial render so removing <React.StrictMode> for now.
   // https://www.techiediaries.com/react-18-useeffect/
   <React.StrictMode>
-    <App />
+    <App dataSource={feedUrl} />
   </React.StrictMode>
 );
 

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { CheckboxItem, ContentItem } from '../../shared/interfaces';
 import Checkbox from './Checkbox';
 import SearchResult from './SearchResult';
-import './Search.css';
+import './Search.scss';
 
 function Search({ data }: { data: ContentItem[] }) {
     const [items, setItems] = useState<ContentItem[]>([]);

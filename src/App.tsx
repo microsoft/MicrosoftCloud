@@ -4,8 +4,9 @@ import Header from './components/header/Header';
 import Navbar from './components/navbar/Navbar';
 import Search from './components/search/Search';
 import { Feature, SiteContent } from './shared/interfaces';
+import packageJson from '../package.json';
 
-function App() {
+function App({ dataSource }: { dataSource: string }) {
   const [siteContent, setSiteContent] = useState<SiteContent>({} as SiteContent);
   const [features, setFeatures] = useState<Feature[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -36,19 +37,27 @@ function App() {
   };
 
   useEffect(() => {
-    fetch('/MicrosoftCloud/data/siteContent.json')
+    const init = (data: SiteContent) => {
+      document.title = data.metadata.title;
+      const metaDescription = document.createElement('meta');
+      metaDescription.name = 'description';
+      metaDescription.content = data.metadata.description;
+      
+      setCssVariables(data);
+      setSiteContent(data);
+      getFeatures(data);
+    }
+
+    fetch(dataSource)
       .then(response => response.json())
       .then(data => {
-        document.title = data.metadata.title;
-        setCssVariables(data);
         setIsLoading(false);
-        setSiteContent(data);
-        getFeatures(data);
+        init(data);
       }).catch(error => {
         console.log(error);
       }
       );
-  }, []);
+  }, [dataSource]);
 
   return (
     <>
@@ -56,12 +65,15 @@ function App() {
       ? 
         <div>Loading...</div> 
       :      
-        <div>
+        <>
           <Navbar data={siteContent.navbar} />
           <Header data={siteContent.header} />
           <Features data={features} />
           <Search data={siteContent.items} />
-        </div>
+          <section className="footer">
+            <div className="version">Version: {packageJson.version}</div>
+          </section>
+        </>
     }
     </>
   );

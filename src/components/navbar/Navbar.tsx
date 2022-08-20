@@ -1,6 +1,6 @@
 import React from 'react';
 import { Navbar as NavbarType } from '../../shared/interfaces';
-import './Navbar.css';
+import './Navbar.scss';
 
 function Navbar({ data } : {data: NavbarType}) {
     return (

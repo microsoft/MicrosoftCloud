@@ -1,0 +1,25 @@
+.checkbox {
+    input[type="checkbox"] {
+        transform: scale(1.3);
+        margin: 0rem .5rem 1.5rem 0rem;
+    }
+
+    label {
+        display:inline-block;
+        white-space: nowrap;
+    }
+}
+
+@media only screen and (max-width: 760px) { 
+    .checkbox {
+        input[type="checkbox"] {
+            margin: 0rem 0.3rem 0rem 0rem;
+        }
+        
+        label {
+            display:inline-block;
+            white-space: normal;
+            margin-bottom: 15px;
+        }
+    }
+}
