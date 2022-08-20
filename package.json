@@ -1,5 +1,5 @@
 {
-  "name": "test-react",
+  "name": "microsoft-cloud-integrations",
   "version": "0.5.0",
   "private": true,
   "homepage": "https://microsoft.github.io/MicrosoftCloud",
@@ -10,6 +10,7 @@
     "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "postbuild": "rm -rf build/publish && mkdir build/publish && cp build/static/js/main*.js build/publish/main-$npm_package_version.min.js && cp build/static/css/main*.css build/publish/main-$npm_package_version.min.css",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "cypress": "npx cypress open"
