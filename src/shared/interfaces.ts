@@ -23,6 +23,7 @@ export interface Header {
 }
 
 export interface Feature {
+    position: number;
     type: string;
     imageUrl: string;
     url: string;

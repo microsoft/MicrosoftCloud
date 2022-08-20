@@ -13,13 +13,15 @@ function App() {
   const getFeatures = (data: SiteContent) => {
     const features = data.items.filter(item => item.feature).map(item => {
       return {
+        position: item.feature?.position,
         type: item.type, 
         imageUrl: item.feature?.imageUrl, 
         url: item.feature?.url, 
         title: item.feature?.title,
         description: item.feature?.description
       };
-    }) as Feature[];
+    }).sort((a, b) => a.position! - b.position!) as Feature[];
+
     setFeatures(features);
   };
 

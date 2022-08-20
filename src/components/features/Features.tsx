@@ -7,7 +7,7 @@ function Features({ data }: { data: Feature[] }) {
         <section className="features">
             {data.map((feature, index) => (
                 <div className={`feature feature-${index + 1}`} key={index}>
-                    <a href={feature.url} target="_blank" rel="noopener">
+                    <a href={feature.url} target="_blank" rel="noopener noreferrer">
                         <div className="feature-header">
                             <img src={feature.imageUrl} alt={feature.title} />
                         </div>
