@@ -8,10 +8,6 @@
         font-style: italic;
     }
     
-    .search-result-highlight {
-        background-color: var(--border-color);
-    }
-    
     .search-result-title {
         font-size: 1.2rem;
         font-weight: bold;
@@ -34,4 +30,8 @@
         margin: 20px 0px 20px 0px;
         cursor: pointer;
     }
+}
+
+.search-result-highlight {
+    background-color: var(--border-color);
 }
