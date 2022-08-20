@@ -6,10 +6,10 @@ import './index.scss';
 
 const rootElement = document.getElementById('root') as HTMLElement;
 
-// Get data-feed attribute from root element
-const feedUrl = rootElement.dataset.feed as string;
+// Get data-feed-url attribute from root element
+const feedUrl = rootElement.dataset.feedUrl as string;
 if (!feedUrl) {
-  throw new Error('No feed URL provided. Add <div id="root" data-feed="<path_to-data_file>"></div>');
+  throw new Error('No feed URL provided. Add <div id="root" data-feed-url="<path_to-data_file>"></div>');
 }
 const root = ReactDOM.createRoot(rootElement); 
 
