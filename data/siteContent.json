@@ -15,7 +15,7 @@
         }
     },
     "navbar": {
-        "imageUrl": "/MicrosoftCloud/images/microsoft-logo.svg",
+        "imageUrl": "./images/microsoft-logo.svg",
         "imageAlt": "Microsoft Logo",
         "links": [
             {
@@ -64,7 +64,7 @@
             ],
             "feature": {
                 "position": 1,
-                "imageUrl": "/MicrosoftCloud/images/build-collaborative-apps.png",
+                "imageUrl": "./images/build-collaborative-apps.png",
                 "url": "https://mybuild.microsoft.com/sessions/a330735b-d4cf-4be0-a8bc-4ceb17c49558?source=sessions",
                 "title": "Building Real-time Collaborative Apps",
                 "description": "Real-time Collaboration using the Microsoft Cloud"
@@ -111,7 +111,7 @@
             "description": "One Productivity Hub sample shows you how to build a tab for viewing your calendar events, to-do tasks and files by using Microsoft Graph Toolkit components and TeamsFx Provider.",
             "feature": {
                 "position": 2,
-                "imageUrl": "/MicrosoftCloud/images/productivity-hub.png",
+                "imageUrl": "./images/productivity-hub.png",
                 "url": "https://github.com/OfficeDev/TeamsFx-Samples/tree/dev/graph-toolkit-one-productivity-hub",
                 "title": "Build a Personal Productivity Hub",
                 "description": "Build a personal productivity hub"
@@ -128,7 +128,7 @@
             "description": "This guide describes the big picture of Microsoft Cloud from an application development perspective, focusing on what leaders must do to be successful.",
             "feature": {
                 "position": 3,
-                "imageUrl": "/MicrosoftCloud/images/microsoft-cloud.png",
+                "imageUrl": "./images/microsoft-cloud.png",
                 "url": "https://docs.microsoft.com/azure/architecture/guide/microsoft-cloud/overview",
                 "title": "Build Applications on the Microsoft Cloud",
                 "description": "Learn how you can leverage services across the Microsoft Cloud"
