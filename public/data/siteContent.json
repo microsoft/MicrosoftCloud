@@ -104,7 +104,7 @@
             "description": "One Productivity Hub sample shows you how to build a tab for viewing your calendar events, to-do tasks and files by using Microsoft Graph Toolkit components and TeamsFx Provider.",
             "feature": {
                 "position": 2,
-                "imageUrl": "./images/productivity-hub.png",
+                "imageUrl": "./images/productivity-hub.jpg",
                 "url": "https://github.com/OfficeDev/TeamsFx-Samples/tree/dev/graph-toolkit-one-productivity-hub",
                 "title": "Build a Personal Productivity Hub",
                 "description": "Build a personal productivity hub"
