@@ -1,0 +1,13 @@
+.App input {
+  margin-bottom:1em; 
+  width: 300px;
+}
+
+.App button {
+  margin-right: 10px;
+}
+
+.App .button-container {
+  margin-top: 20px;
+}
+
