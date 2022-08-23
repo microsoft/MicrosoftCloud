@@ -1,0 +1,7 @@
+"feature": {
+    "position": 1,
+    "imageUrl": "./images/build-collaborative-apps.png",
+    "url": "https://mybuild.microsoft.com/sessions/a330735b-d4cf-4be0-a8bc-4ceb17c49558?source=sessions",
+    "title": "Building Real-time Collaborative Apps",
+    "description": "Real-time Collaboration using the Microsoft Cloud"
+}

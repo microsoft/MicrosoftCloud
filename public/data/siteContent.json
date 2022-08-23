@@ -3,7 +3,7 @@
         "title": "Microsoft Cloud Integration Scenarios",
         "description": "Microsoft Cloud Integration Scenarios: Learn how to integrate services across the Microsoft Cloud (Azure, Microsoft 365, Power Platform, GitHub).",
         "themeColors": {
-            "border-color": "#f5f5f5",
+            "border-color": "#e1e1e1",
             "light-gray": "#f0f0f0",
             "light-blue": "#3498db",
             "dark-blue": "#253A5E",
@@ -61,14 +61,7 @@
                 "0a2d4f5dd0f34a619a214d8b8b5a5f4c",
                 "8c5e92e5f856715da132e16fd362540c",
                 "51af92476dc24a9ca26acd85cb36bd7c"
-            ],
-            "feature": {
-                "position": 1,
-                "imageUrl": "./images/build-collaborative-apps.png",
-                "url": "https://mybuild.microsoft.com/sessions/a330735b-d4cf-4be0-a8bc-4ceb17c49558?source=sessions",
-                "title": "Building Real-time Collaborative Apps",
-                "description": "Real-time Collaboration using the Microsoft Cloud"
-            }
+            ]
         },
         {
             "id": "8c5e92e5f856715da132e16fd362540c",
@@ -132,6 +125,23 @@
                 "url": "https://docs.microsoft.com/azure/architecture/guide/microsoft-cloud/overview",
                 "title": "Build Applications on the Microsoft Cloud",
                 "description": "Learn how you can leverage services across the Microsoft Cloud"
+            }
+        },
+        {
+            "id": "952a685047024a8aaa02d7d53b0203b2",
+            "title": "Teams App Camp",
+            "url": "https://microsoft.github.io/app-camp/",
+            "type": "Hands-On Lab",
+            "cloudCategories": ["Azure", "Microsoft 365"],
+            "services": ["Azure Active Directory", "Azure Bot Framework", "Microsoft Teams"],
+            "technologies": ["JavaScript", "Node"],
+            "description": "This on-demand workshop teaches you how to build Teams applications \"from scratch\", which is important for developers who already have an application they want to extend into Microsoft Teams, or for developers who have a specific toolchain in mind.",
+            "feature": {
+                "position": 1,
+                "imageUrl": "/Featured-Content/images/teams-app-camp.png",
+                "url": "https://microsoft.github.io/app-camp/",
+                "title": "Teams App Camp",
+                "description": "Learn how to build Teams applications from scratch"
             }
         }
     ]
