@@ -138,7 +138,7 @@
             "description": "This on-demand workshop teaches you how to build Teams applications \"from scratch\", which is important for developers who already have an application they want to extend into Microsoft Teams, or for developers who have a specific toolchain in mind.",
             "feature": {
                 "position": 1,
-                "imageUrl": "/Featured-Content/images/teams-app-camp.png",
+                "imageUrl": "./images/teams-app-camp.png",
                 "url": "https://microsoft.github.io/app-camp/",
                 "title": "Teams App Camp",
                 "description": "Learn how to build Teams applications from scratch"
