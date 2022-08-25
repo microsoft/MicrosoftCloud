@@ -1,5 +1,7 @@
 # Lab: ACS Video to Teams Meeting Lab 
 
+Sample Code: /samples/acs-to-teams-meeting
+
 ## Exercise 1: Create the Project and Add Dependencies 
 
 1. Create the React project using the following command: 
