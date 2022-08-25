@@ -143,6 +143,16 @@
                 "title": "Teams App Camp",
                 "description": "Learn how to turn any web app into a full-featured Teams application"
             }
+        },
+        {
+            "id": "952a685047024a8aaa02d7d53456h78g",
+            "title": "Build a productivity dashboard with Microsoft Teams Toolkit for Visual Studio",
+            "url": "https://devblogs.microsoft.com/microsoft365dev/build-a-productivity-dashboard-with-microsoft-teams-toolkit-for-visual-studio/",
+            "type": "Hands-On Lab",
+            "cloudCategories": ["Azure", "Microsoft 365"],
+            "services": ["Azure Active Directory", "Microsoft Graph Toolkit", "Microsoft Teams Toolkit"],
+            "technologies": ["C#", "Visual Studio", "ASP.NET Core", "Blazor"],
+            "description": "Use Teams Toolkit for Visual Studio to build your own personal productivity hub. Learn how to use Microsoft Graph Toolkit components with ASP.NET Core."
         }
     ]
 }
