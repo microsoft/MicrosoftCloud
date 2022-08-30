@@ -19,8 +19,8 @@
         "imageAlt": "Microsoft Logo",
         "links": [
             {
-                "title": "Cloud Builder",
-                "url": "https://lively-sea-0d0f53e1e.1.azurestaticapps.net/"
+                "title": "YouTube",
+                "url": "https://aka.ms/m365youtube"
             },
             {
                 "title": "GitHub",
@@ -152,7 +152,144 @@
             "cloudCategories": ["Azure", "Microsoft 365"],
             "services": ["Azure Active Directory", "Microsoft Graph Toolkit", "Microsoft Teams Toolkit"],
             "technologies": ["C#", "Visual Studio", "ASP.NET Core", "Blazor"],
-            "description": "Use Teams Toolkit for Visual Studio to build your own personal productivity hub. Learn how to use Microsoft Graph Toolkit components with ASP.NET Core."
+            "description": "Use Teams Toolkit for Visual Studio to build your own personal productivity hub. Learn how to use Microsoft Graph Toolkit components with ASP.NET Core.",
+            "relatedContentItems": [
+                "51af92476dc24a9ca26acd85cb302849"
+            ]
+        },
+        {
+            "id": "51af92476dc24a9ca26acd85cb302849",
+            "title": "Build a productivity dashboard with Microsoft Teams Toolkit for Visual Studio",
+            "url": "https://www.youtube.com/watch?v=0WFN8X9Tp8A",
+            "type": "Video",
+            "cloudCategories": ["Azure", "Microsoft 365"],
+            "services": ["Azure Active Directory", "Microsoft Graph Toolkit", "Microsoft Teams Toolkit"],
+            "technologies": ["C#", "Visual Studio", "ASP.NET Core", "Blazor"],
+            "description": "Get started with Teams Toolkit for Visual Studio and build your first Teams tab with ASP.NET Core to boost your productivity.",
+            "relatedContentItems": [
+                "952a685047024a8aaa02d7d53456h78g"
+            ]
+        },
+        {
+            "id": "51af92476dc24a9ca26acd85cb349hn5",
+            "title": "All Things Microsoft Cloud",
+            "url": "https://www.youtube.com/playlist?list=PLWZJrkeLOrbZrAm18tKoti4Fis5GccPSS",
+            "type": "Video",
+            "cloudCategories": ["Azure", "Microsoft 365", "Power Platform"],
+            "services": ["Microsoft Graph", "Power Virtual Agents", "Power Automate", "Microsoft Teams", "GitHub", "Azure Bot Framework", "Accessibility"],
+            "technologies": ["TypeScript", "React"],
+            "description": "Learn what the Microsoft Cloud is and how services spanning Azure, Microsoft 365, Power Platform, and GitHub can be integrated to build robust applications.",
+            "relatedContentItems": [
+                "51af92476dc24a9ca26acd85cb39hn48",
+                "51af92476dc24a9ca26acd85cb39d3m5",
+                "51af92476dc24a9ca26acd85cb39l7b3",
+                "51af92476dc24a9ca26acd85cb33h47m",
+                "51af92476dc24a9ca26acd85cb37d389",
+                "51af92476dc24a9ca26acd85cb30f48g"
+            ]
+        },
+        {
+            "id": "51af92476dc24a9ca26acd85cb30f48g",
+            "title": "All Things Microsoft Cloud: What is the Microsoft Cloud?",
+            "url": "https://www.youtube.com/watch?v=SfAy0f2ir5k",
+            "type": "Video",
+            "cloudCategories": ["Azure", "Microsoft 365", "Power Platform"],
+            "services": ["Microsoft Graph", "Power Virtual Agents", "Power Automate", "Microsoft Teams", "GitHub", "Azure Bot Framework", "Accessibility"],
+            "technologies": ["TypeScript", "React"],
+            "description": "Dan Wahlin and Ayca Bas discuss what the Microsoft Cloud is and how services spanning Azure, Microsoft 365, Power Platform, and GitHub can be integrated to build robust applications. They also discuss new documentation available on https://docs.microsoft.com to help developers, architects, and IT leaders take advantage of everything Microsoft Cloud has to offer. ",
+            "relatedContentItems": [
+                "51af92476dc24a9ca26acd85cb39hn48",
+                "51af92476dc24a9ca26acd85cb39d3m5",
+                "51af92476dc24a9ca26acd85cb39l7b3",
+                "51af92476dc24a9ca26acd85cb33h47m",
+                "51af92476dc24a9ca26acd85cb37d389"
+            ]
+        },
+        {
+            "id": "51af92476dc24a9ca26acd85cb37d389",
+            "title": "All Things Microsoft Cloud: Microsoft 365 and Microsoft Graph",
+            "url": "https://www.youtube.com/watch?v=MXq-M6qRffE",
+            "type": "Video",
+            "cloudCategories": ["Azure", "Microsoft 365"],
+            "services": ["Microsoft Graph"],
+            "technologies": ["TypeScript", "React"],
+            "description": "Ayca Bas and Dan Wahlin talk with Yina Arenas about the role of Microsoft 365 and Microsoft Graph in the overall Microsoft Cloud. Yina shares the story of how Microsoft Graph was created and discusses the powerful APIs it offers to enable developers to integrate Microsoft 365 (and other) data into their applications. ",
+            "relatedContentItems": [
+                "51af92476dc24a9ca26acd85cb39hn48",
+                "51af92476dc24a9ca26acd85cb39d3m5",
+                "51af92476dc24a9ca26acd85cb39l7b3",
+                "51af92476dc24a9ca26acd85cb33h47m",
+                "51af92476dc24a9ca26acd85cb30f48g"
+            ]
+        },
+        {
+            "id": "51af92476dc24a9ca26acd85cb33h47m",
+            "title": "All Things Microsoft Cloud: Power Platform",
+            "url": "https://www.youtube.com/watch?v=z19QZwmy1yg",
+            "type": "Video",
+            "cloudCategories": ["Power Platform", "Azure"],
+            "services": ["Power Automate", "Power Virtual Agents","Power BI"],
+            "technologies": ["TypeScript", "React"],
+            "description": "Learn about the role of Power Platform in the overall Microsoft Cloud. Dan Wahlin and Ayca Bas talk with April Dunnam to discuss how to get started with Power Platform, what fusion development is, how to integrate with different APIs using connectors and Azure API Management, the VS Code extension for Power Platform, and more. ",
+            "relatedContentItems": [
+                "51af92476dc24a9ca26acd85cb39hn48",
+                "51af92476dc24a9ca26acd85cb39d3m5",
+                "51af92476dc24a9ca26acd85cb39l7b3",
+                "51af92476dc24a9ca26acd85cb37d389",
+                "51af92476dc24a9ca26acd85cb30f48g"
+            ]
+        },
+        {
+            "id": "51af92476dc24a9ca26acd85cb39l7b3",
+            "title": "All Things Microsoft Cloud: Microsoft 365 and Microsoft Teams",
+            "url": "https://www.youtube.com/watch?v=777ypUr2hwA",
+            "type": "Video",
+            "cloudCategories": ["Azure","Microsoft 365"],
+            "services": ["Microsoft Teams","Azure Bot Framework"],
+            "technologies": ["TypeScript", "React"],
+            "description": "Learn about the role of Microsoft 365 and Microsoft Teams in the overall Microsoft Cloud. Ayca Bas and Dan Wahlin talk with Bob German about how to get started building apps for Microsoft Teams using Power Platform and how custom apps and services can be built using the Teams Toolkit. He also shares information about a Microsoft Teams App Camp workshop that developers can take to dive in deeper. ",
+            "relatedContentItems": [
+                "51af92476dc24a9ca26acd85cb39hn48",
+                "51af92476dc24a9ca26acd85cb39d3m5",
+                "51af92476dc24a9ca26acd85cb33h47m",
+                "51af92476dc24a9ca26acd85cb37d389",
+                "51af92476dc24a9ca26acd85cb30f48g"
+            ]
+        },
+        {
+            "id": "51af92476dc24a9ca26acd85cb39d3m5",
+            "title": "All Things Microsoft Cloud: Accessibility",
+            "url": "https://www.youtube.com/watch?v=h0gByFYotZw",
+            "type": "Video",
+            "cloudCategories": ["Azure","Microsoft 365","Power Platform"],
+            "services": ["Accessibility"],
+            "technologies": ["TypeScript", "React"],
+            "description": "Accessibility plays a prominent role across Microsoft Cloud services. Ayca Bas and Dan Wahlin talk with Dona Sarkar about different accessibility features built-into cloud services and tools that developers can utilize to increase accessibility in their custom applications.",
+            "relatedContentItems": [
+                "51af92476dc24a9ca26acd85cb39hn48",
+                "51af92476dc24a9ca26acd85cb39l7b3",
+                "51af92476dc24a9ca26acd85cb33h47m",
+                "51af92476dc24a9ca26acd85cb37d389",
+                "51af92476dc24a9ca26acd85cb30f48g"
+            ]
+        }, 
+        {
+            "id": "51af92476dc24a9ca26acd85cb39hn48",
+            "title": "All Things Microsoft Cloud: GitHub",
+            "url": "https://www.youtube.com/watch?v=a7zwFpkPoy0",
+            "type": "Video",
+            "cloudCategories": ["Azure"],
+            "services": ["GitHub"],
+            "technologies": ["TypeScript", "React"],
+            "description": "How does GitHub fit into the overall Microsoft Cloud and what are some of the technologies you can use to simplify integration with Azure? Dan Wahlin and Ayca Bas talk with Todd Anglin to help answer that question. ",
+            "relatedContentItems": [
+                "51af92476dc24a9ca26acd85cb39d3m5",
+                "51af92476dc24a9ca26acd85cb39l7b3",
+                "51af92476dc24a9ca26acd85cb33h47m",
+                "51af92476dc24a9ca26acd85cb37d389",
+                "51af92476dc24a9ca26acd85cb30f48g"
+            ]
         }
+
     ]
 }
