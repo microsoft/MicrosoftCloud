@@ -1,31 +1,29 @@
 import {startDateTimeAsync, endDateTimeAsync} from './dateTimeFormat';
-import 'isomorphic-fetch';
 import {ClientSecretCredential} from '@azure/identity';
 import {Client} from '@microsoft/microsoft-graph-client';
 import {TokenCredentialAuthenticationProvider} from '@microsoft/microsoft-graph-client/authProviders/azureTokenCredentials';
-import { Console } from 'console';
-let _clientSecretCredential = undefined;
-let _appClient = undefined;
-let startTime = undefined;
-let endTime = undefined;
+import 'isomorphic-fetch';
+
+let clientSecretCredential;
+let appGraphClient;
 
 function ensureGraphForAppOnlyAuth() {
 
-  if (!_clientSecretCredential) {
-    _clientSecretCredential = new ClientSecretCredential(
-      '<YOUR_TENANT_ID>',
-      '<YOUR_CLIENT_ID>',
-      '<YOUR_CLIENT_SECRET>'
+  if (!clientSecretCredential) {
+    clientSecretCredential = new ClientSecretCredential(
+      process.env.TENANT_ID,
+      process.env.CLIENT_ID,
+      process.env.CLIENT_SECRET
     );
   }
 
-  if (!_appClient) {
+  if (!appGraphClient) {
     const authProvider = new TokenCredentialAuthenticationProvider(
-      _clientSecretCredential, {
+      clientSecretCredential, {
         scopes: [ 'https://graph.microsoft.com/.default' ]
       });
 
-    _appClient = Client.initWithMiddleware({
+    appGraphClient = Client.initWithMiddleware({
       authProvider: authProvider
     });
   }
@@ -33,9 +31,9 @@ function ensureGraphForAppOnlyAuth() {
 
 async function CreateNewMeetingAsync(userId) {
     ensureGraphForAppOnlyAuth();
-    startTime = await startDateTimeAsync();
-    endTime = await endDateTimeAsync();
-    const newMeeting = '/users/' + userId + '/calendar/events';
+    let startTime = await startDateTimeAsync();
+    let endTime = await endDateTimeAsync();
+    const newMeeting = `/users/${userId}/calendar/events`;
     
     const event = {
       subject: 'Customer Care Meeting',
@@ -50,10 +48,8 @@ async function CreateNewMeetingAsync(userId) {
       isOnlineMeeting: true
     };
     
-    const newEvent = await _appClient?.api(newMeeting).post(event);
-    
-    console.log(newEvent);
-    
+    const newEvent = await appGraphClient.api(newMeeting).post(event);    
+    console.log(newEvent);    
     return newEvent;     
 }
       

@@ -1,10 +1,12 @@
 import { AzureFunction, Context, HttpRequest } from "@azure/functions";
 import CreateNewMeetingAsync from '../Shared/graph';
-let teamsMeetingLink = undefined;
+
+let teamsMeetingLink;
+
 const httpTrigger: AzureFunction = async function (context: Context, req: HttpRequest){
     console.log("Request received");
     
-    teamsMeetingLink = await CreateNewMeetingAsync('8fe146c8-21df-4ae1-9aca-375012b13d96');
+    teamsMeetingLink = await CreateNewMeetingAsync(process.env.USER_ID);
     const body = JSON.stringify(teamsMeetingLink);
     console.log("body", body);
     const jsonMessage = JSON.parse(body);
