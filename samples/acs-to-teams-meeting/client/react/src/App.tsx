@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Call, CallAgent, CallClient, Features } from '@azure/communication-calling';
 import { AzureCommunicationTokenCredential } from '@azure/communication-common';
 import './App.css';
-
+import fetch from 'node-fetch';
 const App = () => {
   // Represents the ACS --> Teams Meeting call and call state
   const [call, setCall] = useState<Call>();
@@ -34,9 +34,15 @@ const App = () => {
     }
   }
 
-  const updateTeamsMeetingLink = (value: string) => {
-    setTeamsMeetingLink(value);
-    setTeamsJoinEnabled(value ? true : false);
+  const updateTeamsMeetingLink =  async () => {
+    //Call functions to get the meeting link
+    let res = await fetch('http://localhost:7071/api/TeamsMeetingFunction');
+    console.log("updateTeamsMeeting:",res);
+    let text = await res.text();
+
+    //Set the meeting link
+    setTeamsMeetingLink(text);
+    setTeamsJoinEnabled(text ? true : false);
   };
 
   useEffect(() => {
@@ -80,7 +86,7 @@ const App = () => {
     <div className="App">
       <h1>Azure Communication Services to Teams Meeting</h1>
       <h3>Teams meeting link</h3>
-      <input type="text" placeholder="Teams meeting link" onChange={(e) => updateTeamsMeetingLink(e.target.value)} />
+      <button type="button" onClick={updateTeamsMeetingLink}>Talk to an agent</button>
       <div>Call state <span>{callState}</span></div>
       <div><span>{recordingState}</span></div>
       <div className="button-container">
