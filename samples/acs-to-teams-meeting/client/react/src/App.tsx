@@ -45,7 +45,7 @@ const App = () => {
   if (adapter) {
     return (
       <div>
-        <h1>Contact Customer Care</h1>
+        <h1>Contact Customer Service</h1>
         <div className="wrapper">
           <CallComposite
             adapter={adapter}
