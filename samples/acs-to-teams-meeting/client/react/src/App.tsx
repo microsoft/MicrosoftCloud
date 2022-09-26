@@ -46,9 +46,11 @@ const App = () => {
     return (
       <div>
         <h1>Contact Customer Care</h1>
-        <CallComposite
-          adapter={adapter}
-        />
+        <div className="wrapper">
+          <CallComposite
+            adapter={adapter}
+          />
+        </div>
       </div>
     );
   }
