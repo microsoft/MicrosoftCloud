@@ -1,23 +1,22 @@
 import { AzureFunction, Context, HttpRequest } from "@azure/functions";
-import CreateNewMeetingAsync from '../Shared/graph';
+import createNewMeetingAsync from '../Shared/graph';
 
 let teamsMeetingLink;
 
 const httpTrigger: AzureFunction = async function (context: Context, req: HttpRequest){
-    console.log("Request received");
+    context.log("Request received");
+    const userId = process.env.USER_ID;
+    context.log('UserId', userId);
     
-    teamsMeetingLink = await CreateNewMeetingAsync(process.env.USER_ID);
+    teamsMeetingLink = await createNewMeetingAsync(userId);
     const body = JSON.stringify(teamsMeetingLink);
-    console.log("body", body);
-    const jsonMessage = JSON.parse(body);
-    console.log("function response:", jsonMessage);
+    const meeting = JSON.parse(body);
+    context.log("meeting:", meeting);
     
     context.res = {
         // status: 200, /* Defaults to 200 */
-        body: jsonMessage.onlineMeeting.joinUrl
-    }
-   
-    
+        body: meeting.onlineMeeting.joinUrl
+    }    
 };
 
 export default httpTrigger;

@@ -10,6 +10,7 @@
     "test": "echo \"No tests yet...\""
   },
   "dependencies": {
+    "@azure/communication-identity": "^1.1.0",
     "@azure/identity": "^2.1.0",
     "@microsoft/microsoft-graph-client": "^3.0.2",
     "isomorphic-fetch": "^3.0.0",

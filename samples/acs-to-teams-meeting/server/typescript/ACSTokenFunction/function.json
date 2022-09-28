@@ -15,5 +15,5 @@
       "name": "res"
     }
   ],
-  "scriptFile": "../dist/TeamsMeetingFunction/index.js"
+  "scriptFile": "../dist/ACSTokenFunction/index.js"
 }

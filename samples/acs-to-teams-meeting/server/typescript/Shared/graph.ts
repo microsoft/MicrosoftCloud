@@ -29,14 +29,14 @@ function ensureGraphForAppOnlyAuth() {
   }
 }
 
-async function CreateNewMeetingAsync(userId) {
+async function createNewMeetingAsync(userId) {
     ensureGraphForAppOnlyAuth();
     let startTime = await startDateTimeAsync();
     let endTime = await endDateTimeAsync();
     const newMeeting = `/users/${userId}/calendar/events`;
     
     const event = {
-      subject: 'Customer Care Meeting',
+      subject: 'Customer Service Meeting',
       start: {
           dateTime: startTime,
           timeZone: 'UTC'
@@ -49,8 +49,7 @@ async function CreateNewMeetingAsync(userId) {
     };
     
     const newEvent = await appGraphClient.api(newMeeting).post(event);    
-    console.log(newEvent);    
     return newEvent;     
 }
       
-export default CreateNewMeetingAsync;
+export default createNewMeetingAsync;
