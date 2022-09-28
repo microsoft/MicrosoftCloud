@@ -8,6 +8,8 @@
 
 1. Go to `Users` in `Azure Active Directory` in the Azure Portal and select a user. You'll use the user's `Object ID` for the `<ACTIVE_DIRECTORY_USER_ID>` value in the next step.
 
+1. Create an Azure Communication Services resource, go to `Settings --> Keys` and copy the first `connection string` value. You'll use it in the next step.
+
 1. Create a `local.settings.json` file in the root of this folder and add the following code snippet. U
     ```json
    {
@@ -18,7 +20,8 @@
             "TENANT_ID": "<YOUR_TENANT_ID>",
             "CLIENT_ID": "<YOUR_CLIENT_ID>",
             "CLIENT_SECRET": "<YOUR_CLIENT_SECRET>",
-            "USER_ID": "<ACTIVE_DIRECTORY_USER_ID>"
+            "USER_ID": "<ACTIVE_DIRECTORY_USER_ID>",
+            "ACS_CONNECTION_STRING": "<ACS_CONNECTION_STRING>"
         },
         "Host": {
             "LocalHttpPort": 7071,
