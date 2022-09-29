@@ -29,8 +29,8 @@ Technologies used in this scenario include:
 
 To get the solution going you'll need to run the front-end and back-end solutions. 
 
-1. Follow the steps in the `server/typescript` readme file to get the server setup and start it.
-1. Follow the steps in the `client` readme file to get the client setup and start it.
+1. Follow the steps in the `server/typescript` [README](./server/typescript/README.md) file to get the server setup and started.
+1. Follow the steps in the `client` [README](./client/react/README.md) file to get the client setup and started.
 
 ## Solution
 
