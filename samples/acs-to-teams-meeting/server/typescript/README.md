@@ -10,9 +10,12 @@
 
 1. Go to `Users` in `Azure Active Directory` in the Azure Portal and select a user. You'll use the user's `Object ID` for the `<ACTIVE_DIRECTORY_USER_ID>` value in the next step.
 
-1. Create an Azure Communication Services resource, go to `Settings --> Keys` and copy the first `connection string` value. You'll use it in the next step.
+1. Create an Azure Communication Services (ACS) resource using the [Azure Portal](https://portal.azure.com).
 
-1. Create a `local.settings.json` file in the root of this folder and add the following code snippet. U
+1. Go to the `Settings --> Keys` section for your new ACS resource and copy the first `connection string` value. You'll use it in the next step.
+
+1. Create a `local.settings.json` file in the root of this folder and add the following code snippet. 
+
     ```json
    {
         "IsEncrypted": false,
