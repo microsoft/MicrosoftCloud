@@ -21,18 +21,26 @@ Technologies used in this scenario include:
 ## Prerequisites
 
 - [Node](https://nodejs.org)
+- [Azure Functions Extension for VS Code](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azurefunctions)
 - [Azure subscription](https://azure.microsoft.com/free/search)
 - [Microsoft 365 developer tenant](https://developer.microsoft.com/microsoft-365/dev-program)
 
-## The Workshop
+## Setup Steps
 
-Coming soon!
+To get the solution going you'll need to run the front-end and back-end solutions. 
+
+1. Follow the steps in the `server/typescript` readme file to get the server setup and start it.
+1. Follow the steps in the `client` readme file to get the client setup and start it.
 
 ## Solution
 
 ![ACS Audio/Video Solution](./architecture.png "Scenario Architecture")
 
 ## References
+
+- Azure Communication Services
+- Azure Functions
+- Microsoft Graph
 
 ## Next Step
 
