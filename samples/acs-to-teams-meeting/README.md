@@ -38,9 +38,9 @@ To get the solution going you'll need to run the front-end and back-end solution
 
 ## References
 
-- Azure Communication Services
-- Azure Functions
-- Microsoft Graph
+- [Azure Communication Services](https://learn.microsoft.com/azure/communication-services)
+- [Azure Functions](https://learn.microsoft.com/azure/azure-functions/functions-overview)
+- [Microsoft Graph](https://learn.microsoft.com/graph/overview)
 
 ## Next Step
 
