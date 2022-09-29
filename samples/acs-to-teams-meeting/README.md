@@ -20,9 +20,9 @@ Technologies used in this scenario include:
 
 ## Prerequisites
 
-- Node
-- Azure subscription
-- Microsoft 365 developer tenant
+- [Node](https://nodejs.org)
+- [Azure subscription](https://azure.microsoft.com/free/search)
+- [Microsoft 365 developer tenant](https://developer.microsoft.com/microsoft-365/dev-program)
 
 ## The Workshop
 
