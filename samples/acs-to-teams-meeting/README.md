@@ -2,21 +2,35 @@
 
 ## Summary 
 
-Technologies used:
+This scenario will teach you how to add audio/video calling functionality into a custom application. As users visit your app, they'll be able to make a call directly into a Microsoft Teams Meeting.
+
+Use this type of functionality for:
+- Customer service scenarios
+- Doctor/patient scenarios
+- Student/teacher scenarios
+- Help desk scenarios
+- More...
+
+Technologies used in this scenario include:
+- React
 - Azure Communication Services
 - Azure Functions
 - Microsoft Graph
-- 
+- Microsoft Teams
 
 ## Prerequisites
 
+- Node
+- Azure subscription
+- Microsoft 365 developer tenant
+
 ## The Workshop
 
-- Part 0 - Environment Setup
-- Part 1 - Adding Azure Communication Services to a React App
-- Part 2 - Create Azure Functions to Call Microsoft Graph
+Coming soon!
 
 ## Solution
+
+![ACS Audio/Video Solution](./architecture.png "Scenario Architecture")
 
 ## References
 
