@@ -43,5 +43,4 @@ To get the solution going you'll need to run the front-end and back-end solution
 - [Microsoft Graph](https://learn.microsoft.com/graph/overview)
 - [Microsoft Graph API for Microsoft Teams](https://learn.microsoft.com/graph/api/resources/teams-api-overview?view=graph-rest-1.0)
 
-## Next Step
 
