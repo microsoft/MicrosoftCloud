@@ -41,6 +41,7 @@ To get the solution going you'll need to run the front-end and back-end solution
 - [Azure Communication Services](https://learn.microsoft.com/azure/communication-services)
 - [Azure Functions](https://learn.microsoft.com/azure/azure-functions/functions-overview)
 - [Microsoft Graph](https://learn.microsoft.com/graph/overview)
+- [Microsoft Graph API for Microsoft Teams](https://learn.microsoft.com/graph/api/resources/teams-api-overview?view=graph-rest-1.0)
 
 ## Next Step
 
