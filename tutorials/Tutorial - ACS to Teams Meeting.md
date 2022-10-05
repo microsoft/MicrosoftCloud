@@ -142,6 +142,7 @@ In this exercise you'll add the [ACS UI calling composite](https://azure.github.
 
     ```typescript
     useEffect(() => {
+        /* Commenting out for now
         const init = async () => {
             setMessage('Getting ACS user');
             //Call Azure Function to get the meeting link
@@ -159,6 +160,7 @@ In this exercise you'll add the [ACS UI calling composite](https://azure.github.
             console.log('Teams meeting link', link);
         }
         init();
+        */
     }, []);
     ```
 
