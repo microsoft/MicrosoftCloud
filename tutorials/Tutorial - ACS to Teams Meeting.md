@@ -138,7 +138,7 @@ In this exercise you'll add the [ACS UI calling composite](https://azure.github.
 
     > NOTE: Because `useAzureCommunicationCallAdapter` is a React hook, it won't assign a value to `callAdapter` until the `callAdapterArgs` value is valid.
 
-1. Earlier you assigned the user identity, token, and Teams meeting link to state values in the `App` component. That works fine for now. In a later exercise you'll see how to dynamically retrieve these values. Since you set the values earlier, comment out the entire `useEffect` function:
+1. Earlier you assigned the user identity, token, and Teams meeting link to state values in the `App` component. That works fine for now. In a later exercise you'll see how to dynamically retrieve those values. Since you set the values earlier, comment out the code in the `useEffect` function (the `init()` function and the call to it). Once you get the Azure Functions running in the next exercises you'll revisit this code.
 
     ```typescript
     useEffect(() => {
