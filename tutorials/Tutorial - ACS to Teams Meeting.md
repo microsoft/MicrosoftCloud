@@ -334,7 +334,7 @@ In this exercise you'll learn how to dynamically retrieve  user identity and tok
     const [token, setToken] = useState<string>('');
     ```
 
-1  Locate the `useEffect` function and change it to look like the following to enable calling the Azure Function to retrieve an ACS user identity and token: 
+1.  Locate the `useEffect` function and change it to look like the following to enable calling the Azure Function to retrieve an ACS user identity and token: 
 
     ```typescript
     useEffect(() => {
