@@ -37,7 +37,7 @@ const App = () => {
   useEffect(() => {
     const init = async () => {
       setMessage('Getting ACS user');
-      //Call Azure Function to get the meeting link
+      //Call Azure Function to get the ACS user identity and token
       let res = await fetch(process.env.REACT_APP_ACS_USER_FUNCTION as string);
       let user = await res.json();
       setUserId(user.userId);

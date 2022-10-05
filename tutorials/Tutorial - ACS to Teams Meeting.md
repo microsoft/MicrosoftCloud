@@ -160,7 +160,7 @@ In this exercise you'll add the [ACS UI calling composite](https://azure.github.
         /* Commenting out for now
         const init = async () => {
             setMessage('Getting ACS user');
-            //Call Azure Function to get the meeting link
+            //Call Azure Function to get the ACS user identity and token
             let res = await fetch(process.env.REACT_APP_ACS_USER_FUNCTION as string);
             let user = await res.json();
             setUserId(user.userId);
@@ -204,9 +204,166 @@ In this exercise you'll add the [ACS UI calling composite](https://azure.github.
 
 ## Exercise 3: Dynamically Create a Microsoft Teams Meeting Link
 
-Circle back to React app and add the fetch call for the teams link
+Function steps here... Need to create a `local.settings.json` file with the following values:
+
+```
+{
+    "IsEncrypted": false,
+    "Values": {
+        "FUNCTIONS_WORKER_RUNTIME": "node",
+        "TENANT_ID": "",
+        "CLIENT_ID": "",
+        "CLIENT_SECRET": "",
+        "USER_ID": "",
+        "ACS_CONNECTION_STRING": ""
+    },
+    "Host": {
+        "LocalHttpPort": 7071,
+        "CORS": "*",
+        "CORSCredentials": false
+    },
+    "watchDirectories": [
+        "Shared"
+    ]
+}
+```
+
+Circle back to React app here so that it calls the function
+
+1. Go to the `typescript` folder in a terminal window and run `npm start` to start the Azure Functions process on your machine.
+
+1. Now that the function is ready to call you'll need to modify the React application.
+
+1. Open `samples/acs-to-teams-meeting/client/react/App.tsx` file in your editor.
+
+1. Locate the `teamsMeetingLink` state variable in the component. Remove the hardcoded teams link and replace it with empty quotes:
+
+    ```typescript
+    const [teamsMeetingLink, setTeamsMeetingLink] = useState<string>('');
+    ```
+
+1. Locate the `useEffect` function and change it to look like the following to enable calling the Azure Function to create a Teams meeting and retrieve the join link: 
+
+    ```typescript
+    useEffect(() => {
+        const init = async () => {
+            /* Commenting out for now
+            setMessage('Getting ACS user');
+            //Call Azure Function to get the ACS user identity and token
+            let res = await fetch(process.env.REACT_APP_ACS_USER_FUNCTION as string);
+            let user = await res.json();
+            setUserId(user.userId);
+            setToken(user.token);
+            */
+            
+            setMessage('Getting Teams meeting link...');
+            //Call Azure Function to get the meeting link
+            res = await fetch(process.env.REACT_APP_TEAMS_MEETING_FUNCTION as string);
+            let link = await res.text();
+            setTeamsMeetingLink(link);
+            setMessage('');
+            console.log('Teams meeting link', link);
+
+        }
+        init();
+
+    }, []);
+    ```
+
+1. Save the file before continuing.
+
+1. Use a terminal window to run `npm start` in the `react` folder to run the application. After it builds you should see the calling UI displayed and you can call into the Teams meeting that was dynamically created by Microsoft Graph.
+
+1. Stop both of the terminal processes (React and Azure Functions) by selecting `ctrl + c`.
 
 ## Exercise 4: Dynamically Create an Azure Communication Services Identity and Token
 
-Circle back to React app and add the fetch call for the ACS user identity/token
+In this exercise you'll learn how to dynamically retrieve  user identity and token values from Azure Communication Services using Azure Functions.
+
+1. Open `local.settings.json` and update the `ACS_CONNECTION_STRING` value with the ACS connection string you saved in an earlier exercise.
+
+1. Open `samples/acs-to-teams-meeting/server/typescript/ACSTokenFunction/index.ts` in VS Code. 
+
+1. Notice that it has the following import at the top of the file:
+
+    ```typescript
+    import { CommunicationIdentityClient } from '@azure/communication-identity';
+
+    ```
+
+1. The function performs the following tasks:
+    - Gets the ACS connection string from an environment variable named `ACS_CONNECTION_STRING`.
+
+        ```typescript
+        const connectionString = process.env.ACS_CONNECTION_STRING;
+        ```
+    
+    - Creates a new `CommunicationIdentityClient` instance and passes the ACS connection string to it.
+
+        ```typescript
+        let tokenClient = new CommunicationIdentityClient(connectionString);
+        ```
+
+    - Creates an ACS user and gets a Voice Over IP token.
+
+        ```typescript
+        const user = await tokenClient.createUser();
+        const userToken = await tokenClient.getToken(user, ["voip"]);
+        ```
+
+    - Sends the userId and token values back to the caller.
+
+        ```typescript
+        context.res = {
+            body: { userId: user.communicationUserId, ...userToken }
+        };
+        ```
+
+1. Go to the `samples/acs-to-teams-meeting/server/typescript` folder in a terminal window and run `npm start`.
+
+1. Now that the Azure Functions are running locally, the client needs to be able to call into them to get the ACS user identity and token values.
+
+1. Open `samples/acs-to-teams-meeting/client/react/App.tsx` file in your editor.
+
+1. Locate the `userId` and `token` state variables in the component. Remove the hardcoded values and replace them with empty quotes:
+
+    ```typescript
+    const [userId, setUserId] = useState<string>('');
+    const [token, setToken] = useState<string>('');
+    ```
+
+1. Locate the `useEffect` function and change it to look like the following:
+
+    ```typescript
+    useEffect(() => {
+        const init = async () => {
+            setMessage('Getting ACS user');
+            //Call Azure Function to get the ACS user identity and token
+            let res = await fetch(process.env.REACT_APP_ACS_USER_FUNCTION as string);
+            let user = await res.json();
+            setUserId(user.userId);
+            setToken(user.token);
+            
+            setMessage('Getting Teams meeting link...');
+            //Call Azure Function to get the meeting link
+            res = await fetch(process.env.REACT_APP_TEAMS_MEETING_FUNCTION as string);
+            let link = await res.text();
+            setTeamsMeetingLink(link);
+            setMessage('');
+            console.log('Teams meeting link', link);
+        }
+        init();
+
+    }, []);
+    ```
+
+    > NOTE: This uncomments the fetch call that handles retrieving the ACS user identity and token.
+
+1. Save the file before continuing.
+
+1. Run `npm start` to run the application. After it builds you should see the calling UI displayed and you can call into the Teams meeting that was dynamically created by Microsoft Graph.
+
+1. Stop both of the terminal processes (React and Azure Functions) by selecting `ctrl + c`.
+
+1. You've successfully completed this tutorial!
 
