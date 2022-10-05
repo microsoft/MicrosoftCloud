@@ -332,7 +332,7 @@ In this exercise you'll learn how to dynamically retrieve  user identity and tok
     const [token, setToken] = useState<string>('');
     ```
 
-1. Locate the `useEffect` function and change it to look like the following:
+1  Locate the `useEffect` function and change it to look like the following to enable calling the Azure Function to retrieve an ACS user identity and token: 
 
     ```typescript
     useEffect(() => {
@@ -357,11 +357,9 @@ In this exercise you'll learn how to dynamically retrieve  user identity and tok
     }, []);
     ```
 
-    > NOTE: This uncomments the fetch call that handles retrieving the ACS user identity and token.
-
 1. Save the file before continuing.
 
-1. Run `npm start` to run the application. After it builds you should see the calling UI displayed and you can call into the Teams meeting that was dynamically created by Microsoft Graph.
+1. Run `npm start` to run the application. After it builds you should see the ACS calling UI displayed and you can call into the Teams meeting that was dynamically created by Microsoft Graph.
 
 1. Stop both of the terminal processes (React and Azure Functions) by selecting `ctrl + c`.
 
