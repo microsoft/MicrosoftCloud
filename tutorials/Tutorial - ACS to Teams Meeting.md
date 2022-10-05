@@ -41,9 +41,9 @@ In this exercise you'll create an Azure Communication Services (ACS) resource in
 
 1. Select the new meeting you added in the calendar and copy the Teams meeting link that is displayed into the same file where you stored the ACS user identity, token, and connection string.
 
-    ![Teams Meeting Link](./images/acs-to-teams-meeting/teams-meeting-link.png "Teams Meeting Link")
+    ![Teams Meeting Join Link](./images/acs-to-teams-meeting/teams-meeting-link.png "Teams Meeting Join Link")
 
-1. Now that your ACS resource is setup, let's get the React application up and running.
+1. Now that your ACS resource is setup and you have a Teams meeting join link, let's get the React application up and running.
 
 ## Exercise 2: Integrate Azure Communication Services Calling into a React App
 
