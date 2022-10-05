@@ -1,5 +1,9 @@
 import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
-import {  CallComposite, fromFlatCommunicationIdentifier, useAzureCommunicationCallAdapter } from '@azure/communication-react';
+import {  
+  CallComposite, 
+  fromFlatCommunicationIdentifier, 
+  useAzureCommunicationCallAdapter 
+} from '@azure/communication-react';
 import React, { useState, useMemo, useEffect } from 'react';
 import './App.css';
 
