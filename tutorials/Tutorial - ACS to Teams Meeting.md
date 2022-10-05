@@ -1,6 +1,19 @@
-# Lab: ACS Video to Teams Meeting Lab 
+# Tutorial: ACS Video to Teams Meeting Lab 
 
-Sample Code: /samples/acs-to-teams-meeting
+In this tutorial you'll learn how Azure Communication Services can be used in a custom React app to allow a user to call into a Microsoft Teams meeting. 
+
+### Pre-requisites:
+- [Node](https://nodejs.org)
+- [Azure Functions Extension for VS Code](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azurefunctions)
+- [Azure subscription](https://azure.microsoft.com/free/search)
+- [Microsoft 365 developer tenant](https://developer.microsoft.com/microsoft-365/dev-program)
+
+### Technologies used in this tutorial include:
+- React
+- Azure Communication Services
+- Azure Functions
+- Microsoft Graph
+- Microsoft Teams
 
 ## Exercise 1: Create an Azure Communication Services Resource using the Azure Portal
 
@@ -35,7 +48,9 @@ In this exercise you'll create an Azure Communication Services (ACS) resource in
 
 1. Select `Settings --> Keys` and copy the `Primary key` connection string value to the same location as the user identity and token values.
 
-1. To run the application you'll need a Teams meeting link. Go to https://teams.microsoft.com, login with your Microsoft 365 developer tenant, and select the `Calendar` option to the far left. 
+1. To run the application you'll need a Teams meeting link. Go to https://teams.microsoft.com, login with your Microsoft 365 developer tenant, and select the `Calendar` option on the left. 
+
+    > NOTE: If you don't currently have a Microsoft 365 account, you can sign up for the [Microsoft 365 Developer Program](https://cda.ms/1Jp) subscription. It's *free* for 90 days and will continually renew as long as you're using it for development activity. If you have a Visual Studio *Enterprise* or *Professional* subscription, both programs include a free Microsoft 365 [developer subscription](https://aka.ms/MyVisualStudioBenefits), active for the life of your Visual Studio subscription. *See* [Set up a Microsoft 365 developer subscription](https://cda.ms/1Jq).
 
 1. Select a date/time on the calendar, add a title for the meeting, and select `Save`.
 
