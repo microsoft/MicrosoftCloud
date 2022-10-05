@@ -47,7 +47,7 @@ In this exercise you'll create an Azure Communication Services (ACS) resource in
 
 ## Exercise 2: Integrate Azure Communication Services Calling into a React App
 
-In this exercise you'll add the [ACS UI calling composite](https://azure.github.io/communication-ui-library/?path=/docs/composites-call-joinexistingcall--join-existing-call)into a React app to enable making audio/video calls from a custom app into a Microsoft Teams meeting.
+In this exercise you'll add the [ACS UI calling composite](https://azure.github.io/communication-ui-library/?path=/docs/composites-call-joinexistingcall--join-existing-call) into a React app to enable making audio/video calls from a custom app into a Microsoft Teams meeting.
 
 1. Run the following command to clone this repository to your machine:
 
