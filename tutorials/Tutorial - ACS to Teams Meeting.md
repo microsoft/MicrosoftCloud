@@ -19,7 +19,7 @@ In this tutorial you'll learn how Azure Communication Services can be used in a 
 
 In this exercise you'll create an Azure Communication Services (ACS) resource in the Azure Portal.
 
-1. Visit https://portal.azure.com in your browser and login.
+1. Visit https://portal.azure.com in your browser and sign in.
 
 1. Type `communication services` in the top search bar and select `Communication Services` from the options that appear.
 
@@ -48,7 +48,7 @@ In this exercise you'll create an Azure Communication Services (ACS) resource in
 
 1. Select `Settings --> Keys` and copy the `Primary key` connection string value to the same location as the user identity and token values.
 
-1. To run the application you'll need a Teams meeting link. Go to https://teams.microsoft.com, login with your Microsoft 365 developer tenant, and select the `Calendar` option on the left. 
+1. To run the application you'll need a Teams meeting link. Go to https://teams.microsoft.com, sign in with your Microsoft 365 developer tenant, and select the `Calendar` option on the left. 
 
     > NOTE: If you don't currently have a Microsoft 365 account, you can sign up for the [Microsoft 365 Developer Program](https://cda.ms/1Jp) subscription. It's *free* for 90 days and will continually renew as long as you're using it for development activity. If you have a Visual Studio *Enterprise* or *Professional* subscription, both programs include a free Microsoft 365 [developer subscription](https://aka.ms/MyVisualStudioBenefits), active for the life of your Visual Studio subscription. *See* [Set up a Microsoft 365 developer subscription](https://cda.ms/1Jq).
 
@@ -64,10 +64,18 @@ In this exercise you'll create an Azure Communication Services (ACS) resource in
 
 In this exercise you'll add the [ACS UI calling composite](https://azure.github.io/communication-ui-library/?path=/docs/composites-call-joinexistingcall--join-existing-call) into a React app to enable making audio/video calls from a custom app into a Microsoft Teams meeting.
 
-1. Run the following command to clone this repository to your machine:
+1. Visit https://github.com and sign in.
+
+1. Visit https://github.com/microsoft/MicrosoftCloud.
+
+1. Select the `Fork` option to add the repository to your desired GitHub organization/account.
+
+    ![Fork a Repository](./images/acs-to-teams-meeting/fork-repo.png "Fork a Repository")
+
+1. Run the following command to clone this repository to your machine. Replace `<YOUR_ORG_NAME>` with your GitHub organization/account name.
 
     ```bash
-    git clone https://github.com/microsoft/MicrosoftCloud
+    git clone https://github.com/<YOUR_ORG_NAME>/MicrosoftCloud
     ```
 
 1. Open the `samples/acs-video-to-teams-meeting/client/react` project folder in Visual Studio Code. 
@@ -491,5 +499,45 @@ In this exercise you'll learn how to dynamically retrieve  user identity and tok
 
 1. Stop both of the terminal processes (React and Azure Functions) by selecting `ctrl + c`.
 
+1. Commit your git changes and push them to your GitHub repository using VS Code.
+
+## Exercise 5: Publish the App to Azure Static Web Apps
+
+In this exercise you'll learn how to publish the ACS React app and the Azure Functions to the cloud using Azure Static Web Apps.
+
+1. Visit https://portal.azure.com in your browser and sign in.
+
+1. Type `static web apps` in the top search bar and select `Static Web Apps` from the options that appear.
+
+    ![Azure Static Web Apps](./images/acs-to-teams-meeting/search-swa-portal.png "Azure Static Web Apps")
+
+1. Select `Create` in the toolbar.
+
+1. Perform the following tasks:
+    - Select your subscription.
+    - Select the resource group to use (create a new one if needed).
+    - Enter an Azure Static Web Apps name of `acs-to-teams-meeting`.
+    - Select the `Free` plan type.
+    - Select a region.
+
+1. Select the GitHub radio button and sign in to your GitHub account.
+
+1. After signing in, select your GitHub:
+    - Organization
+    - Repository (this will be the `MicrosoftCloud` repository you forked)
+    - Branch (select `main`)
+
+1. In the `Build Details` section perform the following tasks:
+    - Build Presets: `React`
+    - App location: `/samples/acs-to-teams-meeting/client/react`
+    - Api location: `/samples/acs-to-teams-meeting/server/typescript`
+    - Output location: `build`
+
+1. Select `Review + create`.
+
+1. Review the details and select `Create`.
+
 1. You've successfully completed this tutorial!
+
+
 
