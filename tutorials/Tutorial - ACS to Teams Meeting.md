@@ -3,7 +3,7 @@
 In this tutorial you'll learn how Azure Communication Services can be used in a custom React app to allow a user to call into a Microsoft Teams meeting. 
 
 ### Pre-requisites:
-- [Node](https://nodejs.org)
+- [Node](https://nodejs.org) - We'll be using node 16+ and npm 8+ for this project
 - [Azure Functions Extension for VS Code](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azurefunctions)
 - [Azure subscription](https://azure.microsoft.com/free/search)
 - [Microsoft 365 developer tenant](https://developer.microsoft.com/microsoft-365/dev-program)
