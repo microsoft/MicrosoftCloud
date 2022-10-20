@@ -545,11 +545,11 @@ In this exercise you'll learn how to publish the ACS React app and the Azure Fun
 
     ```
     # Get the values from your local.settings.json file
-    "TENANT_ID": "<YOUR_VALUE>"
-    "CLIENT_ID": "<YOUR_VALUE>"
-    "CLIENT_SECRET": "<YOUR_VALUE>"
-    "USER_ID": "<YOUR_VALUE>"
-    "ACS_CONNECTION_STRING": "<YOUR_VALUE>"
+    TENANT_ID: <YOUR_VALUE>
+    CLIENT_ID: <YOUR_VALUE>
+    CLIENT_SECRET: <YOUR_VALUE>
+    USER_ID: <YOUR_VALUE>
+    ACS_CONNECTION_STRING: <YOUR_VALUE>
     ```
 
 1. Select the `Save` button at the top of the Configuration screen in the Azure Portal.
