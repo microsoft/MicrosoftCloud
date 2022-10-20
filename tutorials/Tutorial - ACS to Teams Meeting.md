@@ -554,7 +554,7 @@ In this exercise you'll learn how to publish the ACS React app and the Azure Fun
 
 1. Select the `Save` button at the top of the Configuration screen in the Azure Portal.
 
-1. Got back to your GitHub repository (the one you forked earlier) and notice that Azure Static Web Apps has added a `.yml` file into the `.github/workflows` folder. 
+1. Now that you've finished setting up the Azure Static Web App, go back to your GitHub repository (the one you forked earlier) and notice a `.yml` file has been added into the `.github/workflows` folder. 
 
 1. Open the `.yml` file in VS Code and add the following YAML immediately after the `###### End of Repository/Build Configurations ######` comment. Replace the `<YOUR_AZURE_SWA_DOMAIN>` placeholders with your Azure Static Web Apps URL value. 
 
