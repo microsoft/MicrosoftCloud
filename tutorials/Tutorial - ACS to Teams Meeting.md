@@ -1,6 +1,6 @@
-# Tutorial: ACS Video to Teams Meeting Lab 
+# Tutorial: ACS Audio/Video Call to a Teams Meeting 
 
-In this tutorial you'll learn how Azure Communication Services can be used in a custom React app to allow a user to call into a Microsoft Teams meeting. 
+In this tutorial you'll learn how Azure Communication Services can be used in a custom React app to allow a user to call into a Microsoft Teams meeting. You'll learn about the different building blocks that can be used to make this scenario happen and be provided with hands-on steps to walk you through the different services involved.
 
 ### Pre-requisites:
 - [Node](https://nodejs.org) - We'll be using node 16+ and npm 8+ for this project
