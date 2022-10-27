@@ -14,7 +14,7 @@
             "page-margins": "0px 30px 0px 30px"
         },
         "randomizeFeatures": true,
-        "pageSize": 5
+        "pageSize": 10
     },
     "navbar": {
         "imageUrl": "./images/microsoft-logo.svg",
