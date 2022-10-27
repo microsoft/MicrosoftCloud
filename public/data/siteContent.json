@@ -11,9 +11,9 @@
             "green": "#4db42b",
             "white": "#fff",
             "black": "#000",
-            "page-margins": "0px 30px 0px 30px",
-            "randomizeFeatures": true
-        }
+            "page-margins": "0px 30px 0px 30px"
+        },
+        "randomizeFeatures": true
     },
     "navbar": {
         "imageUrl": "./images/microsoft-logo.svg",
