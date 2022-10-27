@@ -11,6 +11,9 @@
           "description": {
             "type": "string"
           },
+          "randomizeFeatures": {
+            "type": "boolean"
+          },
           "themeColors": {
             "type": "object",
             "properties": {
