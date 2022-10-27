@@ -23,7 +23,6 @@ In this exercise you'll create an Azure Communication Services (ACS) resource in
 
 1. Type `communication services` in the top search bar and select `Communication Services` from the options that appear.
 
-
     ![ACS in the Azure Portal](./images/acs-to-teams-meeting/search-acs-portal.png "Azure Communication Services")
 
 1. Select `Create` in the toolbar.
