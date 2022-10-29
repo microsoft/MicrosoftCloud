@@ -34,7 +34,7 @@ To get the solution going you'll need to run the front-end and back-end solution
 
 ## Solution
 
-![ACS Audio/Video Solution](./architecture.png "Scenario Architecture")
+![ACS Audio/Video Solution](/tutorials/images/acs-to-teams-meeting/architecture.png "Scenario Architecture")
 
 ## References
 

@@ -19,6 +19,8 @@ In this tutorial you'll learn how Azure Communication Services can be used in a 
 
 In this exercise you'll create an Azure Communication Services (ACS) resource in the Azure Portal.
 
+![ACS in the Azure Portal](./images/acs-to-teams-meeting/1-acs-azure-portal.png "ACS in the Azure Portal")
+
 1. Visit https://portal.azure.com in your browser and sign in.
 
 1. Type `communication services` in the top search bar and select `Communication Services` from the options that appear.
@@ -62,6 +64,8 @@ In this exercise you'll create an Azure Communication Services (ACS) resource in
 ## Exercise 2: Integrate Azure Communication Services Calling into a React App
 
 In this exercise you'll add the [ACS UI calling composite](https://azure.github.io/communication-ui-library/?path=/docs/composites-call-joinexistingcall--join-existing-call) into a React app to enable making audio/video calls from a custom app into a Microsoft Teams meeting.
+
+![ACS in React](./images/acs-to-teams-meeting/2-acs-react.png "ACS in React")
 
 1. Visit https://github.com and sign in.
 
@@ -211,6 +215,8 @@ In this exercise you'll add the [ACS UI calling composite](https://azure.github.
 
 ## Exercise 3: Dynamically Create a Microsoft Teams Meeting Link
 In this exercise, you'll automate the process of creating a Microsoft Teams meeting link and passing to the ACS by using Azure Functions and Microsoft Graph.
+
+![Create Teams Meeting](./images/acs-to-teams-meeting/3-create-teams-meeting-link.png "Create Teams Meeting")
 
 1. Create Azure Active Directory (AAD) app for Deamon app authentication. In this step, authentication will be handled in the backgroud with app credentials, and AAD app will use Application Permissions to make Microsoft Graph API calls:
     1. Go to [Azure Portal](https://portal.azure.com) and select `Azure Active Directory`.
@@ -365,7 +371,7 @@ In this exercise, you'll automate the process of creating a Microsoft Teams meet
 
     export default httpTrigger;
     ```
-1. Use a terminal window to run `func host start` in the `samples/acs-video-to-teams-meeting/server/typescript` folder to run the funcgtion. Now that the `TeamsMeetingFunction` is ready to use, we can go ahead and call the function from the React app.
+1. Use a terminal window to run `func host start` in the `samples/acs-video-to-teams-meeting/server/typescript` folder to run the function. Now that the `TeamsMeetingFunction` is ready to use, we can go ahead and call the function from the React app.
 
 1. Open `samples/acs-to-teams-meeting/client/react/App.tsx` file in VS Code.
 
@@ -411,7 +417,9 @@ In this exercise, you'll automate the process of creating a Microsoft Teams meet
 
 ## Exercise 4: Dynamically Create an Azure Communication Services Identity and Token
 
-In this exercise you'll learn how to dynamically retrieve  user identity and token values from Azure Communication Services using Azure Functions.
+In this exercise you'll learn how to dynamically retrieve user identity and token values from Azure Communication Services using Azure Functions. Once retrieved, the values will be passed to the ACS UI composite to enable a call to be made by a customer.
+
+![Create ACS Identity and Token](./images/acs-to-teams-meeting/4-acs-identity-token.png "Create ACS Identity and Token")
 
 1. Open `local.settings.json` and update the `ACS_CONNECTION_STRING` value with the ACS connection string you saved in an earlier exercise.
 
@@ -503,6 +511,8 @@ In this exercise you'll learn how to dynamically retrieve  user identity and tok
 ## Exercise 5: Publish the App to Azure Static Web Apps
 
 In this exercise you'll learn how to publish the ACS React app and the Azure Functions to the cloud using Azure Static Web Apps.
+
+![Azure Static Web Apps](./images/acs-to-teams-meeting/5-publish-swa.png "Azure Static Web Apps")
 
 1. Visit https://portal.azure.com in your browser and sign in.
 
