@@ -7,7 +7,7 @@ Here's an overview of the application solution:
 ![ACS Audio/Video Solution](/tutorials/images/acs-to-teams-meeting/architecture-no-title.png "Scenario Architecture")
 
 ### Pre-requisites:
-- [Node](https://nodejs.org) - Node 16+ and npm 8+ will be used for this project
+- [Node](https://nodejs.org) - Node 16+ and npm 7+ will be used for this project
 - [git](https://learn.microsoft.com/devops/develop/git/install-and-set-up-git)
 - [Visual Studio Code](https://code.visualstudio.com/)
 - [Azure Functions Extension for VS Code](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azurefunctions)
@@ -91,12 +91,20 @@ In this exercise you'll add the [ACS UI calling composite](https://azure.github.
 
 1. Open the `package.json` file in VS Code and note the following ACS packages are included:
 
-    ```bash
+    ```
     @azure/communication-common 
     @azure/communication-react
     ``` 
 
-1. Open a terminal window and run the `npm install` command in the `react` folder to install the application dependencies.
+1. Double-check that you have `npm 7` or higher installed by opening a terminal window and running the following command:
+
+    ```
+    npm --version
+    ```
+
+    > NOTE: If you don't have `npm 7` or higher installed you can update npm to the latest version by running `npm install -g npm`.
+
+1. Open a terminal window and run the `npm install` command in the `react` folder to install the application dependencies. 
 
 1. Open `App.tsx` and take a moment to expore the imports at the top of the file. These handle importing ACS security and audio/video calling symbols that will be used in the app.
 
@@ -217,8 +225,6 @@ In this exercise you'll add the [ACS UI calling composite](https://azure.github.
 
 1. Run `npm start` in your terminal window to run the application. Ensure you run the command within the `react` folder.
 
-    > NOTE: If the build process fails ensure that you have NPM 8 or higher installed by running `npm --version`. If you need to update your npm version, run `npm install -g npm`.
-
 1. After the applications builds you should see a calling UI displayed. Enable selecting your microphone and camera and initiate the call. You should see that you're placed in a waiting room. If you join the meeting you setup earlier in Microsoft Teams, you can allow the guest to enter the meeting.
 
 1. Press `ctrl+c` to stop the application. Now that you've successfully run it, let's explore how you can dynamically get the ACS user identity and token and automatically create a Microsoft Teams meeting and return the join URL using Microsoft Graph.
@@ -228,24 +234,29 @@ In this exercise, you'll automate the process of creating a Microsoft Teams meet
 
 ![Create Teams Meeting](./images/acs-to-teams-meeting/3-create-teams-meeting-link.png "Create Teams Meeting")
 
-1. Create Azure Active Directory (AAD) app for Deamon app authentication. In this step, authentication will be handled in the backgroud with app credentials, and AAD app will use Application Permissions to make Microsoft Graph API calls:
+1. You'll need to create an Azure Active Directory (AAD) app for Deamon app authentication. In this step, authentication will be handled in the backgroud with `app credentials`, and AAD app will use Application Permissions to make Microsoft Graph API calls. Microsoft Graph will be used to dynamically create a Microsoft Teams meeting and return the Teams meeting URL.
+
+1. Perform the following steps to create an AAD app:
     1. Go to [Azure Portal](https://portal.azure.com) and select `Azure Active Directory`.
-    1. Select `App registration` tab and then `+ New registration`.
-    1. Fill the new app registration form details as below and select `Register`:
+    1. Select the `App registration` tab followed by `+ New registration`.
+    1. Fill in the new app registration form details as shown below and select `Register`:
         - Name: *ACS Teams Interop App*
         - Supported account types: *Accounts in any organizational directory (Any Azure AD directory - Multitenant) and personal Microsoft accounts (e.g. Skype, Xbox)*
-        - Redirect URI: leave this area blank
-    1. After the app is registered successfully, go to `API permissions` and select `+ Add a permission`.
-    1. Select `Microsoft Graph`, then `Application permissions`, select **Calendars.ReadWrite** permission and `Add`.
+        - Redirect URI: leave this blank
+    1. After the app is registered, go to `API permissions` and select `+ Add a permission`.
+    1. Select `Microsoft Graph` followed by `Application permissions`.
+    1. Select the **Calendars.ReadWrite** permission and then select `Add`.
     1. After adding the permissions, select `Grant admin consent for <your organization name>`.
-    1. Go to `Certificates & secrets` tab and select `+ New client secret`, select `Add`. Copy the value of the secret, you'll use it in the next steps of the exercise.
-    1. Go to `Overview` tab and copy `Application (client) ID` and `Directory (tenant) ID`, you'll use it in the next steps of the exercise.
+    1. Go to the `Certificates & secrets` tab, select `+ New client secret`, and then select `Add`. 
+    1. Copy the value of the secret into a local file. You'll use the value later in this exercise.
+    1. Go to the `Overview` tab and copy the `Application (client) ID` and `Directory (tenant) ID` values into the same local file that you used in the previous step.
 
-1. Open `samples/acs-video-to-teams-meeting/server/typescript` project folder in Visual Studio Code.
+1. Open the `samples/acs-video-to-teams-meeting/server/typescript` project folder in Visual Studio Code.
 
-1. Go to `TeamsMeetingFunction` folder and create a `local.settings.json` file with the following values:
-    - Define `TENANT_ID`, `CLIENT_ID` and `CLIENT_SECRET` with the copied details from the Azure Active Directory app.
-    - Define `USER_ID` with the user id that you'd like to create a Microsoft Teams Meeting. 
+1. Go to the `TeamsMeetingFunction` folder and create a `local.settings.json` file with the following values:
+
+    - Use the values you copied into the local file to update the `TENANT_ID`, `CLIENT_ID` and `CLIENT_SECRET` values.
+    - Define `USER_ID` with the user id that you'd like to create a Microsoft Teams Meeting. You can get this value by going to [to be added].
     ```json
     {
         "IsEncrypted": false,
@@ -267,7 +278,7 @@ In this exercise, you'll automate the process of creating a Microsoft Teams meet
         ]
     }
     ```
-    >NOTE: `ACS_CONNECTION_STRING` will be used in the next exercise.
+    >NOTE: `ACS_CONNECTION_STRING` will be used in the next exercise so you don't need to update it yet.
 
 1. Open the `package.json` file in VS Code and note that the following Microsoft Graph and Identity packages are included:
 
@@ -276,7 +287,7 @@ In this exercise, you'll automate the process of creating a Microsoft Teams meet
     @azure/identity
     @microsoft/microsoft-graph-client
     ```
-1. Run npm install in the `typesript` folder to install the application dependencies.
+1. Run npm install in the `typescript` folder to install the application dependencies.
 
 1. Open `Shared/graph.ts` and take a moment to expore the imports at the top of the file. These handle importing authentication and client symbols that will be used in the function to call Microsoft Graph.
 
