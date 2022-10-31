@@ -1,9 +1,15 @@
-# Tutorial: ACS Audio/Video Call to a Teams Meeting 
+# Tutorial: Audio/Video Calling from a Custom App into a Teams Meeting
 
-In this tutorial you'll learn how Azure Communication Services can be used in a custom React app to allow a user to call into a Microsoft Teams meeting. You'll learn about the different building blocks that can be used to make this scenario happen and be provided with hands-on steps to walk you through the different services involved.
+In this tutorial you'll learn how Azure Communication Services can be used in a custom React application to allow a user to make an audio/video call into a Microsoft Teams meeting. You'll learn about the different building blocks that can be used to make this scenario possible and be provided with hands-on steps to walk you through the different Microsoft Cloud services involved. 
+
+Here's an overview of the application solution:
+
+![ACS Audio/Video Solution](/tutorials/images/acs-to-teams-meeting/architecture-no-title.png "Scenario Architecture")
 
 ### Pre-requisites:
-- [Node](https://nodejs.org) - We'll be using node 16+ and npm 8+ for this project
+- [Node](https://nodejs.org) - Node 16+ and npm 8+ will be used for this project
+- [git](https://learn.microsoft.com/devops/develop/git/install-and-set-up-git)
+- [Visual Studio Code](https://code.visualstudio.com/)
 - [Azure Functions Extension for VS Code](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azurefunctions)
 - [Azure subscription](https://azure.microsoft.com/free/search)
 - [Microsoft 365 developer tenant](https://developer.microsoft.com/microsoft-365/dev-program)
@@ -30,30 +36,30 @@ In this exercise you'll create an Azure Communication Services (ACS) resource in
 1. Select `Create` in the toolbar.
 
 1. Perform the following tasks:
-    - Select your subscription.
-    - Select the resource group to use (create a new one if needed).
+    - Select your Azure subscription.
+    - Select the resource group to use (create a new one if one doesn't exist).
     - Enter an ACS resource name. It must be a unique value.
     - Select a data location.
 
 1. Select `Review + Create` followed by `Create`.
 
-1. Once your ACS resource is created, navigate to it and select `Settings --> Identities & User Access Tokens`.
+1. Once your ACS resource is created, navigate to it, and select `Settings --> Identities & User Access Tokens`.
 
 1. Select the `Voice and video calling (VOIP)` checkbox.
 
 1. Select `Generate`.
 
-1. Copy the `Identity` and `User Access token` values to a local file. You'll need those values later in this exercise.
+1. Copy the `Identity` and `User Access token` values to a local file. You'll need the values later in this exercise.
 
     ![User identity and token](./images/acs-to-teams-meeting/user-identity-token.png "User identity and token")
 
-1. Select `Settings --> Keys` and copy the `Primary key` connection string value to the same location as the user identity and token values.
+1. Select `Settings --> Keys` and copy the `Primary key` connection string value to the local file where you copied the user identity and token values.
 
 1. To run the application you'll need a Teams meeting link. Go to https://teams.microsoft.com, sign in with your Microsoft 365 developer tenant, and select the `Calendar` option on the left. 
 
-    > NOTE: If you don't currently have a Microsoft 365 account, you can sign up for the [Microsoft 365 Developer Program](https://cda.ms/1Jp) subscription. It's *free* for 90 days and will continually renew as long as you're using it for development activity. If you have a Visual Studio *Enterprise* or *Professional* subscription, both programs include a free Microsoft 365 [developer subscription](https://aka.ms/MyVisualStudioBenefits), active for the life of your Visual Studio subscription. *See* [Set up a Microsoft 365 developer subscription](https://cda.ms/1Jq).
+    > NOTE: If you don't currently have a Microsoft 365 account, you can sign up for the [Microsoft 365 Developer Program](https://developer.microsoft.com/microsoft-365/dev-program) subscription. It's *free* for 90 days and will continually renew as long as you're using it for development activity. If you have a Visual Studio *Enterprise* or *Professional* subscription, both programs include a free Microsoft 365 [developer subscription](https://aka.ms/MyVisualStudioBenefits), active for the life of your Visual Studio subscription.
 
-1. Select a date/time on the calendar, add a title for the meeting, and select `Save`.
+1. Select a any date/time on the calendar, add a title for the meeting, and select `Save`.
 
 1. Select the new meeting you added in the calendar and copy the Teams meeting link that is displayed into the same file where you stored the ACS user identity, token, and connection string.
 
@@ -67,7 +73,7 @@ In this exercise you'll add the [ACS UI calling composite](https://azure.github.
 
 ![ACS in React](./images/acs-to-teams-meeting/2-acs-react.png "ACS in React")
 
-1. Visit https://github.com and sign in.
+1. Visit https://github.com and sign in. If you don't already have a GitHub account, you can select the `Sign up` option to create one.
 
 1. Visit https://github.com/microsoft/MicrosoftCloud.
 
@@ -90,9 +96,9 @@ In this exercise you'll add the [ACS UI calling composite](https://azure.github.
     @azure/communication-react
     ``` 
 
-1. Run `npm install` in the `react` folder to install the application dependencies.
+1. Open a terminal window and run the `npm install` command in the `react` folder to install the application dependencies.
 
-1. Open `App.tsx` and take a moment to expore the imports at the top of the file. These handle importing ACS security and calling symbols that will be used in the app.
+1. Open `App.tsx` and take a moment to expore the imports at the top of the file. These handle importing ACS security and audio/video calling symbols that will be used in the app.
 
     ```typescript
     import { 
@@ -108,7 +114,7 @@ In this exercise you'll add the [ACS UI calling composite](https://azure.github.
     import './App.css';
     ```
 
-    > NOTE: You'll see how the `CallComposite` component is used later in this exercise. It provides the core UI functionality for Azure Communication Services to enable making a call from the app into a Microsoft Teams meeting.
+    > NOTE: You'll see how the `CallComposite` component is used later in this exercise. It provides the core UI functionality for Azure Communication Services to enable making an audio/video call from the app into a Microsoft Teams meeting.
 
 1. Locate the `App` component and perform the following tasks:
     - Take a moment to examine the `useState` definitions in the component.
@@ -127,11 +133,11 @@ In this exercise you'll add the [ACS UI calling composite](https://azure.github.
     const [teamsMeetingLink, setTeamsMeetingLink] = useState<string>('');
     ```
 
-    > NOTE: Later in this tutorial you'll see how to retrieve the `userId` and `token` values dynamically from Azure Communication Services.
+    > NOTE: Later in this tutorial you'll see how to retrieve the `userId`, `token`, and `teamsMeetingLink` values dynamically.
 
 1. Take a moment to explore the `useMemo` functions in the `App` component.
     - The `credential` `useMemo` function creates a new `AzureCommunicationTokenCredential` instance once the token has a value.
-    - The `callAdapterArgs` `useMemo` function returns an object that has the arguments that are used to make an audio/video call.
+    - The `callAdapterArgs` `useMemo` function returns an object that has the arguments that are used to make an audio/video call. Notice that is uses the `userId`, `credential`, and `teamsMeetingLink` values in the ACS call arguments.
 
     ```typescript
     const credential = useMemo(() => {
@@ -154,9 +160,9 @@ In this exercise you'll add the [ACS UI calling composite](https://azure.github.
     }, [userId, credential, displayName, teamsMeetingLink]);
     ```
 
-    > NOTE: `useMemo` is used in this scenario because we only want the `AzureCommunicationTokenCredential` object and the call adapter args to be created once as the necessary parameters are passed in. View additional details about [useMemo](https://reactjs.org/docs/hooks-reference.html#usememo).
+    > NOTE: `useMemo` is used in this scenario because we only want the `AzureCommunicationTokenCredential` object and the call adapter args to be created once as the necessary parameters are passed in. View additional details about [useMemo here](https://reactjs.org/docs/hooks-reference.html#usememo).
 
-1. Once the `credentials` and `callAdapterArgs` are ready, the following line handles creating an ACS call adapter using the `useAzureCommunicationCallAdapter` hook provided by ACS. The `callAdapter` object will be used later in the UI calling composite component.
+1. Once the `credentials` and `callAdapterArgs` are ready, the following line handles creating an ACS call adapter using the `useAzureCommunicationCallAdapter` React hook provided by ACS. The `callAdapter` object will be used later in the UI calling composite component.
 
     ```typescript
     const callAdapter = useAzureCommunicationCallAdapter(callAdapterArgs);
@@ -164,7 +170,7 @@ In this exercise you'll add the [ACS UI calling composite](https://azure.github.
 
     > NOTE: Because `useAzureCommunicationCallAdapter` is a React hook, it won't assign a value to `callAdapter` until the `callAdapterArgs` value is valid.
 
-1. Earlier you assigned the user identity, token, and Teams meeting link to state values in the `App` component. That works fine for now. In a later exercise you'll see how to dynamically retrieve those values. Since you set the values earlier, comment out the code in the `useEffect` function (the `init()` function and the call to it). Once you get the Azure Functions running in the next exercises you'll revisit this code.
+1. Earlier you assigned the user identity, token, and Teams meeting link to state values in the `App` component. That works fine for now, but in a later exercise you'll see how to dynamically retrieve those values. Since you set the values earlier, comment out the code in the `useEffect` function as shown next. Once you get the Azure Functions running in the next exercises, you'll revisit this code.
 
     ```typescript
     useEffect(() => {
@@ -190,7 +196,7 @@ In this exercise you'll add the [ACS UI calling composite](https://azure.github.
     }, []);
     ```
 
-1. Locate the following JSX code. It uses the `CallComposite` symbol you saw imported to render the user interface used to make an audio/video call from the React app into a Teams meeting. The `callAdapter` you explored earlier is passed to its `adapter` property.
+1. Locate the following JSX code. It uses the `CallComposite` symbol you saw imported to render the user interface used to make an audio/video call from the React app into a Teams meeting. The `callAdapter` you explored earlier is passed to its `adapter` property to provide the required arguments.
 
     ```jsx
     if (callAdapter) {
@@ -209,11 +215,15 @@ In this exercise you'll add the [ACS UI calling composite](https://azure.github.
 
 1. Save the file before continuing.
 
-1. Run `npm start` to run the application. After it builds you should see a calling UI displayed. Enable selecting your microphone and camera and initiate the call. You should see that you're placed in a waiting room. If you join the meeting you setup earlier in Microsoft Teams, you can allow the guest to enter the meeting.
+1. Run `npm start` in your terminal window to run the application. Ensure you run the command within the `react` folder.
+
+    > NOTE: If the build process fails ensure that you have NPM 8 or higher installed by running `npm --version`. If you need to update your npm version, run `npm install -g npm`.
+
+1. After the applications builds you should see a calling UI displayed. Enable selecting your microphone and camera and initiate the call. You should see that you're placed in a waiting room. If you join the meeting you setup earlier in Microsoft Teams, you can allow the guest to enter the meeting.
 
 1. Press `ctrl+c` to stop the application. Now that you've successfully run it, let's explore how you can dynamically get the ACS user identity and token and automatically create a Microsoft Teams meeting and return the join URL using Microsoft Graph.
 
-## Exercise 3: Dynamically Create a Microsoft Teams Meeting Link
+## Exercise 3: Dynamically Create a Microsoft Teams Meeting using Microsoft Graph
 In this exercise, you'll automate the process of creating a Microsoft Teams meeting link and passing to the ACS by using Azure Functions and Microsoft Graph.
 
 ![Create Teams Meeting](./images/acs-to-teams-meeting/3-create-teams-meeting-link.png "Create Teams Meeting")
