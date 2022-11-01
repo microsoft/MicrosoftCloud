@@ -54,7 +54,11 @@ In this exercise, you'll automate the process of creating a Microsoft Teams meet
         ]
     }
     ```
-    >NOTE: `ACS_CONNECTION_STRING` will be used in the next exercise so you don't need to update it yet.
+    :::note
+
+    `ACS_CONNECTION_STRING` will be used in the next exercise so you don't need to update it yet.
+
+    :::
 
 1. Open the `package.json` file in VS Code and note that the following Microsoft Graph and Identity packages are included:
 
@@ -74,7 +78,12 @@ In this exercise, you'll automate the process of creating a Microsoft Teams meet
     import {TokenCredentialAuthenticationProvider} from '@microsoft/microsoft-graph-client/authProviders/azureTokenCredentials';
     import 'isomorphic-fetch';
     ```
-    >NOTE: You'll also see imports from `dateTimeFormat.ts` which will be used later in this exercise. `startDateTimeAsync` and `endDateTimeAsync` will be used while creating a Microsoft Teams meeting link to define start date and end date for the meeting. 
+
+    :::info
+
+    You'll also see imports from `dateTimeFormat.ts` which will be used later in this exercise. `startDateTimeAsync` and `endDateTimeAsync` will be used while creating a Microsoft Teams meeting link to define start date and end date for the meeting.
+
+    ::: 
 
 1. Take a moment to examine `clientSecretCredential` and `appGraphClient`, they will be used later in the authentication process and when calling the Microsoft Graph API:
 
@@ -182,7 +191,11 @@ In this exercise, you'll automate the process of creating a Microsoft Teams meet
     REACT_APP_ACS_USER_FUNCTION=http://localhost:7071/api/ACSTokenFunction
     ```
 
-    > NOTE: These values will be passed into React as it builds so that you can easily change them as needed during the build process.
+    :::info
+
+        These values will be passed into React as it builds so that you can easily change them as needed during the build process.
+    
+    :::
 
 1. Open `samples/acs-to-teams-meeting/client/react/App.tsx` file in VS Code.
 

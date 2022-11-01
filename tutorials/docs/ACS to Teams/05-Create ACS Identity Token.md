@@ -29,7 +29,11 @@ In this exercise you'll learn how to dynamically retrieve user identity and toke
         const connectionString = process.env.ACS_CONNECTION_STRING;
         ```
 
-        > NOTE: This is the connection string value you added into the `local.settings.json` file earlier.
+        :::note
+
+        This is the connection string value you added into the `local.settings.json` file earlier.
+
+        :::
     
     - Creates a new `CommunicationIdentityClient` instance and passes the ACS connection string to it.
 

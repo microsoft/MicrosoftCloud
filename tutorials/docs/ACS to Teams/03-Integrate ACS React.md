@@ -40,7 +40,11 @@ In this exercise you'll add the [ACS UI calling composite](https://azure.github.
     npm --version
     ```
 
-    > NOTE: If you don't have `npm 7` or higher installed you can update npm to the latest version by running `npm install -g npm`.
+    ::tip
+    
+    If you don't have `npm 7` or higher installed you can update npm to the latest version by running `npm install -g npm`.
+
+    :::
 
 1. Open a terminal window and run the `npm install` command in the `react` folder to install the application dependencies. 
 
@@ -60,7 +64,11 @@ In this exercise you'll add the [ACS UI calling composite](https://azure.github.
     import './App.css';
     ```
 
-    > NOTE: You'll see how the `CallComposite` component is used later in this exercise. It provides the core UI functionality for Azure Communication Services to enable making an audio/video call from the app into a Microsoft Teams meeting.
+    :::note
+    
+    You'll see how the `CallComposite` component is used later in this exercise. It provides the core UI functionality for Azure Communication Services to enable making an audio/video call from the app into a Microsoft Teams meeting.
+
+    :::
 
 1. Locate the `App` component and perform the following tasks:
     - Take a moment to examine the `useState` definitions in the component.
@@ -79,7 +87,11 @@ In this exercise you'll add the [ACS UI calling composite](https://azure.github.
     const [teamsMeetingLink, setTeamsMeetingLink] = useState<string>('');
     ```
 
-    > NOTE: Later in this tutorial you'll see how to retrieve the `userId`, `token`, and `teamsMeetingLink` values dynamically.
+    :::note
+    
+    Later in this tutorial you'll see how to retrieve the `userId`, `token`, and `teamsMeetingLink` values dynamically.
+
+    :::
 
 1. Take a moment to explore the `useMemo` functions in the `App` component.
     - The `credential` `useMemo` function creates a new `AzureCommunicationTokenCredential` instance once the token has a value.
@@ -106,7 +118,11 @@ In this exercise you'll add the [ACS UI calling composite](https://azure.github.
     }, [userId, credential, displayName, teamsMeetingLink]);
     ```
 
-    > NOTE: `useMemo` is used in this scenario because we only want the `AzureCommunicationTokenCredential` object and the call adapter args to be created once as the necessary parameters are passed in. View additional details about [useMemo here](https://reactjs.org/docs/hooks-reference.html#usememo).
+    :::note
+
+    `useMemo` is used in this scenario because we only want the `AzureCommunicationTokenCredential` object and the call adapter args to be created once as the necessary parameters are passed in. View additional details about [useMemo here](https://reactjs.org/docs/hooks-reference.html#usememo).
+
+    :::
 
 1. Once the `credentials` and `callAdapterArgs` are ready, the following line handles creating an ACS call adapter using the `useAzureCommunicationCallAdapter` React hook provided by ACS. The `callAdapter` object will be used later in the UI calling composite component.
 
@@ -114,7 +130,11 @@ In this exercise you'll add the [ACS UI calling composite](https://azure.github.
     const callAdapter = useAzureCommunicationCallAdapter(callAdapterArgs);
     ```
 
-    > NOTE: Because `useAzureCommunicationCallAdapter` is a React hook, it won't assign a value to `callAdapter` until the `callAdapterArgs` value is valid.
+    :::note
+
+    Because `useAzureCommunicationCallAdapter` is a React hook, it won't assign a value to `callAdapter` until the `callAdapterArgs` value is valid.
+
+    :::
 
 1. Earlier you assigned the user identity, token, and Teams meeting link to state values in the `App` component. That works fine for now, but in a later exercise you'll see how to dynamically retrieve those values. Since you set the values earlier, comment out the code in the `useEffect` function as shown next. Once you get the Azure Functions running in the next exercises, you'll revisit this code.
 

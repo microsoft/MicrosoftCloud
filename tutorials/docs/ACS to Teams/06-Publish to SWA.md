@@ -72,7 +72,11 @@ In this exercise you'll learn how to publish the ACS React app and the Azure Fun
         REACT_APP_TEAMS_MEETING_FUNCTION: https://<YOUR_AZURE_SWA_DOMAIN>/api/TeamsMeetingFunction
     ```
 
-    > NOTE: This will add environment variables into the build process for the React app so that it knows what APIs to call to get the ACS user token as well as to create a Teams meeting.
+    :::info
+
+    This will add environment variables into the build process for the React app so that it knows what APIs to call to get the ACS user token as well as to create a Teams meeting.
+
+    :::
 
 1. Save the `.yml` file and push the changes up to your GitHub repository. This will trigger a new build of the React application and then deploy it to your Azure Static Web App. 
 
