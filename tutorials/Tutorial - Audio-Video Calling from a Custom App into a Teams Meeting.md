@@ -543,7 +543,10 @@ In this exercise you'll learn how to dynamically retrieve user identity and toke
 
 1. Stop both of the terminal processes (React and Azure Functions) by selecting `ctrl + c`.
 
-1. Commit your git changes and push them to your GitHub repository using VS Code. You can select the git icon (3rd one down in the VS Code toolbar), enter a commit message and select `Commit`, then select `Sync Changes`.
+1. Commit your git changes and push them to your GitHub repository using VS Code:
+    - Select the git icon (3rd one down in the VS Code toolbar).
+    - Enter a commit message and select `Commit`.
+    - Select `Sync Changes`.
 
 ## Exercise 5: Publish the App to Azure Static Web Apps
 
