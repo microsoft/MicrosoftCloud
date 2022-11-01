@@ -14,21 +14,42 @@
   --ifm-color-primary-lighter: #359962;
   --ifm-color-primary-lightest: #3cad6e;
   --ifm-code-font-size: 95%;
+  --ifm-menu-color-background-active: #3498db;
+  --ifm-menu-color-active: #fff;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
 }
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
 [data-theme='dark'] {
-  --ifm-color-primary: #25c2a0;
+  --ifm-color-primary: #253a5e;
   --ifm-color-primary-dark: #21af90;
   --ifm-color-primary-darker: #1fa588;
   --ifm-color-primary-darkest: #1a8870;
   --ifm-color-primary-light: #29d5b0;
   --ifm-color-primary-lighter: #32d8b4;
   --ifm-color-primary-lightest: #4fddbf;
+  --ifm-heading-color: #fff;
+  --ifm-hero-text-color: #fff;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
 }
 
 .navbar__logo img {
   height: 85%;
+}
+
+.navbar__items--right .iconExternalLink_node_modules-\@docusaurus-theme-classic-lib-theme-Icon-ExternalLink-styles-module {
+  display: none;
+}
+
+.theme-doc-sidebar-item-category-level-1 > div > a,  .theme-doc-sidebar-item-category-level-1 > div > a:hover{
+  font-weight: 600;
+  color: #000;
+}
+
+[data-theme='dark'] .theme-doc-sidebar-item-category-level-1 > div > a,  
+[data-theme='dark'] .theme-doc-sidebar-item-category-level-1 > div > a:hover,
+[data-theme='dark'] .breadcrumbs__item--active .breadcrumbs__link 
+[data-theme='dark'] .hero__subtitle,
+[data-theme='dark'] a {
+  color: #fff;
 }

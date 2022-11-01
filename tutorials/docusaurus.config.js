@@ -51,7 +51,8 @@ const config = {
     ({
       docs: {
         sidebar: {
-          hideable: true
+          hideable: true,
+          autoCollapseCategories: true
         }
       },
       navbar: {
@@ -62,10 +63,14 @@ const config = {
         },
         items: [
           {
-            type: 'doc',
-            docId: 'acs-to-teams/introduction',
-            position: 'left',
+            href: '/MicrosoftCloud/tutorials/',
+            position: 'right',
             label: 'Tutorials',
+          },
+          {
+            href: 'https://www.youtube.com/channel/UCV_6HOhwxYLXAGd-JOqKPoQ?view_as=subscriber',
+            position: 'right',
+            label: 'YouTube',
           },
           {
             href: 'https://github.com/microsoft/MicrosoftCloud',
