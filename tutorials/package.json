@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "move-tutorials": "mv build ../public/tutorials",
+    "move-tutorials": "rimraf ../public/tutorials && mv build ../public/tutorials",
     "docusaurus": "docusaurus",
     "start": "docusaurus start",
     "build": "docusaurus build && npm run move-tutorials",
@@ -27,7 +27,8 @@
   "devDependencies": {
     "@docusaurus/module-type-aliases": "2.2.0",
     "@tsconfig/docusaurus": "^1.0.5",
-    "typescript": "^4.7.4"
+    "typescript": "^4.7.4",
+    "rimraf": "^3.0.2"
   },
   "browserslist": {
     "production": [
