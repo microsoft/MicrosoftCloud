@@ -21,6 +21,10 @@
         "imageAlt": "Microsoft Logo",
         "links": [
             {
+                "title": "Tutorials",
+                "url": "/MicrosoftCloud/tutorials"
+            },
+            {
                 "title": "YouTube",
                 "url": "https://aka.ms/m365youtube"
             },
