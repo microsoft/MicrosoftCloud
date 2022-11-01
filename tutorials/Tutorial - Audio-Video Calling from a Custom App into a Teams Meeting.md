@@ -1,4 +1,4 @@
-# Tutorial: Audio/Video Calling from a Custom App into a Teams Meeting
+# Hands-On Tutorial: Audio/Video Calling from a Custom App into a Teams Meeting
 
 In this tutorial you'll learn how Azure Communication Services can be used in a custom React application to allow a user to make an audio/video call into a Microsoft Teams meeting. You'll learn about the different building blocks that can be used to make this scenario possible and be provided with hands-on steps to walk you through the different Microsoft Cloud services involved. 
 
@@ -564,7 +564,7 @@ In this exercise you'll learn how to publish the ACS React app and the Azure Fun
 
 1. Perform the following tasks:
     - Select your subscription.
-    - Select the resource group to use (create a new one if needed).
+    - Select the resource group to use (create a new one if needed). You can use the same resource group that you used for ACS if you'd like.
     - Enter an Azure Static Web Apps name of `acs-to-teams-meeting`.
     - Select the `Free` plan type.
     - Select a region.
@@ -573,7 +573,7 @@ In this exercise you'll learn how to publish the ACS React app and the Azure Fun
 
 1. After signing in, select your GitHub:
     - Organization
-    - Repository (this will be the `MicrosoftCloud` repository you forked)
+    - Repository (this will be the `MicrosoftCloud` repository you forked earlier in this tutorial)
     - Branch (select `main`)
 
 1. In the `Build Details` section perform the following tasks:
@@ -617,7 +617,7 @@ In this exercise you'll learn how to publish the ACS React app and the Azure Fun
 
     > NOTE: This will add environment variables into the build process for the React app so that it knows what APIs to call to get the ACS user token as well as to create a Teams meeting.
 
-1. Save the `.yml` file and push the changes up to your GitHub repository. This will trigger a new build of the React application to occur as well as a new deployment to your Azure Static Web App. 
+1. Save the `.yml` file and push the changes up to your GitHub repository. This will trigger a new build of the React application and then deploy it to your Azure Static Web App. 
 
 1. Once the build process completes, visit the URL for your Azure Static Web App and you should see the application running.
 
