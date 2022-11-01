@@ -1,0 +1,8 @@
+{
+  "label": "Build a Personal Productivity Dashboard",
+  "position": 2,
+  "link": {
+    "type": "generated-index",
+    "description": "One Productivity Hub sample shows you how to build a tab for viewing your calendar events, to-do tasks and files by using Microsoft Graph Toolkit components and TeamsFx Provider."
+  }
+}
