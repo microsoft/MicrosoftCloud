@@ -539,11 +539,11 @@ In this exercise you'll learn how to dynamically retrieve user identity and toke
 
 1. Save the file before continuing.
 
-1. Run `npm start` to run the application. After it builds you should see the ACS calling UI displayed and you can call into the Teams meeting that was dynamically created by Microsoft Graph.
+1. Open a separate terminal and run `npm start` in the `react` folder. After it builds you should see the ACS calling UI displayed and you can call into the Teams meeting that was dynamically created by Microsoft Graph.
 
 1. Stop both of the terminal processes (React and Azure Functions) by selecting `ctrl + c`.
 
-1. Commit your git changes and push them to your GitHub repository using VS Code.
+1. Commit your git changes and push them to your GitHub repository using VS Code. You can select the git icon (3rd one down in the VS Code toolbar), enter a commit message and select Commit, then 
 
 ## Exercise 5: Publish the App to Azure Static Web Apps
 
