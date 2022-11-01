@@ -53,3 +53,7 @@
 [data-theme='dark'] a {
   color: #fff;
 }
+
+div.theme-admonition-note {
+  background-color: #ffffdf;
+}

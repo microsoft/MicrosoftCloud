@@ -40,7 +40,7 @@ In this exercise you'll add the [ACS UI calling composite](https://azure.github.
     npm --version
     ```
 
-    ::tip
+    :::tip
     
     If you don't have `npm 7` or higher installed you can update npm to the latest version by running `npm install -g npm`.
 
