@@ -21,7 +21,7 @@
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
 [data-theme='dark'] {
-  --ifm-color-primary: #253a5e;
+  --ifm-color-primary: #3498db;
   --ifm-color-primary-dark: #21af90;
   --ifm-color-primary-darker: #1fa588;
   --ifm-color-primary-darkest: #1a8870;
@@ -50,7 +50,8 @@
 [data-theme='dark'] .theme-doc-sidebar-item-category-level-1 > div > a:hover,
 [data-theme='dark'] .breadcrumbs__item--active .breadcrumbs__link 
 [data-theme='dark'] .hero__subtitle,
-[data-theme='dark'] a {
+[data-theme='dark'] a,
+[data-theme='dark'] .hero__subtitle {
   color: #fff;
 }
 
