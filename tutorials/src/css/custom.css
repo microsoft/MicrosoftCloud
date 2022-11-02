@@ -37,7 +37,7 @@
   height: 85%;
 }
 
-.navbar__items--right .iconExternalLink_node_modules-\@docusaurus-theme-classic-lib-theme-Icon-ExternalLink-styles-module {
+.navbar__items--right a > svg {
   display: none;
 }
 
