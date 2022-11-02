@@ -32,7 +32,10 @@ In this exercise, you'll automate the process of creating a Microsoft Teams meet
 1. Go to the `TeamsMeetingFunction` folder and create a `local.settings.json` file with the following values:
 
     - Use the values you copied into the local file to update the `TENANT_ID`, `CLIENT_ID` and `CLIENT_SECRET` values.
-    - Define `USER_ID` with the user id that you'd like to create a Microsoft Teams Meeting. You can get this value by going to [to be added].
+    - Define `USER_ID` with the user id that you'd like to create a Microsoft Teams Meeting. 
+        >You can get your User ID from [Azure Portal](https://portal.azure.com), select `Azure Active Directory` and navigate to `Users` tab on the side bar. Search for your user name and select your user name to see the user details. Inside the user details, Object ID stands for User ID. Copy the `Object ID` and define as `USER_ID` in `local.settings.json`.
+        ![Getting User ID from Azure Active Directory](/img/acs-to-teams/aad-user-id.png "Getting User ID from Azure Active Directory")
+
     ```json
     {
         "IsEncrypted": false,
