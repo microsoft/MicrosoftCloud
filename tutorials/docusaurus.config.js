@@ -8,7 +8,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 const config = {
   title: 'Microsoft Cloud Hands-On Tutorials',
   tagline: 'Integration Scenarios Across the Microsoft Cloud',
-  url: 'https://your-docusaurus-test-site.com',
+  url: 'https://microsoft.github.io',
   baseUrl: '/MicrosoftCloud/tutorials',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
