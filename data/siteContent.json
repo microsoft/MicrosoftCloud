@@ -40,6 +40,24 @@
     },
     "items": [
         {
+            "id": "a2842d2446bb4b999742cefe21601fb8",
+            "title": "Audio/Video Calling from a Custom App into a Teams Meeting",
+            "url": "https://github.com/microsoft/brainstorm-fluidframework-m365-azure",
+            "type": "Code Sample",
+            "cloudCategories": ["Azure", "Microsoft 365"],
+            "services": ["Azure Communication Services", "Azure Functions", "Microsoft Teams", "Microsoft Graph"],
+            "technologies": ["TypeScript", "React"],
+            "description": "In this tutorial you'll learn how Azure Communication Services can be used in a custom React application to allow a user to make an audio/video call into a Microsoft Teams meeting. You'll learn about the different building blocks that can be used to make this scenario possible and be provided with hands-on steps to walk you through the different Microsoft Cloud services involved.",
+            "relatedContentItems": [],
+            "feature": {
+                "position": 4,
+                "imageUrl": "./images/acs-to-teams-tutorial.png",
+                "url": "https://microsoft.github.io/MicrosoftCloud/tutorials/docs/ACS%20to%20Teams/Introduction",
+                "title": "Audio/Video Calling from a Custom App into a Teams Meeting",
+                "description": "Hands-on tutorial that teaches you how to add audio/video calling into a custom app."
+            }
+        },
+        {
             "id": "0a2d4f5dd0f34a619a214d8b8b5a5f4c",
             "title": "Building Real-time Collaborative Apps",
             "url": "https://github.com/microsoft/brainstorm-fluidframework-m365-azure",
