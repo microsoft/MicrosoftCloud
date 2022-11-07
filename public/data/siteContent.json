@@ -41,7 +41,7 @@
     "items": [
         {
             "id": "a2842d2446bb4b999742cefe21601fb8",
-            "title": "Audio/Video Calling from a Custom App into a Teams Meeting",
+            "title": "Audio/Video Calling: Custom App to a Teams Meeting",
             "url": "https://microsoft.github.io/MicrosoftCloud/tutorials/docs/ACS%20to%20Teams/Introduction",
             "type": "Hands-On Lab",
             "cloudCategories": ["Azure", "Microsoft 365"],
