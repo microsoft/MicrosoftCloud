@@ -58,8 +58,11 @@ const config = {
       navbar: {
         title: '',
         logo: {
-          alt: 'My Site Logo',
+          alt: 'Microsoft Cloud Hands-On Tutorials',
           src: 'img/microsoft-logo.svg',
+          srcDark: 'img/microsoft-logo-dark.svg',
+          href: 'https://microsoft.github.io/MicrosoftCloud',
+          target: '_self'
         },
         items: [
           {
