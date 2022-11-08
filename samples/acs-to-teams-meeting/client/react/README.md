@@ -6,4 +6,11 @@
 
 1. Follow the steps in the `server/[your-chosen-language]` (ex: `server/typescript`) project to register an Azure Active Directory application and start the Azure Function.
 
+1. Add the following environment variables:
+
+    ```
+    export REACT_APP_ACS_USER_FUNCTION=http://localhost:7071/api/ACSTokenFunction
+    export REACT_APP_TEAMS_MEETING_FUNCTION=http://localhost:7071/api/TeamsMeetingFunction
+    ```
+
 1. Run `npm start` in this project.
