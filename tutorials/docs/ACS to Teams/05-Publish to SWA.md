@@ -1,6 +1,6 @@
 ---
 title: 5. Publish the App to Azure Static Web Apps
-sidebar_position: 6
+sidebar_position: 5
 ---
 
 # Exercise 5

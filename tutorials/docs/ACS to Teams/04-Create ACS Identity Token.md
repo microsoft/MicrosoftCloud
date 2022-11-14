@@ -1,6 +1,6 @@
 ---
 title: 4. Dynamically Create an Azure Communication Services Identity and Token
-sidebar_position: 5
+sidebar_position: 4
 ---
 
 # Exercise 4

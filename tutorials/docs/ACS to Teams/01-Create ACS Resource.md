@@ -1,6 +1,6 @@
 ---
 title: 1. Create an Azure Communication Services Resource
-sidebar_position: 2
+sidebar_position: 1
 ---
 
 # Exercise 1

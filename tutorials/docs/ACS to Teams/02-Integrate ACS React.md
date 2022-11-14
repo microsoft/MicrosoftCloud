@@ -1,6 +1,6 @@
 ---
 title: 2. Integrate Azure Communication Services Calling into a React App
-sidebar_position: 3
+sidebar_position: 2
 ---
 
 # Exercise 2

@@ -55,6 +55,18 @@
   color: #fff;
 }
 
+.external-link {
+  color: #3498db;
+}
+
+[data-theme='dark'] .external-link {
+  color: #fff;
+}
+
 div.theme-admonition-note {
   background-color: #ffffdf;
+}
+
+.pagination-nav__link--prev {
+  display: none;
 }

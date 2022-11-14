@@ -1,8 +1,0 @@
-{
-  "label": "Audio/Video Calling from a Custom App into a Teams Meeting",
-  "position": 2,
-  "link": {
-    "type": "generated-index",
-    "description": "Learn how Azure Communication Services can be used in a custom React application to allow a user to make an audio/video call into a Microsoft Teams meeting."
-  }
-}

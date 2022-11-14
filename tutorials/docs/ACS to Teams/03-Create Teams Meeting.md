@@ -1,6 +1,6 @@
 ---
 title: 3. Dynamically Create a Microsoft Teams Meeting using Microsoft Graph
-sidebar_position: 4
+sidebar_position: 3
 ---
 
 # Exercise 3
