@@ -16,7 +16,7 @@ Now that the function is working locally, it's time to deploy it to Azure.
 1. You'll be prompted to enter the following information:
 
     - Your Azure subscription name.
-    - The function name.
+    - The function name - enter `getGitHubRepoStats`.
     - The runtime stack (select Node.js 16 LTS).
     - The region (select any region you'd like).
 
@@ -24,5 +24,5 @@ Now that the function is working locally, it's time to deploy it to Azure.
 
 1. The next step is to deploy the code. Go back to the command pallet in VS Code and select **Azure Functions: Deploy to Function App**. You’ll be asked to select your subscription and Function App name.
 
-1. Once the function is deployed to Azure, you can go to the Azure extension in VS Code (click the Azure icon in the sidebar), expand your subscription, expand your Function App, right-click on the function and select **Browse Website**. Add `/api/<your\_function\_app\_name>` to the URL and you should see data returned from your function.
+1. Once the function is deployed to Azure, you can go to the Azure extension in VS Code (click the Azure icon in the sidebar), expand your subscription, expand your Function App, right-click on the function and select **Browse Website**. Add `/api/getGitHubRepoStats` to the URL and you should see data returned from your function.
 
