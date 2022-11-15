@@ -2,6 +2,8 @@
 
 **Level**: Beginner
 
+## Introduction
+
 The One Productivity Hub tutorial shows you how to build a tab for viewing your calendar events, to-do tasks and files by using Microsoft Graph Toolkit components and TeamsFx Provider.
 
 ![One Productivity Hub Tutorial](/img/productivity-dashboard/oneproductivityhub-overview.gif "One Productivity Hub Tutorial")
