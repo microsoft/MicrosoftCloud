@@ -12,12 +12,18 @@ In this exercise you'll create an empty project, install the Azure Functions ext
 To get started, perform the following tasks:
 
 1. Create an empty folder on your desktop and open it in VS Code.
+
 1. Install the [Azure Functions extension](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azurefunctions) if it's not already installed.
+
 1. Click on the **Azure** icon in the VS Code sidebar.
 
     :::note
     If you don't see the Azure icon after installing the Azure Functions extension, right-click on the VS Code sidebar and select **Azure** from the menu.
     :::
+
+1. Sign in to Azure if you're not already signed in.
+
+    ![Sign in to Azure](/img/automate-data-azure-functions-power-automate/functions-sign-into-azure.png "Sign in to Azure")
 
 1. Locate the **Workspace** section and click the **+** icon.
 1. Select **Create Function** and then select **Yes**.

@@ -26,3 +26,10 @@ Now that the function is working locally, it's time to deploy it to Azure.
 
 1. Once the function is deployed to Azure, you can go to the Azure extension in VS Code (click the Azure icon in the sidebar), expand your subscription, expand your Function App, right-click on the function and select **Browse Website**. Add `/api/getGitHubRepoStats` to the URL and you should see data returned from your function.
 
+1. Perform the following steps:
+
+    - Copy the Azure Function domain to a local file. 
+    - Copy the JSON data returned from the function call to a local file.
+
+    You'll use these values in the next exercise.
+
