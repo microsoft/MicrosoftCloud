@@ -1,16 +1,3 @@
 # Using Azure Communication Services to Call into a Teams Meeting
 
-1. You'll need an Azure Communication Services resource setup to run this demonstration. Visit https://learn.microsoft.com/azure/communication-services/quickstarts/create-communication-resource for instructions.
-
-1. Run `npm install` in this project.
-
-1. Follow the steps in the `server/[your-chosen-language]` (ex: `server/typescript`) project to register an Azure Active Directory application and start the Azure Function.
-
-1. Add the following environment variables:
-
-    ```
-    export REACT_APP_ACS_USER_FUNCTION=http://localhost:7071/api/ACSTokenFunction
-    export REACT_APP_TEAMS_MEETING_FUNCTION=http://localhost:7071/api/TeamsMeetingFunction
-    ```
-
-1. Run `npm start` in this project.
+To run the React client, follow the steps in the `acs-to-teams-meeting/readme.md` file.
