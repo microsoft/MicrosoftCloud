@@ -6,6 +6,21 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
+
+  headTags: [
+    {
+      tagName: "script",
+      attributes: {},
+      innerHTML: `
+      (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+      })(window, document, "clarity", "script", "e9evt2zm9w");
+      `
+    }
+  ],
+
   title: 'Microsoft Cloud Hands-On Tutorials',
   tagline: 'Integration Scenarios Across the Microsoft Cloud',
   url: 'https://microsoft.github.io',
@@ -48,7 +63,7 @@ const config = {
 
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
-    ({
+    {
       docs: {
         sidebar: {
           hideable: true,
@@ -86,7 +101,7 @@ const config = {
         theme: lightCodeTheme,
         darkTheme: darkCodeTheme,
       },
-    }),
+    },
 };
 
 module.exports = config;
