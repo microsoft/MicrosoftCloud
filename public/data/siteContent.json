@@ -136,14 +136,7 @@
             "cloudCategories": ["Azure", "Microsoft 365"],
             "services": ["Microsoft Graph Toolkit", "Microsoft Graph", "Azure Active Directory", "Microsoft Teams"],
             "technologies": ["JavaScript", "React"],
-            "description": "One Productivity Hub sample shows you how to build a tab for viewing your calendar events, to-do tasks and files by using Microsoft Graph Toolkit components and TeamsFx Provider.",
-            "feature": {
-                "position": 2,
-                "imageUrl": "./images/productivity-hub.jpg",
-                "url": "https://github.com/OfficeDev/TeamsFx-Samples/tree/dev/graph-toolkit-one-productivity-hub",
-                "title": "Build a Personal Productivity Hub",
-                "description": "Build a personal productivity hub"
-            }
+            "description": "One Productivity Hub sample shows you how to build a tab for viewing your calendar events, to-do tasks and files by using Microsoft Graph Toolkit components and TeamsFx Provider."
         },
         {
             "id": "5cdc5e15f43a44288abfbcace1b8b8b8",
@@ -182,7 +175,7 @@
         {
             "id": "952a685047024a8aaa02d7d53456h78g",
             "title": "Build a productivity dashboard with Microsoft Teams Toolkit for Visual Studio",
-            "url": "https://devblogs.microsoft.com/microsoft365dev/build-a-productivity-dashboard-with-microsoft-teams-toolkit-for-visual-studio/",
+            "url": "https://learn.microsoft.com/graph/toolkit/get-started/building-one-productivity-hub",
             "type": "Hands-On Lab",
             "cloudCategories": ["Azure", "Microsoft 365"],
             "services": ["Azure Active Directory", "Microsoft Graph Toolkit", "Microsoft Teams Toolkit"],
@@ -190,7 +183,14 @@
             "description": "Use Teams Toolkit for Visual Studio to build your own personal productivity hub. Learn how to use Microsoft Graph Toolkit components with ASP.NET Core.",
             "relatedContentItems": [
                 "51af92476dc24a9ca26acd85cb302849"
-            ]
+            ],
+            "feature": {
+                "position": 2,
+                "imageUrl": "./images/productivity-hub.jpg",
+                "url": "https://learn.microsoft.com/graph/toolkit/get-started/building-one-productivity-hub",
+                "title": "Build a Personal Productivity Hub",
+                "description": "Hands-On tutorial."
+            }
         },
         {
             "id": "51af92476dc24a9ca26acd85cb302849",
