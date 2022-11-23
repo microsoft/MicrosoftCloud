@@ -42,7 +42,7 @@
         {
             "id": "a2842d2446bb4b999742cefe21601fb8",
             "title": "Audio/Video Calling: Custom App to a Teams Meeting",
-            "url": "https://microsoft.github.io/MicrosoftCloud/tutorials/docs/ACS%20to%20Teams",
+            "url": "https://microsoft.github.io/MicrosoftCloud/tutorials/docs/ACS-to-Teams-Meeting",
             "type": "Hands-On Lab",
             "cloudCategories": ["Azure", "Microsoft 365"],
             "services": ["Azure Communication Services", "Azure Functions", "Microsoft Teams", "Microsoft Graph"],
@@ -52,7 +52,7 @@
             "feature": {
                 "position": 4,
                 "imageUrl": "./images/acs-to-teams-tutorial.png",
-                "url": "https://microsoft.github.io/MicrosoftCloud/tutorials/docs/ACS%20to%20Teams",
+                "url": "https://microsoft.github.io/MicrosoftCloud/tutorials/docs/ACS-to-Teams-Meeting",
                 "title": "Audio/Video Calling from a Custom App into a Teams Meeting",
                 "description": "Hands-on tutorial."
             }
@@ -60,7 +60,7 @@
         {
             "id": "2c86f508f12945faac5ea80b06a24f95",
             "title": "Automate Data Reporting with Azure Functions and Power Automate",
-            "url": "https://microsoft.github.io/MicrosoftCloud/tutorials/docs/Automate%20Data%20Reporting%20with%20Azure%20Functions%20and%20Power%20Automate/",
+            "url": "https://microsoft.github.io/MicrosoftCloud/tutorials/docs/Automate-Data-Reporting-with-Azure-Functions-and-Power-Automate/",
             "type": "Hands-On Lab",
             "cloudCategories": ["Azure", "Power Platform", "GitHub"],
             "services": ["Azure Active Directory", "Azure Functions", "Power Automate"],
