@@ -1,5 +1,7 @@
 # Workshop: Authentication App with Next.js and Microsoft Graph
 
+**Level**: Beginner-Intermediate
+
 ![Authentication App](/img/authentication-workshop/authentication.gif "Authentication App")
 
 ## Introduction
