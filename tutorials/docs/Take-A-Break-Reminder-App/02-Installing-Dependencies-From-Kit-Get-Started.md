@@ -33,5 +33,5 @@ npm run dev
 
 Open your browser and go to the following address: `http://localhost:3000`
 
-If everything is working correctly, we can move on to the next session.
+If everything is working correctly, we can move on to the next section.
 

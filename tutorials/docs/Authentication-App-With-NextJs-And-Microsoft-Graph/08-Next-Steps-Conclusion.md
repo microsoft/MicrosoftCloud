@@ -7,7 +7,7 @@ sidebar_position: 1
 
 We hope you enjoyed this workshop and learned something new! If you have any questions or comments, don't hesitate to reach out to us!
 
-If you want to go further, make the `workshop-demo-02`. There we will go into the `Reminder` page. A page that will inform you each 60 minutes to take a break. If you want to make this workshop, click **[here](../workshop-demo-02/01-intro.md)**
+If you want to go further, make the `workshop-demo-02`. There we will go into the `Reminder` page. A page that will inform you each 60 minutes to take a break. If you want to make this workshop, go to the Workshop Reminder App.
 
 If you want to learn more about Microsoft Graph, we have a lot of free courses and Learn Modules about it. Below you can see some interesting resources and links:
 
