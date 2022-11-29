@@ -80,7 +80,7 @@ In this exercise, you'll automate the process of creating a Microsoft Teams meet
 
 1. Open `Shared/graph.ts` and take a moment to expore the imports at the top of the file. This code handles importing authentication and client symbols that will be used in the Azure Function to call Microsoft Graph.
 
-    ```typescipt
+    ```typescript
     import {startDateTimeAsync, endDateTimeAsync} from './dateTimeFormat';
     import {ClientSecretCredential} from '@azure/identity';
     import {Client} from '@microsoft/microsoft-graph-client';
