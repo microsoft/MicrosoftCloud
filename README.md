@@ -33,5 +33,4 @@ Enable GitHub Pages to use the `gh-pages` branch by going to `https://github.com
 Publish:
 
 1. `npm install`
-1. Build tutorials by running `npm run build` in the `/tutorials` folder.
-1. `npm run deploy`
+1. Build and deploy the project by running `npm run build-deploy`.

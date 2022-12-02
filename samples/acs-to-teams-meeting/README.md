@@ -2,6 +2,8 @@
 
 ## Summary 
 
+[View the Hands-On Tutorial](https://microsoft.github.io/MicrosoftCloud/tutorials/docs/ACS%20to%20Teams)
+
 This scenario will teach you how to add audio/video calling functionality into a custom application. As users visit your app, they'll be able to make a call directly into a Microsoft Teams Meeting.
 
 Use this type of functionality for:
@@ -27,10 +29,31 @@ Technologies used in this scenario include:
 
 ## Setup Steps
 
-To get the solution going you'll need to run the front-end and back-end solutions. 
+To get the solution running you'll need to run the front-end and back-end solutions. You can alternatively go through our [hands-on tutorial](https://microsoft.github.io/MicrosoftCloud/tutorials/docs/ACS%20to%20Teams) as well which will provide many more details.
 
-1. Follow the steps in the `server/typescript` [README](./server/typescript/README.md) file to get the server setup and started.
-1. Follow the steps in the `client` [README](./client/react/README.md) file to get the client setup and started.
+1. You'll need to create an **Azure Communication Services** resource using the [Azure Portal](https://portal.azure.com). Visit https://learn.microsoft.com/azure/communication-services/quickstarts/create-communication-resource for instructions.
+
+1. Follow the steps in the `acs-to-teams-meeting/server/[your-chosen-language]` readme (for example the `acs-to-teams-meeting/server/typescript`) to register an Azure Active Directory application and start the Azure Function.
+
+1. Add the following environment variables by opening a command window and running the following commands. Choose the `Bash` or `Powershell` option based on your local setup.
+
+#### Bash (Mac/Linux/WSL)
+
+    ```bash
+    export REACT_APP_ACS_USER_FUNCTION=http://localhost:7071/api/ACSTokenFunction
+    export REACT_APP_TEAMS_MEETING_FUNCTION=http://localhost:7071/api/TeamsMeetingFunction
+    ```
+
+#### Powershell (Windows/Mac/Linux)
+
+    ```powershell
+    $Env:REACT_APP_ACS_USER_FUNCTION = "http://localhost:7071/api/ACSTokenFunction"
+    $Env:REACT_APP_TEAMS_MEETING_FUNCTION = "http://localhost:7071/api/TeamsMeetingFunction"
+    ```
+
+1. Run `npm start` in this project.
+
+    > NOTE: Ensure that you started the server project first as mentioned above.
 
 ## Solution
 
