@@ -1,4 +1,4 @@
-# Workshop: Authentication App with Next.js and Microsoft Graph
+# Authentication App with Next.js and Microsoft Graph
 
 **Level**: Beginner-Intermediate
 
@@ -8,7 +8,7 @@
 
 In this workshop, you will learn how to build a simple authentication app using Next.js, TypeScript, and Microsoft Graph. The app will allow users to sign in with their Microsoft account and view their profile information.
 
-## What Microsoft Graph is?
+## What is Microsoft Graph?
 
 Microsoft Graph is an API that allows you to access data and services from Microsoft 365. You can use the Microsoft Graph API to build applications that interact with millions of users around the world, accessing data in a consistent way across the Microsoft 365 ecosystem.
 
