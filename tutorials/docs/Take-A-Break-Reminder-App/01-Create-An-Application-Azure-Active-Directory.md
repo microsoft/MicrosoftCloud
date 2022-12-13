@@ -60,7 +60,7 @@ Now, let's go to the step by step!
 
 10. Click on **Microsoft Graph** amd then on **Delegated permissions**.
 
-![image-101.png](/img/authentication-workshop/image-101.png)
+![image-111.png](/img/authentication-workshop/image-111.png)
 
 11. Select the following permissions and click on **Add permissions**.
 
