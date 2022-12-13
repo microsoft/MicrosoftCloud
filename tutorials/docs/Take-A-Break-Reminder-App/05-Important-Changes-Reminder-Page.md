@@ -1,5 +1,5 @@
 ---
-title: 6. Important Changes in the Reminder Page
+title: 5. Important Changes in the Reminder Page
 sidebar_position: 1
 ---
 

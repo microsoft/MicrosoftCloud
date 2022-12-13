@@ -1,5 +1,5 @@
 ---
-title: 8. Important changes in the Admin & Reminder Pages
+title: 7. Important changes in the Admin & Reminder Pages
 sidebar_position: 1
 ---
 

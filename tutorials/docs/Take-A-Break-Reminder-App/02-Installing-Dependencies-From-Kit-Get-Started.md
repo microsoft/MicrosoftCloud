@@ -1,5 +1,5 @@
 ---
-title: 3. Installing dependencies from the Kit Get Started
+title: 2. Installing dependencies from the Kit Get Started
 sidebar_position: 1
 ---
 

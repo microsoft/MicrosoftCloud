@@ -1,5 +1,5 @@
 ---
-title: 2. Configuring an Application in Azure Active Directory
+title: 1. Configuring an Application in Azure Active Directory
 sidebar_position: 1
 ---
 

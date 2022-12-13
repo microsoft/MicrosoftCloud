@@ -1,5 +1,5 @@
 ---
-title: 5. Developing the GetPresence API
+title: 4. Developing the GetPresence API
 sidebar_position: 1
 ---
 

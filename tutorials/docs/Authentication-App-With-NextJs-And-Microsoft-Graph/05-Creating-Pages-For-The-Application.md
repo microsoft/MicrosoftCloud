@@ -1,5 +1,5 @@
 ---
-title: 6. Creating the pages for the application
+title: 5. Creating the pages for the application
 sidebar_position: 1
 ---
 

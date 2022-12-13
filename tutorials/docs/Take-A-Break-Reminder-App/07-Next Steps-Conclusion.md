@@ -1,5 +1,5 @@
 ---
-title: 8. Next Steps & Conclusion
+title: 7. Next Steps & Conclusion
 sidebar_position: 1
 ---
 

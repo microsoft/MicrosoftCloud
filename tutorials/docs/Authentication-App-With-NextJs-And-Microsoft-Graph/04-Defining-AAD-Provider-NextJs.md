@@ -1,5 +1,5 @@
 ---
-title: 5. Defining AAD Provider in Next.js
+title: 4. Defining AAD Provider in Next.js
 sidebar_position: 1
 ---
 
