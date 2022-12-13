@@ -1,5 +1,5 @@
 ---
-title: Session 07 - Creating the Interface file for JWT
+title: 7. Creating the Interface file for JWT
 sidebar_position: 1
 ---
 

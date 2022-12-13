@@ -1,5 +1,5 @@
 ---
-title: Session 04 - Creating the Application Components
+title: 4. Creating the Application Components
 sidebar_position: 1
 ---
 

@@ -1,5 +1,5 @@
 ---
-title: Session 04 - Changing [...nextauth].ts file
+title: 4. Changing [...nextauth].ts file
 sidebar_position: 1
 ---
 

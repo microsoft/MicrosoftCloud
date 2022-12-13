@@ -1,5 +1,5 @@
 ---
-title: Session 02 - Configuring an Application in Azure Active Directory
+title: 2. Configuring an Application in Azure Active Directory
 sidebar_position: 1
 ---
 

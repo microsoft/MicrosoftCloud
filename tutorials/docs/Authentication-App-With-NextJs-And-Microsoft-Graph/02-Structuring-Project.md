@@ -1,5 +1,5 @@
 ---
-title: Session 03 - Structuring the Project
+title: 3. Structuring the Project
 sidebar_position: 1
 ---
 

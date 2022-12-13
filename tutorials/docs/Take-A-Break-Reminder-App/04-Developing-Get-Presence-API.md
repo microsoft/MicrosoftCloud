@@ -1,5 +1,5 @@
 ---
-title: Session 05 - Developing the GetPresence API
+title: 5. Developing the GetPresence API
 sidebar_position: 1
 ---
 

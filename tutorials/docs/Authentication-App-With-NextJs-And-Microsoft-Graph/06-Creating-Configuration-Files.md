@@ -1,5 +1,5 @@
 ---
-title: Session 07 - Creating the Configuration Files
+title: 7. Creating the Configuration Files
 sidebar_position: 1
 ---
 
