@@ -13,16 +13,30 @@ In this exercise you'll learn how to dynamically retrieve user identity and toke
 
 1. Open `local.settings.json` and update the `ACS_CONNECTION_STRING` value with the ACS connection string you saved in an earlier exercise.
 
-1. Open `samples/acs-to-teams-meeting/server/typescript/ACSTokenFunction/index.ts` in VS Code. 
-
-1. Notice that it has the following import at the top of the file:
+1. Open `samples/acs-to-teams-meeting/server/typescript/ACSTokenFunction/index.ts` in VS Code. It has the following code:
 
     ```typescript
     import { CommunicationIdentityClient } from '@azure/communication-identity';
 
+    module.exports = async function (context, req) {
+        // Get ACS connection string from local.settings.json (or App Settings when in Azure)
+        const connectionString = process.env.ACS_CONNECTION_STRING;
+        let tokenClient = new CommunicationIdentityClient(connectionString);
+        const user = await tokenClient.createUser();
+        const userToken = await tokenClient.getToken(user, ["voip"]);
+        context.res = {
+            body: { userId: user.communicationUserId, ...userToken }
+        };
+    }
     ```
 
 1. The function performs the following tasks:
+    - Imports `CommunicationIdentityClient` which will be used to create the user identity and token.
+
+        ```typescript
+        import { CommunicationIdentityClient } from '@azure/communication-identity';
+        ```
+
     - Gets the ACS connection string from an environment variable named `ACS_CONNECTION_STRING`.
 
         ```typescript
