@@ -41,7 +41,7 @@ If you have doubt how to create it, you can watch this video **[LINK HERE](https
 | **5. Creating the pages for the application**               | In this session, we are going to create the pages for the application.                                                                              |
 | **6. Creating Configuration Files**                         | In this session we will create the configuration files for our application.                                                                         |
 | **7. Important changes in the Admin & Reminder Pages**      | In this session we will make some important changes in the `Admin` and `Reminder` pages.                                                            |
-| **8. Next Steps & Conclusion**                              | And finally what is the next steps and some important links and resources.                                                                          |
+| **8. Next Steps & Final Words**                             | And finally what is the next steps and some important links and resources.                                                                          |
 
 
 
