@@ -30,6 +30,7 @@
   --ifm-color-primary-lightest: #4fddbf;
   --ifm-heading-color: #fff;
   --ifm-hero-text-color: #fff;
+  --ifm-menu-color-background-hover: #3498db;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
 }
 
@@ -41,13 +42,22 @@
   display: none;
 }
 
-.theme-doc-sidebar-item-category-level-1 > div > a,  .theme-doc-sidebar-item-category-level-1 > div > a:hover{
+.theme-doc-sidebar-item-category-level-1 > div > a,  
+.theme-doc-sidebar-item-category-level-1 > div > a:hover,
+.theme-doc-sidebar-item-link-level-1.menu__list-item > a {
   font-weight: 600;
   color: #000;
 }
 
+.theme-doc-sidebar-item-link-level-1.menu__list-item > a.menu__link--active:not(.menu__link--sublist) {
+  background: var(--ifm-menu-color-background-hover);
+}
+
 [data-theme='dark'] .theme-doc-sidebar-item-category-level-1 > div > a,  
 [data-theme='dark'] .theme-doc-sidebar-item-category-level-1 > div > a:hover,
+[data-theme='dark'] .theme-doc-sidebar-item-link-level-1.menu__list-item > a {
+  color: #fff;
+}
 [data-theme='dark'] .breadcrumbs__item--active .breadcrumbs__link 
 [data-theme='dark'] .hero__subtitle,
 [data-theme='dark'] a,
