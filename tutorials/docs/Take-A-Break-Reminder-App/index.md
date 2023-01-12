@@ -1,4 +1,4 @@
-# Workshop: Take a Break Reminder App
+# Take a Break Reminder App
 
 ![Reminder App](/img/authentication-workshop/reminder.gif "Reminder App")
 
@@ -43,4 +43,4 @@ If you not completed the previous workshop, you can download the kit from this l
 | **4. Developing the GetPresence API**                       | In this session we will be developing the `GetPresence` API. This API will be responsible for getting the presence of the user who is logged in.                        |
 | **5. Important Changes in the Reminder Page**               | In this session, we will make some important changes in the `Reminder` page.                                                                                            |
 | **6. Creating the Interface file for JWT**                  | In this session we will create an interface file for our application. This file will be responsible for configuring the JWT token that will be used in our application. |
-| **7. Next Steps & Conclusion**                              | And finally what is the next steps and some important links and resources.                                                                                              |
+| **7. Next Steps & Final Words**                             | And finally what is the next steps and some important links and resources.                                                                                              |
