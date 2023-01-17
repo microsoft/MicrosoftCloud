@@ -2,7 +2,6 @@ import {startDateTimeAsync, endDateTimeAsync} from './dateTimeFormat';
 import {ClientSecretCredential} from '@azure/identity';
 import {Client} from '@microsoft/microsoft-graph-client';
 import {TokenCredentialAuthenticationProvider} from '@microsoft/microsoft-graph-client/authProviders/azureTokenCredentials';
-import 'isomorphic-fetch';
 
 let clientSecretCredential;
 let appGraphClient;

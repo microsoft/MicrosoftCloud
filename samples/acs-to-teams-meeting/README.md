@@ -29,7 +29,7 @@ Technologies used in this scenario include:
 
 ## Setup Steps
 
-To get the solution running you'll need to run the front-end and back-end solutions. You can alternatively go through our [hands-on tutorial](https://microsoft.github.io/MicrosoftCloud/tutorials/docs/ACS%20to%20Teams) as well which will provide many more details.
+To get the solution running you'll need to run the front-end and back-end solutions. You can alternatively go through our [hands-on tutorial](https://microsoft.github.io/MicrosoftCloud/tutorials/docs/ACS-to-Teams-Meeting) as well which will provide many more details.
 
 1. You'll need to create an **Azure Communication Services** resource using the [Azure Portal](https://portal.azure.com). Visit https://learn.microsoft.com/azure/communication-services/quickstarts/create-communication-resource for instructions.
 
