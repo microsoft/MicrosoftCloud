@@ -10,7 +10,7 @@ echo "Granting Microsoft Graph permissions for service principal $appId"
 az ad app permission grant --id ${appId} --api 00000003-0000-0000-c000-000000000000 --scope Calendars.ReadWrite > /dev/null 2>&1
 
 # create acs instance
-echo "Creating ACS instnace..."
+echo "Creating ACS instance..."
 az group create --location westus --name MyResourceGroup > /dev/null 2>&1
 az extension add --name communication > /dev/null 2>&1
 uniqueString=$(echo $RANDOM)
