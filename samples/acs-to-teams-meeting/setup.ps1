@@ -9,7 +9,7 @@ Add-AzADAppPermission -ApplicationId $sp.AppId -ApiId 00000003-0000-0000-c000-00
 Write-Output "Please grant admint consent via the Azure portal to $($sp.id) for the assigned Microsoft Graph permissions"
 
 # create acs instance
-Write-Output "Creating ACS instnace..."
+Write-Output "Creating ACS instance..."
 New-AzResourceGroup -Name MyResourceGroup -Location westus
 $uniqueString = Get-Random
 New-AzCommunicationService -ResourceGroupName MyResourceGroup -Name "acstoteams${uniqueString}" -DataLocation UnitedStates -Location Global
