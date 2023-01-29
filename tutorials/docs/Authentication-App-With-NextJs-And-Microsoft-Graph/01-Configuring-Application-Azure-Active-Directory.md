@@ -78,7 +78,7 @@ Now, let's go to the step by step!
 
 13. Select the following permissions and click on **Add permissions**.
 
-- **Presence.ReadWrite.All**
+- **Presence.ReadWrite.All**: Allows the app to read all presence information and write activity and availability of all users in the directory without a signed-in user. Presence information includes activity, availability, status note, calendar out-of-office message, time zone and location. 
 
 ![image-14](/img/authentication-workshop/image-14.png)
 

@@ -29,15 +29,15 @@ Now we need to install some dependencies. And one of them is the **[Microsoft Gr
 npm install @microsoft/microsoft-graph-client
 ```
 
-If you want to know more about the Microsoft Graph Client, you can read the documentation **[HERE](https://docs.microsoft.com/en-us/graph/sdks/sdks-overview)**. And also, know about the NPM package **[HERE](https://www.npmjs.com/package/@microsoft/microsoft-graph-client)**.
+If you want to know more about the Microsoft Graph Client, **[you can read the documentation](https://docs.microsoft.com/en-us/graph/sdks/sdks-overview)**. And also, **[know about the NPM package](https://www.npmjs.com/package/@microsoft/microsoft-graph-client)**.
 
-Another package we will need to install is NextAuth. It is a library that helps us to integrate authentication login sessions with Next.js. To install it, run the following command:
+Another package we will need to install is NextAuth.js. It is a library that helps us to integrate authentication login sessions with Next.js. To install it, run the following command:
 
 ```bash
 npm install next-auth
 ```
 
-Also, if you want to know more about NextAuth, you can read the documentation **[HERE](https://next-auth.js.org/)**. And also, know about the NPM package **[HERE](https://www.npmjs.com/package/next-auth)**.
+Also, if you want to know more about NextAuth.js, **[you can read the documentation](https://next-auth.js.org/)**. And also, **[know about the NPM package](https://www.npmjs.com/package/next-auth)**.
 
 Now we can finally start to create some components for our application. But we will do that in the next section.
 

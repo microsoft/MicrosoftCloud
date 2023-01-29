@@ -7,7 +7,7 @@ Before we start creating the pages, we need to define the AAD provider in NextAu
 
 But what is AAD? AAD stands for Azure Active Directory. It is a cloud-based identity and access management service that helps you manage access to your applications and services. 
 
-For this, inside the `pages/api` folder create a new folder called `auth`. Inside in this folder, create the file `[...nextauth]].ts` and add the following code:
+For this, inside the `pages/api` folder create a new folder called `auth`. Inside in this folder, create the file `[...nextauth].ts` and add the following code:
 
 - `pages/api/auth/[...nextauth].ts`
 
@@ -15,13 +15,6 @@ For this, inside the `pages/api` folder create a new folder called `auth`. Insid
 <br/>
 
 ```tsx
-/**
- * file: pages/api/auth/[...nextauth].ts
- * description: file responsible for the authenticate an user using AAD Provider
- * data: 10/28/2022
- * author: Glaucia Lemos <Twitter: @glaucia_lemos86>
- */
-
 import NextAuth, { NextAuthOptions } from "next-auth";
 import AzureADProvider from 'next-auth/providers/azure-ad';
 
@@ -49,7 +42,6 @@ Now we need to use the environment variables that we created before in Azure Por
 AZURE_AD_CLIENT_ID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 AZURE_AD_CLIENT_SECRET=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 AZURE_AD_TENANT_ID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-NEXTAUTH_URL=http://localhost:3000
 NEXTAUTH_SECRET=123
 ```
 
@@ -63,13 +55,6 @@ Now we need to configure the main project in the project. So let's do it! Open t
 <br/>
 
 ```tsx
-/**
- * file: pages/_app.tsx
- * description: file responsible for the application's configuration
- * data: 10/26/2022
- * author: Glaucia Lemos <Twitter: @glaucia_lemos86>
- */
-
 import { SessionProvider } from 'next-auth/react';
 
 import type { AppProps } from 'next/app';
@@ -90,7 +75,7 @@ export default function App({
 </details>
 <br/>
 
-We are here defining the `SessionProvider` from the NextAuth. It is responsible for managing the session of the user. 
+We are here defining the `SessionProvider` from the NextAuth.js. It is responsible for managing the session of the user. 
 
 Now let's run the application again e then open the browser and access the following URL: `http://localhost:3000`. If you see the following screen, it means that everything is working fine:
 

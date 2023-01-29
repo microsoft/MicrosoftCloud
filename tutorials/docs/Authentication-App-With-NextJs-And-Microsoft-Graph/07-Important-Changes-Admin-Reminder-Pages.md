@@ -11,13 +11,6 @@ Finally, let's make some changes in the `reminder.tsx` and `admin.tsx` files. So
 <br/>
 
 ```tsx
-/**
- * file: pages/admin.tsx
- * description: file responsible for the admin page
- * data: 10/26/2022
- * author: Glaucia Lemos <Twitter: @glaucia_lemos86>
- */
-
 import { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import Layout from '../components/Layout/layout';
@@ -70,13 +63,6 @@ export default function Page() {
 <br/>
 
 ```tsx
-/**
- * file: pages/reminder.tsx
- * description: file responsible for the reminder page
- * data: 10/26/2022
- * author: Glaucia Lemos <Twitter: @glaucia_lemos86>
- */
-
 import { useSession } from 'next-auth/react';
 import Layout from '../components/Layout/layout';
 
