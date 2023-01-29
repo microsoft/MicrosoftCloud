@@ -89,6 +89,6 @@ npm run dev
 
 And finally let's open the browser and go to the following URL: `http://localhost:3000/`. So, you should see the following full application:
 
-![gif-01](/img/authentication-workshop/gif-01.gif)
+![gif-01](/img/authentication-workshop/gif-01.gif "Authentication Application gif")
 
 And finally, we finished the application! 🎉🎉🎉

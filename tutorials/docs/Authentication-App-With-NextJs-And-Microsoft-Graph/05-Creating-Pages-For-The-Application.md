@@ -213,6 +213,6 @@ Wow! How many changes, right? 😅 Let's try to understand what is happening her
 
 Now run again the application and check the result:
 
-![image-17](/img/authentication-workshop/image-17.jpg)
+![image-17](/img/authentication-workshop/image-17.jpg "Authentication Application")
 
 There's some important files that we need to create. But let's leave it for the next section. 😊
