@@ -13,13 +13,6 @@ To do this, we need to make the following changes:
 <br/>
 
 ```ts
-/**
- * file: pages/api/auth/[...nextauth].ts
- * description: file responsible for the authenticate an user using AAD Provider
- * data: 10/28/2022
- * author: Glaucia Lemos <Twitter: @glaucia_lemos86>
- */
-
 import NextAuth, { NextAuthOptions } from "next-auth";
 import AzureADProvider from 'next-auth/providers/azure-ad';
 

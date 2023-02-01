@@ -29,7 +29,7 @@ declare module "next-auth/jwt" {
 
 Nothing very complicated here. But it is important that you understand what is happening here. The `next-auth/jwt` is a module that exports an interface called `JWT`. We are telling TypeScript that we want to extend this interface with the properties `userRole`, `accessToken` and `refreshToken`. This allows us to access these properties anywhere in our code. For example, if you try to access `session.userRole` somewhere in your code, TypeScript won't complain. This is very useful because you don't need to import the `session` everywhere. You can simply access the properties you need.
 
-This means TypeScript Augmentation. You can read more about it **[AQUI](https://next-auth.js.org/getting-started/typescript#module-augmentation)**.
+This means TypeScript Augmentation. **[You can read more about it](https://next-auth.js.org/getting-started/typescript#module-augmentation)**.
 
 Finally we can test our application. Run the command `npm run dev` and access the application at `http://localhost:3000/reminder`. 
 

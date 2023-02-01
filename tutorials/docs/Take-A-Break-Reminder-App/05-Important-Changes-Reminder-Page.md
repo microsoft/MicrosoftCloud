@@ -13,13 +13,6 @@ Open the `reminder.tsx` file and update the code as follows:
 <br/>
 
 ```tsx
-/**
- * file: pages/reminder.tsx
- * description: file responsible for the reminder page
- * data: 11/03/2022
- * author: Glaucia Lemos <Twitter: @glaucia_lemos86>
- */
-
 import { useSession } from 'next-auth/react';
 import { useState } from 'react';
 import Layout from '../components/Layout/layout';

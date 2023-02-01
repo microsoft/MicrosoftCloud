@@ -3,7 +3,7 @@ title: 2. Installing dependencies from the Kit Get Started
 sidebar_position: 1
 ---
 
-Again, if you are not coming from the previous workshop, you can download the source code of the project we will be working on in this workshop **[HERE](https://github.com/glaucia86/kitstarter-msgraph-nextjs)**
+Again, if you are not coming from the previous workshop, **[you can download the source code of the project we will be working on in this workshop](https://github.com/glaucia86/kitstarter-msgraph-nextjs)**
 
 After downloading the source code, you should run the following command in the terminal:
 
@@ -21,7 +21,6 @@ At the root of the project, create a file called `env.local` and fill in the fol
 AZURE_AD_CLIENT_ID=<copy Application (client) ID here>
 AZURE_AD_CLIENT_SECRET=<copy generated client secret value here>
 AZURE_AD_TENANT_ID=<copy the tenant id here>
-NEXTAUTH_URL=http://localhost:3000
 NEXTAUTH_SECRET= # Linux: `openssl rand -hex 32` or go to https://generate-secret.now.sh/32
 ```
 

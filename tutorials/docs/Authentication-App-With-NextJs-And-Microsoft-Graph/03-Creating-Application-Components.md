@@ -13,13 +13,6 @@ Every application needs a Layout. So, let's create a `Layout` component. Create 
 <br/>
 
 ```tsx
-/**
- * file: components/Layout/layout.tsx
- * description: file responsible for the 'Layout' component
- * data: 10/26/2022
- * author: Glaucia Lemos <Twitter: @glaucia_lemos86>
- */
-
 import Header from '../Header/header';
 import Footer from '../Footer/footer';
 import React, { ReactNode } from 'react';
@@ -156,13 +149,6 @@ Now let's focus on the `header.tsx` file. Open the `header.tsx` file and add the
 <br/>
 
 ```tsx
-/**
- * file: components/Header/header.tsx
- * description: file responsible for the 'Header' component
- * data: 10/26/2022
- * author: Glaucia Lemos <Twitter: @glaucia_lemos86>
- */
-
 import Link from 'next/link';
 import { signIn, signOut, useSession } from 'next-auth/react';
 import styles from './header.module.css';
@@ -324,13 +310,6 @@ Inside the `components` folder, create a new folder called `AccessDenied`. Insid
 <br/>
 
 ```tsx
-/**
- * file: components/AccessDenied/access-denied.tsx
- * description: file responsible for the 'AccessDenied' component.
- * data: 10/26/2022
- * author: Glaucia Lemos <Twitter: @glaucia_lemos86>
- */
-
 import { signIn } from 'next-auth/react';
 
 export default function AccessDenied() {
@@ -356,9 +335,9 @@ export default function AccessDenied() {
 </details>
 <br/>
 
-Again! It's a simple component. When we finish this whole tutorial, we can add some UI to it. But for now, let's keep it simple, using **[Material UI](https://mui.com/)**.
+Again! It's a simple component! 😊
 
-As we are using **[TypeScript](https://www.typescriptlang.org/)** in this application, we need to transpile the code. So let's do it! Open the terminal and run the following command:
+We are going to use **[TypeScript](https://www.typescriptlang.org/)** in this application. So let's do it! Open the terminal and run the following command:
 
 ```bash
 npm run build

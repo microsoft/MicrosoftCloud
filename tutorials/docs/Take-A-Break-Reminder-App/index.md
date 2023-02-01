@@ -4,7 +4,7 @@
 
 ## Introduction
 
-In this workshop, you will learn how to build a simple application with Next.Js and Microsoft Graph that will send an alert to the user each 60 minutes, if the user status is set to `Available`. If so, the user will need to take a break.
+In this workshop, you will learn how to build a simple application with Next.js and Microsoft Graph that will send an alert to the user each 60 minutes, if the user status is set to `Available`. If so, the user will need to take a break.
 
 
 ## What Microsoft Graph is?
@@ -20,16 +20,16 @@ To follow this workshop, you will need:
 - **[Microsoft 365 Developer Program](https://developer.microsoft.com/en-us/microsoft-365/dev-program)**
 - **[Microsoft Graph](https://developer.microsoft.com/en-us/graph)**
 - **[Microsoft Graph JavaScript SDK](https://github.com/microsoftgraph/msgraph-sdk-javascript)**
-- **[Node.Js 16.x](https://nodejs.org/en/)**
-- **[Next.Js](https://nextjs.org/learn/foundations/about-nextjs)**
+- **[Node.js 16.x](https://nodejs.org/en/)**
+- **[Next.js](https://nextjs.org/learn/foundations/about-nextjs)**
 
-Beyond that, you will need a Microsoft 365 Developer Program account **[LINK HERE](https://developer.microsoft.com/en-us/microsoft-365/dev-program)**. 
+Beyond that, you will need a **[Microsoft 365 Developer Program account](https://developer.microsoft.com/en-us/microsoft-365/dev-program)**. 
 
-If you have doubt how to create it, you can watch this video **[LINK HERE](https://www.youtube.com/watch?v=JvWLgirC8xs)**. It explains how to create the account. This account it's free. 
+If you have doubt how to create it, **[you can watch this video](https://www.youtube.com/watch?v=JvWLgirC8xs)**. It explains how to create the account. This account it's free. 
 
 ## Kit - Getting Started
 
-If you not completed the previous workshop, you can download the kit from this link **[LINK HERE](https://github.com/glaucia86/kitstarter-msgraph-nextjs)**. This kit contains the code that you will need to complete this workshop. Thus, is not necessary to create the project from scratch.
+If you not completed the previous workshop, **[you can download the kit from this link](https://github.com/glaucia86/kitstarter-msgraph-nextjs)**. This kit contains the code that you will need to complete this workshop. Thus, is not necessary to create the project from scratch.
 
 ## Sessions
 

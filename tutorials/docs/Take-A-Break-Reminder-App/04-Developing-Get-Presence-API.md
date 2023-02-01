@@ -27,13 +27,6 @@ Now, let's create a file called `getPresence.ts` in the `pages/api` folder and a
 <br/>
 
 ```ts
-/**
- * file: pages/api/getPresence.ts
- * description: file responsible for the getPresence Microsoft Graph API
- * data: 11/03/2022
- * author: Glaucia Lemos <Twitter: @glaucia_lemos86>
- */
-
 import { getToken, } from "next-auth/jwt";
 import { Client } from "@microsoft/microsoft-graph-client";
 
