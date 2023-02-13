@@ -27,29 +27,30 @@ public class TeamsMeetingFunction
         ILogger log)
     {
         var userId = _configuration.GetValue<string>("USER_ID");
-        var newEvent = await _graphServiceClient
-            .Users[userId]
-            .Calendar
-            .Events
-            .Request()
-            .AddAsync(CreateMeetingEvent());
+        var newEvent = await CreateMeetingEventAsync(userId);
 
         return new OkObjectResult(newEvent.OnlineMeeting.JoinUrl);
     }
 
-    private static Event CreateMeetingEvent() => new()
-    {
-        Subject = "Customer Service Meeting",
-        Start = new() 
-        { 
-            DateTime = DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ss"), 
-            TimeZone = "UTC" 
-        },
-        End = new() 
-        { 
-            DateTime = DateTime.UtcNow.AddHours(1).ToString("yyyy-MM-ddTHH:mm:ss"), 
-            TimeZone = "UTC" 
-        },
-        IsOnlineMeeting = true
-    };
+    private async Task<Event> CreateMeetingEventAsync(string userId) => 
+        await _graphServiceClient
+            .Users[userId]
+            .Calendar
+            .Events
+            .Request()
+            .AddAsync(new()
+            {
+                Subject = "Customer Service Meeting",
+                Start = new()
+                {
+                    DateTime = DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ss"),
+                    TimeZone = "UTC"
+                },
+                End = new()
+                {
+                    DateTime = DateTime.UtcNow.AddHours(1).ToString("yyyy-MM-ddTHH:mm:ss"),
+                    TimeZone = "UTC"
+                },
+                IsOnlineMeeting = true
+            });
 }

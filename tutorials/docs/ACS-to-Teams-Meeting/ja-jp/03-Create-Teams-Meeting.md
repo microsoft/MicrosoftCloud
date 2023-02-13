@@ -77,121 +77,87 @@ sidebar_position: 3
     <PackageReference Include="Microsoft.Graph" Version="4.53.0" />
     ```
 
-6. Open `Shared/graph.ts` and take a moment to expore the imports at the top of the file. This code handles importing authentication and client symbols that will be used in the Azure Function to call Microsoft Graph.
 
-    ```typescript
-    import {startDateTimeAsync, endDateTimeAsync} from './dateTimeFormat';
-    import {ClientSecretCredential} from '@azure/identity';
-    import {Client} from '@microsoft/microsoft-graph-client';
-    import {TokenCredentialAuthenticationProvider} from '@microsoft/microsoft-graph-client/authProviders/azureTokenCredentials';
-    import 'isomorphic-fetch';
+6. `Startup.cs` をいて `Configure` メソッドの先頭を確認します:
+   - このコードは Microsoft Graph を Azure Functions から呼び出すための `GraphServiceClient` を作成しています。
+   - `Tenant Id`, `Client Id`, `Client Secret` を指定して作成した `ClientSecretCredential` を `GraphServiceClient` のコンストラクタに渡すことでアプリケーションの権限 (**Calendars.ReadWrite** など) を使用して Microsoft Graph を呼び出すことが出来ます。
+
+    ```csharp
+    var config = p.GetRequiredService<IConfiguration>();
+    var clientSecretCredential = new ClientSecretCredential(
+        config.GetValue<string>("TENANT_ID"),
+        config.GetValue<string>("CLIENT_ID"),
+        config.GetValue<string>("CLIENT_SECRET")
+    );
+    
+    return new GraphServiceClient(
+        clientSecretCredential,
+        new[] { "https://graph.microsoft.com/.default" }
     ```
 
-    :::info
+7. `TeamsMeetingFunctions.cs` を開いてコンストラクタを確認します。`Startup.cs` で指定した `GraphServiceClient` を受け取って関数の処理で使用するためにフィールドに設定しています。`IConfiguration` は関数の処理で `local.settings.json` に設定した `USER_ID` を取得するために使用します。
 
-    You'll also see imports from `dateTimeFormat.ts` which will be used later in this exercise. `startDateTimeAsync` and `endDateTimeAsync` will be used while creating a Microsoft Teams meeting link to define start date and end date for the meeting.
-
-    ::: 
-
-7.  Take a moment to examine `clientSecretCredential` and `appGraphClient`, they will be used later in the authentication process and when calling the Microsoft Graph API:
-
-    ```typescript
-    let clientSecretCredential;
-    let appGraphClient;
-    ```
-
-8.  Locate the `ensureGraphForAppOnlyAuth` function:
-    - `ClientSecretCredential` uses the `Tenant Id`, `Client Id` and `Client Secret` values from the Azure Active Directory app.
-    - The `authProvider` object is defined as an Azure Active Directory app that will authenticate in the background and use app-only permissions (such as **Calendars.ReadWrite**) to make Microsoft Graph API calls.
-
-    ```typescript
-    function ensureGraphForAppOnlyAuth() {
-        if (!clientSecretCredential) {
-            clientSecretCredential = new ClientSecretCredential(
-                process.env.TENANT_ID,
-                process.env.CLIENT_ID,
-                process.env.CLIENT_SECRET
-            );
-        }
-
-        if (!appGraphClient) {
-            const authProvider = new TokenCredentialAuthenticationProvider(
-            clientSecretCredential, {
-                scopes: [ 'https://graph.microsoft.com/.default' ]
-            });
-
-            appGraphClient = Client.initWithMiddleware({
-                authProvider: authProvider
-            });
-        }
+    ```csharp
+    private readonly GraphServiceClient _graphServiceClient;
+    private readonly IConfiguration _configuration;
+    
+    public TeamsMeetingFunction(GraphServiceClient graphServiceClient, IConfiguration configuration)
+    {
+        _graphServiceClient = graphServiceClient;
+        _configuration = configuration;
     }
-    ``` 
+    ```
+    
+8. `CreateMeetingEventAsync` メソッドを確認します:
+   - [Microsoft Graph Calendar Events API](https://learn.microsoft.com/graph/api/calendar-post-events?view=graph-rest-1.0&tabs=http) にデータを送信して、引数の `userId` で渡された ID のユーザーのカレンダーに動的に新しいイベントを作成します。
+   - 作成したイベントデータを返します。
 
-9.  Take a moment to explore the `createNewMeetingAsync` function. It posts data to the [Microsoft Graph Calendar Events API](https://learn.microsoft.com/graph/api/calendar-post-events?view=graph-rest-1.0&tabs=http) which dynamically creates an event in a user's calendar and returns the new event details:
+    ```csharp
+    private async Task<Event> CreateMeetingEventAsync(string userId) => 
+        await _graphServiceClient
+            .Users[userId]
+            .Calendar
+            .Events
+            .Request()
+            .AddAsync(new()
+            {
+                Subject = "Customer Service Meeting",
+                Start = new()
+                {
+                    DateTime = DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ss"),
+                    TimeZone = "UTC"
+                },
+                End = new()
+                {
+                    DateTime = DateTime.UtcNow.AddHours(1).ToString("yyyy-MM-ddTHH:mm:ss"),
+                    TimeZone = "UTC"
+                },
+                IsOnlineMeeting = true
+            });
+    ```
 
-    ```typescript
-    async function createNewMeetingAsync(userId) {
-        ensureGraphForAppOnlyAuth();
-        let startTime = await startDateTimeAsync();
-        let endTime = await endDateTimeAsync();
-        const newMeeting = `/users/${userId}/calendar/events`;
-        
-        const event = {
-        subject: 'Customer Service Meeting',
-        start: {
-            dateTime: startTime,
-            timeZone: 'UTC'
-        },
-        end: {
-            dateTime: endTime,
-            timeZone: 'UTC'
-        },
-        isOnlineMeeting: true
-        };
-        
-        const newEvent = await appGraphClient.api(newMeeting).post(event);    
-        return newEvent;     
+9. `Run` メソッドについて確認します:
+   - コンストラクタでフィールドに設定した `_configuration` から `local.settings.json` の `USER_ID` を読み込み `CreateMeetingEventAsync` を呼び出してカレンダーに新しいイベントを作成しています。
+   - イベントの Teams 会議リンクをレスポンスとして返しています。 
+
+    ```csharp
+    [FunctionName("TeamsMeetingFunction")]
+    public async Task<IActionResult> Run(
+        [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)] HttpRequest req,
+        ILogger log)
+    {
+        var userId = _configuration.GetValue<string>("USER_ID");
+        var newEvent = await CreateMeetingEventAsync(userId);
+    
+        return new OkObjectResult(newEvent.OnlineMeeting.JoinUrl);
     }
-
-    export default createNewMeetingAsync;
     ```
+    
+10. Visual Studio で `F5` キーを押すか、メニューの `デバッグ --> デバッグの開始` を選択してプログラムを実行します。
 
-10. Go to `TeamsMeetingFunction/index.ts` and explore the Http Trigger function:
-    - `createNewMeetingAsync` is imported from `graph.ts`. It handles creating and retrieving new event details.
-    - `userId` is retrieved from `local.settings.json` inside the Http Trigger function. This is done by accessing the `USER_ID` environment variable by using `process.env.USER_ID`.
-    - When the function is triggered, it calls `createNewMeetingAsync` with the defined user id and returns the new event details in `teamMeetingLink` parameter.
-    - The function accesses the Teams meeting join URL by calling `meeting.onlineMeeting.joinUrl` and returns the value in the body of the response.
+11. `TeamsMeetingFunction` が使用可能になったので、React アプリから呼び出して確認をしましょう。 
 
-    ```typescript
-    import { AzureFunction, Context, HttpRequest } from "@azure/functions";
-    import createNewMeetingAsync from '../Shared/graph';
-
-    let teamsMeetingLink;
-
-    const httpTrigger: AzureFunction = async function (context: Context, req: HttpRequest){
-        context.log("Request received");
-        const userId = process.env.USER_ID;
-        context.log('UserId', userId);
-        
-        teamsMeetingLink = await createNewMeetingAsync(userId);
-        const body = JSON.stringify(teamsMeetingLink);
-        const meeting = JSON.parse(body);
-        context.log("meeting:", meeting);
-        
-        context.res = {
-            // status: 200, /* Defaults to 200 */
-            body: meeting.onlineMeeting.joinUrl
-        }    
-    };
-
-    export default httpTrigger;
-    ```
-
-11. Use a terminal window to run `npm start` in the `samples/acs-video-to-teams-meeting/server/typescript` folder to run the function locally. 
-
-12. Now that the `TeamsMeetingFunction` is ready to use, let's call the function from the React app.
-
-13. Go back to the `samples/acs-to-teams-meeting/client/react` folder in VS Code. Add a `.env` file into the folder with the following values:
+12. `samples/acs-to-teams-meeting/client/react` フォルダーを VS Code で開きます。そして `.env` ファイルを以下の値に変更します:
 
     ```
     REACT_APP_TEAMS_MEETING_FUNCTION=http://localhost:7071/api/TeamsMeetingFunction
@@ -201,19 +167,21 @@ sidebar_position: 3
 
     :::info
 
-        These values will be passed into React as it builds so that you can easily change them as needed during the build process.
+        これらの値はビルド時に React に渡されるため、必要に応じてビルド プロセス中に必要に応じて簡単に変更することが出来ます。
     
     :::
 
-14. Open `samples/acs-to-teams-meeting/client/react/App.tsx` file in VS Code.
+13. `samples/acs-to-teams-meeting/client/react/App.tsx` ファイルを VS Code で開きます。
 
+14. コンポーネント内の `teamsMeetingLink` の状態変数を探します。ハードコードされている Teams 会議リンクを空文字に置き換えます:
 15. Locate the `teamsMeetingLink` state variable in the component. Remove the hardcoded teams link and replace it with empty quotes:
 
     ```typescript
     const [teamsMeetingLink, setTeamsMeetingLink] = useState<string>('');
     ```
 
-16. Locate the `useEffect` function and change it to look like the following. This handles calling the Azure Function you looked at earlier which creates a Teams meeting and returns the meeting join link:
+
+16. `useEffect` 関数を探し、以下のように変更します。先ほど説明した Teams の会議を作成して会議の参加リンクを返す Azure Function の呼び出しを行います:
 
     ```typescript
     useEffect(() => {
@@ -229,7 +197,7 @@ sidebar_position: 3
             
             setMessage('Getting Teams meeting link...');
             //Call Azure Function to get the meeting link
-            res = await fetch(process.env.REACT_APP_TEAMS_MEETING_FUNCTION as string);
+            let res = await fetch(process.env.REACT_APP_TEAMS_MEETING_FUNCTION as string); // Please add `let`.
             let link = await res.text();
             setTeamsMeetingLink(link);
             setMessage('');
@@ -241,10 +209,10 @@ sidebar_position: 3
     }, []);
     ```
 
-17. Save the file before continuing.
+17. 先に進む前にファイルを保存します。
 
-18. Open another terminal window, `cd` into the `react` folder, and run `npm start` to build and run the application. 
+18. ターミナル ウィンドウで `react` フォルダーを開いて `npm start` を実行してアプリケーションを実行させてください。
 
-19. After the application builds, you should see the ACS calling UI displayed and can then call into the Teams meeting that was dynamically created by Microsoft Graph.
+19. アプリケーションがビルドされると、ACS の通話の画面が表示され、Microsoft Graph によって動的に作成された Teams の会議に参加できます。
 
-20. Stop both of the terminal processes (React and Azure Functions) by entering `ctrl + c` in each terminal window.
+20. ターミナル ウィンドウで `Ctrl + C` を押して React のアプリを終了させてください。そして Visual Studio で `Shift + F5` を押すかメニューの `デバッグ --> デバッグの停止` を選択してデバッグを終了させてください。
