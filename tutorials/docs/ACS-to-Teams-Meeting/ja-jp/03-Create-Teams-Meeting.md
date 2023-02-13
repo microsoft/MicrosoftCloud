@@ -1,42 +1,42 @@
 ---
-title: 3. Dynamically Create a Microsoft Teams Meeting using Microsoft Graph
+title: 3. Microsoft Graph を使って動的に Microsoft Teams 会議を作成する
 sidebar_position: 3
 ---
 
-# Exercise 3
+# 演習 3
 
-## Dynamically Create a Microsoft Teams Meeting using Microsoft Graph
-In this exercise, you'll automate the process of creating a Microsoft Teams meeting link and passing to the ACS by using Azure Functions and Microsoft Graph.
+## Microsoft Graph を使って動的に Microsoft Teams 会議を作成する
+
+この演習では、Microsoft Graph と Azure Functions を使って自動的に Microsoft Teams 会議リンクを作成して ACS に渡します。
 
 ![Create Teams Meeting](/img/acs-to-teams/3-create-teams-meeting-link.png "Create Teams Meeting")
 
-1. You'll need to create an Azure Active Directory (AAD) app for Deamon app authentication. In this step, authentication will be handled in the backgroud with `app credentials`, and AAD app will use Application Permissions to make Microsoft Graph API calls. Microsoft Graph will be used to dynamically create a Microsoft Teams meeting and return the Teams meeting URL.
+1. Azure Active Directory (AAD) にデーモン アプリ認証のためのアプリを作成します。ここでは 認証は `アプリの資格情報` と共にバックグラウンドで処理が行われ、AAD アプリは Microsoft Graph API の呼び出しをアプリケーションの許可で行います。Microsoft Graph を使用して、Microsoft Teams の会議を動的に作成し、Teams の会議 URL を返します。
 
-1. Perform the following steps to create an AAD app:
-    1. Go to [Azure Portal](https://portal.azure.com) and select `Azure Active Directory`.
-    1. Select the `App registration` tab followed by `+ New registration`.
-    1. Fill in the new app registration form details as shown below and select `Register`:
-        - Name: *ACS Teams Interop App*
-        - Supported account types: *Accounts in any organizational directory (Any Azure AD directory - Multitenant) and personal Microsoft accounts (e.g. Skype, Xbox)*
-        - Redirect URI: leave this blank
-    1. After the app is registered, go to `API permissions` and select `+ Add a permission`.
-    1. Select `Microsoft Graph` followed by `Application permissions`.
-    1. Select the **Calendars.ReadWrite** permission and then select `Add`.
-    1. After adding the permissions, select `Grant admin consent for <your organization name>`.
-    1. Go to the `Certificates & secrets` tab, select `+ New client secret`, and then select `Add`. 
-    1. Copy the value of the secret into a local file. You'll use the value later in this exercise.
-    1. Go to the `Overview` tab and copy the `Application (client) ID` and `Directory (tenant) ID` values into the same local file that you used in the previous step.
+2. 以下の手順で、 AAD アプリを作成します:
+    1. [Azure Portal](https://portal.azure.com) を開いて、`Azure Active Directory` を選択。
+    2. `アプリの登録` を選択して `新規登録` を選択。
+    3. 以下のようにアプリケーションの登録フォームを入力し `登録` を選択:
+        - 名前: *ACS Teams Interop App*
+        - サポートされているアカウントの種類: *任意の組織ディレクトリ内のアカウント (任意の Azure AD ディレクトリ - マルチテナント) と個人の Microsoft アカウント (Skype、Xbox など)*
+        - リダイレクト URI: 空欄のまま
+    4. アプリの登録後に `API のアクセス許可` を選択して `+ アクセス許可の追加` を選択。
+    5. `Microsoft Graph` を選択して `アプリケーションの許可` を選択。
+    6. **Calendars.ReadWrite** を選択して `アクセス許可の追加` を選択。
+    7. アクセス許可の追加後に、`<あなたのテナント名> に管理者の同意を与えます` を選択。
+    8. `証明書とシークレット` に移動して `+ 新しいクライアント シークレット` を選択して `追加` を選択。
+    9. 追加されたシークレットの値をコピーしてローカルのファイルにコピー。この演習の後ろで使用します。
+    10. `概要` に移動して  `アプリケーション (クライアント) ID` と `ディレクトリ (テナント) ID` の値をコピーして、前の手順で使用したローカル ファイルにコピー。
 
-1. Open the `samples/acs-video-to-teams-meeting/server/typescript` project folder in Visual Studio Code.
+3. `samples/acs-to-teams-meeting/server/csharp/ExerciseACS.sln` を Visual Studio 2022 で開いてください。
 
-1. Go to the `TeamsMeetingFunction` folder and create a `local.settings.json` file with the following values:
-
-    - Use the values you copied into the local file to update the `TENANT_ID`, `CLIENT_ID` and `CLIENT_SECRET` values.
-    - Define `USER_ID` with the user id that you'd like to create a Microsoft Teams Meeting. 
+4. `ExerciseACS` プロジェクトに以下の内容で `local.settings.json` を追加してください:
+    - `TENANT_ID` と `CLIENT_ID` と `CLIENT_SECRET` はローカル ファイルにコピーした値を使って更新してください。
+    - `USER_ID` には Microsoft Teams 会議を作成したいユーザーの ID を指定します。
 
     :::note
 
-    You can get your User ID from [Azure Portal](https://portal.azure.com). Select `Azure Active Directory` and navigate to the `Users` tab on the side bar. Search for your user name and select it to see the user details. Inside the user details, Object ID represents the User ID. Copy the `Object ID` value and use it for the `USER_ID` value in `local.settings.json`.
+    ユーザー ID は [Azure Portal](https://portal.azure.com) から取得できます。`Azure Active Directory` を選択してサイド バーの `ユーザー` を選択します。自分のユーザー名を検索して選択をしてユーザーの詳細を開きます。ユーザーの詳細にあるオブジェクト ID がユーザーの ID になります。`オブジェクト ID` をコピーして `local.settings.json` の `USER_ID` として使用してください。
 
     ![Getting User ID from Azure Active Directory](/img/acs-to-teams/aad-user-id.png "Getting User ID from Azure Active Directory")
 
@@ -65,20 +65,19 @@ In this exercise, you'll automate the process of creating a Microsoft Teams meet
     ```
     :::note
 
-    `ACS_CONNECTION_STRING` will be used in the next exercise so you don't need to update it yet.
+    `ACS_CONNECTION_STRING` は次の演習で使用するため、ここでは更新を行いません。
 
     :::
 
-1. Open the `package.json` file in VS Code and note that the following Microsoft Graph and Identity packages are included:
+5. ソリューション エクスプローラーで `ExerciseACS` プロジェクトをダブル クリックしてプロジェクト ファイルを開きます。以下の `PackageReference` タグで Microsoft Graph や認証のパッケージが含まれています:
 
-    ```bash
-    @azure/communication-identity
-    @azure/identity
-    @microsoft/microsoft-graph-client
+    ```xml
+    <PackageReference Include="Azure.Communication.Identity" Version="1.2.0" />
+    <PackageReference Include="Azure.Identity" Version="1.8.2" />
+    <PackageReference Include="Microsoft.Graph" Version="4.53.0" />
     ```
-1. Open a terminal window in the `typescript` folder and run the `npm install` command to install the application dependencies.
 
-1. Open `Shared/graph.ts` and take a moment to expore the imports at the top of the file. This code handles importing authentication and client symbols that will be used in the Azure Function to call Microsoft Graph.
+6. Open `Shared/graph.ts` and take a moment to expore the imports at the top of the file. This code handles importing authentication and client symbols that will be used in the Azure Function to call Microsoft Graph.
 
     ```typescript
     import {startDateTimeAsync, endDateTimeAsync} from './dateTimeFormat';
@@ -94,14 +93,14 @@ In this exercise, you'll automate the process of creating a Microsoft Teams meet
 
     ::: 
 
-1. Take a moment to examine `clientSecretCredential` and `appGraphClient`, they will be used later in the authentication process and when calling the Microsoft Graph API:
+7.  Take a moment to examine `clientSecretCredential` and `appGraphClient`, they will be used later in the authentication process and when calling the Microsoft Graph API:
 
     ```typescript
     let clientSecretCredential;
     let appGraphClient;
     ```
 
-1. Locate the `ensureGraphForAppOnlyAuth` function:
+8.  Locate the `ensureGraphForAppOnlyAuth` function:
     - `ClientSecretCredential` uses the `Tenant Id`, `Client Id` and `Client Secret` values from the Azure Active Directory app.
     - The `authProvider` object is defined as an Azure Active Directory app that will authenticate in the background and use app-only permissions (such as **Calendars.ReadWrite**) to make Microsoft Graph API calls.
 
@@ -128,7 +127,7 @@ In this exercise, you'll automate the process of creating a Microsoft Teams meet
     }
     ``` 
 
-1. Take a moment to explore the `createNewMeetingAsync` function. It posts data to the [Microsoft Graph Calendar Events API](https://learn.microsoft.com/graph/api/calendar-post-events?view=graph-rest-1.0&tabs=http) which dynamically creates an event in a user's calendar and returns the new event details:
+9.  Take a moment to explore the `createNewMeetingAsync` function. It posts data to the [Microsoft Graph Calendar Events API](https://learn.microsoft.com/graph/api/calendar-post-events?view=graph-rest-1.0&tabs=http) which dynamically creates an event in a user's calendar and returns the new event details:
 
     ```typescript
     async function createNewMeetingAsync(userId) {
@@ -157,7 +156,7 @@ In this exercise, you'll automate the process of creating a Microsoft Teams meet
     export default createNewMeetingAsync;
     ```
 
-1. Go to `TeamsMeetingFunction/index.ts` and explore the Http Trigger function:
+10. Go to `TeamsMeetingFunction/index.ts` and explore the Http Trigger function:
     - `createNewMeetingAsync` is imported from `graph.ts`. It handles creating and retrieving new event details.
     - `userId` is retrieved from `local.settings.json` inside the Http Trigger function. This is done by accessing the `USER_ID` environment variable by using `process.env.USER_ID`.
     - When the function is triggered, it calls `createNewMeetingAsync` with the defined user id and returns the new event details in `teamMeetingLink` parameter.
@@ -188,11 +187,11 @@ In this exercise, you'll automate the process of creating a Microsoft Teams meet
     export default httpTrigger;
     ```
 
-1. Use a terminal window to run `npm start` in the `samples/acs-video-to-teams-meeting/server/typescript` folder to run the function locally. 
+11. Use a terminal window to run `npm start` in the `samples/acs-video-to-teams-meeting/server/typescript` folder to run the function locally. 
 
-1. Now that the `TeamsMeetingFunction` is ready to use, let's call the function from the React app.
+12. Now that the `TeamsMeetingFunction` is ready to use, let's call the function from the React app.
 
-1. Go back to the `samples/acs-to-teams-meeting/client/react` folder in VS Code. Add a `.env` file into the folder with the following values:
+13. Go back to the `samples/acs-to-teams-meeting/client/react` folder in VS Code. Add a `.env` file into the folder with the following values:
 
     ```
     REACT_APP_TEAMS_MEETING_FUNCTION=http://localhost:7071/api/TeamsMeetingFunction
@@ -206,15 +205,15 @@ In this exercise, you'll automate the process of creating a Microsoft Teams meet
     
     :::
 
-1. Open `samples/acs-to-teams-meeting/client/react/App.tsx` file in VS Code.
+14. Open `samples/acs-to-teams-meeting/client/react/App.tsx` file in VS Code.
 
-1. Locate the `teamsMeetingLink` state variable in the component. Remove the hardcoded teams link and replace it with empty quotes:
+15. Locate the `teamsMeetingLink` state variable in the component. Remove the hardcoded teams link and replace it with empty quotes:
 
     ```typescript
     const [teamsMeetingLink, setTeamsMeetingLink] = useState<string>('');
     ```
 
-1. Locate the `useEffect` function and change it to look like the following. This handles calling the Azure Function you looked at earlier which creates a Teams meeting and returns the meeting join link:
+16. Locate the `useEffect` function and change it to look like the following. This handles calling the Azure Function you looked at earlier which creates a Teams meeting and returns the meeting join link:
 
     ```typescript
     useEffect(() => {
@@ -242,10 +241,10 @@ In this exercise, you'll automate the process of creating a Microsoft Teams meet
     }, []);
     ```
 
-1. Save the file before continuing.
+17. Save the file before continuing.
 
-1. Open another terminal window, `cd` into the `react` folder, and run `npm start` to build and run the application. 
+18. Open another terminal window, `cd` into the `react` folder, and run `npm start` to build and run the application. 
 
-1. After the application builds, you should see the ACS calling UI displayed and can then call into the Teams meeting that was dynamically created by Microsoft Graph.
+19. After the application builds, you should see the ACS calling UI displayed and can then call into the Teams meeting that was dynamically created by Microsoft Graph.
 
-1. Stop both of the terminal processes (React and Azure Functions) by entering `ctrl + c` in each terminal window.
+20. Stop both of the terminal processes (React and Azure Functions) by entering `ctrl + c` in each terminal window.
