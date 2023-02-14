@@ -156,7 +156,7 @@ Visual Studio 2022 を使用して Azure Functions にデプロイを行いま�
 
     ```powershell
     az acr build --registry $ACR_NAME --image acs-to-teams-meeting `
-      --build-arg REACT_APP_ACS_USER_FUNCTION="$AZURE_FUNCTIONS_DOMAIN+/api/ACSTokenFunction" `
+      --build-arg REACT_APP_ACS_USER_FUNCTION="$AZURE_FUNCTIONS_DOMAIN/api/ACSTokenFunction" `
       --build-arg REACT_APP_TEAMS_MEETING_FUNCTION="$AZURE_FUNCTIONS_DOMAIN/api/TeamsMeetingFunction" .
     ```
 
