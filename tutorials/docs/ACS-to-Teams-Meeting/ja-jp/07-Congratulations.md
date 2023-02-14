@@ -2,8 +2,8 @@
 sidebar_position: 6
 ---
 
-# Congratulations!
+# お疲れ様でした
 
-## You've completed this tutorial! 
+## 以上で、このチュートリアルは完了です。
 
 ![ACS Audio/Video Solution](/img/acs-to-teams/architecture-no-title.png "Scenario Architecture")

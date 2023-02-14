@@ -1,56 +1,56 @@
 ---
-title: 5. Deploy the App to Azure Static Web Apps
+title: 5. アプリを Azure Static Web Apps にデプロイする
 sidebar_position: 5
 ---
 
-# Exercise 5
+# 演習 5
 
-## Deploy the App to Azure Static Web Apps
+## アプリを Azure Static Web Apps にデプロイする
 
-In this exercise you'll learn how to deploy the ACS React app and the Azure Functions to the cloud using Azure Static Web Apps.
+この演習では、Azure Static Web Apps を使用して ACS の React アプリと Azure Functions をクラウドにデプロイする方法を学習します。
 
 ![Azure Static Web Apps](/img/acs-to-teams/5-deploy-swa.png "Azure Static Web Apps")
 
-1. Visit https://portal.azure.com in your browser and sign in.
+1. https://portal.azure.com をブラウザで開いてサインインしてください。
 
-1. Type `static web apps` in the top search bar and select `Static Web Apps` from the options that appear.
+2. 画面上部の検索バーに `static web apps` と入力して、表示された `静的 Web アプリ` を選択します。
 
     ![Azure Static Web Apps](/img/acs-to-teams/search-swa-portal.png "Azure Static Web Apps")
 
-1. Select `Create` in the toolbar.
+3. ツールバーの `作成` を選択します。
 
-1. Perform the following tasks:
-    - Select your subscription.
-    - Select the resource group to use (create a new one if needed). You can use the same resource group that you used for ACS if you'd like.
-    - Enter an Azure Static Web Apps name of `acs-to-teams-meeting`.
-    - Select the `Free` plan type.
-    - Select a region.
+4. 以下のタスクを行ってください:
+    - 自分のサブスクリプションを選択。
+    - 使用するリソース グループを選択 (必要に応じて新規作成)。ACS に使用したものと同じリソースグループを使用も出来ます。
+    - Azure Static Web Apps の名前に `acs-to-teams-meeting` と入力。
+    - ホスティング プランで `Free` を選択。
+    - リージョンを選択。
 
-1. Select the GitHub radio button and sign in to your GitHub account.
+5. ラジオ ボタンで GitHub を選択して使用する GitHub アカウントでサインインをします。
 
-1. After signing in, select your GitHub:
-    - Organization
-    - Repository (this will be the `MicrosoftCloud` repository you forked earlier in this tutorial)
-    - Branch (select `main`)
+6. サインインの後に、あなたの GitHub アカウントを選択してください:
+    - 組織
+    - リポジトリ (前のチュートリアルでフォークした `MicrosoftCloud` リポジトリ)
+    - 分岐 (`main` を選択)
 
-1. In the `Build Details` section perform the following tasks:
-    - Build Presets: `React`
-    - App location: `/samples/acs-to-teams-meeting/client/react`
-    - Api location: `/samples/acs-to-teams-meeting/server/typescript`
-    - Output location: `build`
+7. `ビルドの詳細` セクションで以下のタスクを行ってください:
+    - ビルドのプリセット: `React`
+    - アプリの場所: `/samples/acs-to-teams-meeting/client/react`
+    - API の場所: `/samples/acs-to-teams-meeting/server/typescript`
+    - 出力先: `build`
 
-1. Select `Review + create`.
+8. `確認および作成` を選択してください。
 
-1. Review the details and select `Create`.
+9.  詳細を確認して `作成` を選択してください。
 
-1. Notice the URL that is created for your static web app. Copy the URL shown on the Overview screen to a file. You'll need it later in this exercise.
+10. 作成が完了したらリソースに移動して概要にある URL を確認してください。この演習の後半で必要になるので URL をファイルにコピーしてください。
 
-1. Select `Settings --> Configuration` for your new static web app.
+11. Static Web Apps の `設定 --> 構成` を選択してください。
 
-1. Add all of the following key/value pairs into the `Application settings` by selecting the `+ Add` button. Get the values from your `local.settings.json` in the `server/typescript` folder.
+12. `+ 追加` ボタンを押して以下のキーと値を `アプリケーション設定` に追加してください。これらの値は Visual Studio の `ExerciseACS` プロジェクトの `local.settings.json` から取得してください。
 
     ```
-    # Get the values from your local.settings.json file
+    # これらの値を local.settings.json ファイルから取得
     TENANT_ID: <YOUR_VALUE>
     CLIENT_ID: <YOUR_VALUE>
     CLIENT_SECRET: <YOUR_VALUE>
@@ -58,13 +58,13 @@ In this exercise you'll learn how to deploy the ACS React app and the Azure Func
     ACS_CONNECTION_STRING: <YOUR_VALUE>
     ```
 
-1. Select the `Save` button at the top of the Configuration screen in the Azure Portal.
+13. Azure ポータルの構成画面の上部にある `保存` ボタンを選択してください。
 
-1. Now that you've finished setting up the Azure Static Web App, go back to your GitHub repository (the one you forked earlier) and notice a `.yml` file has been added into the `.github/workflows` folder. 
+14. Azure Static Web App の構成が完了しました。GitHub リポジトリ (前にフォークしたもの) に戻って `.github/workflows` フォルダーにある `.yml` ファイルを確認してください。
 
-1. Open the `.yml` file in VS Code and add the following YAML immediately after the `###### End of Repository/Build Configurations ######` comment. Replace the `<YOUR_AZURE_SWA_DOMAIN>` placeholders with your Azure Static Web Apps URL value. 
+15. GitHub リポジトリから pull して `.yml` ファイルを VS Code で開いて `###### End of Repository/Build Configurations ######` コメントの直後に以下の内容を追加します。その際に `<YOUR_AZURE_SWA_DOMAIN>` は、先ほど作成した Azure Static Web Apps の URL に置き換えてください。
 
-    > IMPORTANT: Ensure that the `env:` property is indented properly. It should match up with the indentation of the `with:` property above it.
+    > 重要: `:env` が適切にインデントされていることを確認してください。これは上にある `:with` のインデントと一致させる必要があります。
 
     ```yaml
     env: # Add environment variables here
@@ -74,12 +74,12 @@ In this exercise you'll learn how to deploy the ACS React app and the Azure Func
 
     :::info
 
-    This will add environment variables into the build process for the React app so that it knows what APIs to call to get the ACS user token as well as to create a Teams meeting.
+    これにより React アプリのビルド プロセスに環境変数が渡され、ACS のユーザートークンや Teams 会議を作成する際に呼び出す API がわかるようになります。
 
     :::
 
-1. Save the `.yml` file and push the changes up to your GitHub repository. This will trigger a new build of the React application and then deploy it to your Azure Static Web App. 
+16. `.yml` ファイルを保存し、変更を GitHub リポジトリにプッシュします。これにより、React アプリケーションの新しいビルドが開始され、Azure Static Web App にデプロイされます。
 
-1. Once the build process completes, visit the URL for your Azure Static Web App and you should see the application running.
+17. ビルド プロセスの完了後に Azure Static Web App の URL にアクセスすると、アプリケーションが動作していることが確認できます。
 
-1. You've successfully completed this tutorial!
+18. 以上で、このチュートリアルは完了です。
