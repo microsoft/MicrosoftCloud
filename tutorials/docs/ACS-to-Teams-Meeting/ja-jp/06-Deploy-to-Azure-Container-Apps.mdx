@@ -1,74 +1,85 @@
 ---
-title: 6. Deploy the App to Azure Functions and Azure Container Apps
+title: 6. アプリを Azure Functions と Azure Container Apps にデプロイする
 sidebar_position: 6
 ---
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Exercise 6
+# 演習 6
 
-## Deploy the App to Azure Functions and Azure Container Apps
+## アプリを Azure Functions と Azure Container Apps にデプロイする
 
 :::info
-In addition to the [pre-requisites listed for this tutorial](/MicrosoftCloud/tutorials/docs/ACS-to-Teams-Meeting/), you'll also need to install the Azure CLI on your machine to complete this exercise.
+[このチュートリアルの前提条件](/MicrosoftCloud/tutorials/docs/ACS-to-Teams-Meeting/) に加えて、この演習を完了するには Azure CLI をインストールする必要があります。
 
 - [Azure CLI](https://learn.microsoft.com/cli/azure/install-azure-cli)
 :::
 
-In this exercise you'll learn how to deploy the Microsoft Graph and ACS functions discussed in earlier exercises 
-to Azure Functions. You'll also build a container image and deploy it to Azure Container Apps.
+この演習では、これまでの演習で取り上げた Microsoft Graph と ACS の Functions を Azure Functions にデプロイする方法を学びます。
+また、コンテナ イメージを構築し Azure Container Apps にデプロイします。
 
 ![Azure Container Apps](/img/acs-to-teams/6-deploy-container-apps.png "Azure Container Apps")
 
-### Deploy to Azure Functions
+### Azure Functions にデプロイする
 
-Let's get started by using VS Code to deploy the functions code to Azure Functions.
+Visual Studio 2022 を使用して Azure Functions にデプロイを行いましょう。
 
-1. Open the `samples/acs-video-to-teams-meeting/server/typescript` project folder in Visual Studio Code.
+1. `samples/acs-video-to-teams-meeting/server/csharp/ExerciseACS.sln` を Visual Studio 2022 で開きます。
 
-1. You should already have run `npm install` and see a `node_modules` folder in the project root. If not, open a command window and run `npm install` to install the dependencies.
+2. ソリューション エクスプローラーの `ExerciseACS` プロジェクトの上で右クリックします。
 
-1. Open the VS Code command pallet (`shift + cmd + p` on Mac | `shift + ctrl + p` on Windows), and select **Azure Functions: Create Function App in Azure**.
+3. `コンテキスト メニュー --> 発行` を選択します。
 
-    ![Create Function App in Azure](/img/automate-data-azure-functions-power-automate/create-function-app-in-azure.png "Create Function App in Azure")
+4. ターゲットで `Azure` を選択して `次へ` を選択します。
 
-1. You'll be prompted to enter the following information:
+5. `Azure Function App (Windows)` を選択して `次へ` を選択します。
 
-    - Your Azure subscription name.
-    - The function name - enter `acsFunctions<YOUR_LAST_NAME>`.
+6. デプロイ先のサブスクリプションを選択 (Azure のサブスクリプションに紐づくアカウントでサインインをしていない場合はサインインを行ってください) して `+ 新規作成` を選択します。
 
-    :::note 
-    A globally unique name is required. You can make the name more unique by adding a number or your last name to the end of the name.
-    :::
+7. 以下の内容を入力して `作成` を選択します:
+   - 名前: 任意の名前 (ワールドワイドで一意である必要があります)
+   - サブスクリプション名: デプロイ先のサブスクリプション
+   - リソースグループ: デプロイ先のリソースグループ (必要であれば新規作成をしてください)。ここまでの演習で使用してきたリソース グループも使用できます。
+   - プランの種類: 消費
+   - 場所: デプロイ先のリージョン
+   - Azure Storage: 新規作成をしてください (既存のものを使用することもできます)
+   - Application Insights: 新規作成をしてください (既存のものを使用することもできます)
 
-    - The runtime stack - Select the latest `Node.js LTS` version.
-    - The region (select any region you'd like).
+8. 作成が完了すると作成した Azure Function App が選択された状態になるので `パッケージ ファイルから実行します (推奨)` にチェックが入っていることを確認して `完了` を選択します。
 
-1. Once the Azure Function App is created you'll see a message about viewing the details. 
+9. 発行プロファイルが作成されるので `発行` ボタンを選択して Azure にデプロイを行います。
 
-1. Go back to the command pallet in VS Code and select **Azure Functions: Deploy to Function App**. You'll be asked to select your subscription and the Function App name you created earlier.
+11. デプロイが完了したら Azure ポータルで作成した Function App を選択します。
 
-1. Once the function is deployed to Azure, do the following:
+12. 概要にある URL をコピーしてローカル ファイルに保存してください。演習の後半で使用します。
 
-    - Select the Azure extension in VS Code (click the Azure icon in the sidebar).
-    - Expand your subscription.
-    - Expand your Function App.
-    - Right-click on the function and select **Browse Website**. Ensure the function app is working correctly before proceeding.
+13. Function App の `設定 --> 構成` を選択してください。
 
-1. Copy the Azure Function domain to a local file. You'll use the value later in this exercise.
+14. `+ 追加` ボタンを押して以下のキーと値を `アプリケーション設定` に追加してください。これらの値は Visual Studio の `ExerciseACS` プロジェクトの `local.settings.json` から取得してください。
 
-### Deploy to Azure Container Apps
+    ```
+    # これらの値を local.settings.json ファイルから取得
+    TENANT_ID: <YOUR_VALUE>
+    CLIENT_ID: <YOUR_VALUE>
+    CLIENT_SECRET: <YOUR_VALUE>
+    USER_ID: <YOUR_VALUE>
+    ACS_CONNECTION_STRING: <YOUR_VALUE>
+    ```
 
-1. The first task you'll perform is to create a new [Azure Container Registry (ACR)](https://learn.microsoft.com/azure/container-registry/container-registry-get-started-azure-cli) resource. Once the registry is created, you'll build an image and push it to the registry.
+15. Azure ポータルの構成画面の上部にある `保存` ボタンを選択してください。
 
-1. Open a command window and run the following command to login to your Azure subscription:
+### Azure Container Apps にデプロイする
+
+1. 最初に新しい [Azure Container Registry (ACR)](https://learn.microsoft.com/azure/container-registry/container-registry-get-started-azure-cli) リソースを作成します。リソースを作成した後に、イメージをビルドしてレジストリにプッシュします。
+
+2. コマンド ウィンドウを開き以下のコマンドを実行して Azure サブスクリプションにログインします:
 
     ```bash
     az login
     ```
 
-1. Add the following shell variables substituting your values for the placeholders. Add your `<GITHUB_USERNAME>` as a lowercase value and subsitute your Azure Functions domain for the `<AZURE_FUNCTIONS_DOMAIN>` value (include the `https://` in the domain value).
+3. プレースホルダーを自分の値に変更して以下のシェル変数を追加します。`<GITHUB_USERNAME>`を小文字で追加して、`<AZURE_FUNCTIONS_DOMAIN>` に Azure Functions のドメインを代入します (ドメインには `https://` を含む)。
 
     <Tabs>
     <TabItem value="bash" label="Bash">
@@ -93,7 +104,7 @@ Let's get started by using VS Code to deploy the functions code to Azure Functio
     </TabItem>
     </Tabs>
 
-1. Create a new ACR resource by running the following command:
+4. 以下のコマンドを実行して、新しい ACR リソースを作成します:
 
     <Tabs>
     <TabItem value="bash" label="Bash">
@@ -120,12 +131,12 @@ Let's get started by using VS Code to deploy the functions code to Azure Functio
     </TabItem>
     </Tabs>
 
-1. Open the `samples/acs-video-to-teams-meeting/client/react/Dockerfile` file in your editor and notice that the following tasks are performed:
+5. `samples/acs-video-to-teams-meeting/client/react/Dockerfile` をエディターで開いて、以下のタスクが実行されていることを確認します:
 
-    - The React application is built and assigned to the `build` stage.
-    - The nginx server is configured and the output of the `build` stage is copied into the nginx server image.
+    - `build` ステージで React アプリケーションがビルドされています。
+    - ngnx サーバーが設定され、`build` ステージの出力が nginx サーバー イメージにコピーされています。
 
-1. Build the container image in Azure by running the following command from the root of the `samples/acs-video-to-teams-meeting/client/react` folder. Replace `<YOUR_FUNCTIONS_DOMAIN>` with your Azure Functions domain that you copied to a local file earlier in this exercise.
+6. `samples/acs-video-to-teams-meeting/client/react` フォルダーので、以下のコマンドを実行して、Azure のコンテナーイメージを構築します。
 
     <Tabs>
     <TabItem value="bash" label="Bash">
@@ -148,63 +159,63 @@ Let's get started by using VS Code to deploy the functions code to Azure Functio
     </TabItem>
     </Tabs>
 
-1. Run the following command to list the images in your registry. You should see your new image listed.
-    
+7. 以下のコマンドを実行してレジストリ内のイメージの一覧を表示します。新しいイメージが表示されます。
+
     ```bash
     az acr repository list --name $ACR_NAME --output table
     ```
 
-1. Now that the image is deployed, you need to create an Azure Container App that can run the container.
+8. イメージがデプロイされたので、コンテナを実行するための Azure Container App を作成します。
 
-1. Visit https://portal.azure.com in your browser and sign in.
+9. https://portal.azure.com をブラウザーで開いてサインインを行います。
 
-1. Type `container apps` in the top search bar and select `Container Apps` from the options that appear.
+10. 画面上部の検索バーに `コンテナー アプリ` と入力して、表示された `コンテナー アプリ` を選択します。
 
-1. Select `Create` in the toolbar.
-
-    :::note
-    Although you're using the Azure Portal, a Container App can also be created by using the Azure CLI. For more information, see [Quickstart: Deploy your first container app](https://learn.microsoft.com/azure/container-apps/get-started). You'll see an example of how the Azure CLI can be used at the end of this exercise as well.
-    :::
-
-1. Perform the following tasks:
-    - Select your subscription.
-    - Select the resource group to use (create a new one if needed). You can use the same resource group that you used for your ACS resource if you'd like. Copy your resource group name to the same local file where you stored your Azure Functions domain.
-    - Enter a Container app name of `acs-to-teams-meeting`.
-    - Select a region.
-    - Select **Create new** in the **Container Apps Environment** section.
-    - Enter an **Environment name** of `acs-to-teams-meeting-env`.
-    - Select the **Create** button.
-    - Select **Next: App settings >**.
-
-1. Enter the following values in the **Create Container App** screen:
-
-    - Deselect the **Use quickstart image** checkbox.
-    - **Name**: `acs-to-teams-meeting`
-    - **Image source**: `Azure Container Registry`
-    - **Registry**: `<YOUR_ACR_REGISTRY_NAME>.azurecr.io`
-    - **Image**: `acs-to-teams-meeting`
-    - **Image tag**: `latest`
-    - **CPU and Memory**: `0.25 CPU cores, -.5 Gi memory`
-
-1. In the **Application ingress settings** section, do the following:
-
-    - Select the **Enabled** checkbox.
-    - Select the **Accepting traffic from anywhere** radio button.
+11. ツールバーの `作成` を選択します。
 
     :::note
-    This will create an entry point (ingress) for your React application and allow it to be called from anywhere. Azure Container Apps redirects all traffic to HTTPS.
+    Azure Portal を使用していますが、Azure CLI を使用してもコンテナアプリを作成することができます。詳しくは、[Quickstart: Deploy your first container app](https://learn.microsoft.com/azure/container-apps/get-started)をご覧ください。この演習の最後にも、Azure CLIを使用する例があります。
     :::
 
-    - **Target Port**: `80` 
+12. 以下のタスクを実行します:
+    - 使用するサブスクリプションを選択。
+    - 使用するリソース グループ (必要があれば新規作成) を選択。ACS のリソースのために作成したものと同じリソース グループも使用できます。リソース グループ名をコピーして Azure Functions のドメインを保存したのと同じローカル ファイルに保存します。
+    - コンテナー アプリ名に `acs-to-teams-meeting` と入力。
+    - リージョンを選択。
+    - **コンテナー アプリ 環境** で **新規作成** を選択。
+    - **環境名** に `acs-to-teams-meeting-env` と入力。
+    - **Create** ボタンを選択。
+    - **次へ: アプリ設定 >** を選択。
+
+13. **コンテナー アプリの作成** 画面で以下の値を入力します:
+
+    - **クイックスタート イメージを使用する** のチェックを外す。
+    - **名前**: `acs-to-teams-meeting`
+    - **イメージのソース**: `Azure Container Registry`
+    - **レジストリ**: `<YOUR_ACR_REGISTRY_NAME>.azurecr.io`
+    - **イメージ**: `acs-to-teams-meeting`
+    - **イメージ タグ**: `latest`
+    - **CPU とメモリ**: `0.25 CPU コア、0.5 Gi メモリ`
+
+14. **アプリケーションのイングレス設定** のセクションで、以下の設定を行います:
+
+    - **有効** のチェックボックスを選択。
+    - **どこからでもトラフィックを受け入れます** のラジオ ボタンを選択。
+
+    :::note
+    これにより、React アプリケーションのエントリ ポイント (イングレス) が作成され、何処からでも呼び出すことが出来るようになります。Azure Contaienr Apps は全てのトラフィックを HTTPS にリダイレクトします。
+    :::
+
+    - **ターゲット ポート**: `80` 
     
     :::note
-    This is the default port for the nginx server.
+    これは nginx サーバーのデフォルトのポートです。
     :::
 
-1. Select **Review + create**. Once validation passes, select the **Create** button.
+15. **確認と作成** を選択します。確認が完了したら **作成** ボタンを選択します。
 
    :::info
-   If you get an error it may be due to your container apps environment being inactive for too long. The simplest solution will be to go through the process of creating the container app again. Alternatively, you can run the following command to create the container app using the Azure CLI:
+   エラーが発生した場合、コンテナアプリの環境が長い間非アクティブであったことが原因である可能性があります。最も簡単な解決策は、コンテナ アプリの作成プロセスを再度実行することです。または、以下のコマンドを実行し、Azure CLI を使用してコンテナアプリを作成することもできます:
 
     <Tabs>
     <TabItem value="bash" label="Bash">
@@ -232,4 +243,4 @@ Let's get started by using VS Code to deploy the functions code to Azure Functio
     </Tabs>
    :::
 
-1. Once your container app deployment completes, navigate to it in the Azure Portal and select the **Application Url** on the **Overview** screen to view the application running in the nginx container!
+16. コンテナ アプリのデプロイが完了したら、Azure ポータルでコンテナ アプリに移動して、**概要**画面 の **アプリケーション URL** を選択すると nginx コンテナで実行中のアプリが表示されます。
