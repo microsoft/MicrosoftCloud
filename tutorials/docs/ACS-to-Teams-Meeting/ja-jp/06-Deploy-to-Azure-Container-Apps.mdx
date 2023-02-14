@@ -69,6 +69,10 @@ Visual Studio 2022 を使用して Azure Functions にデプロイを行いま�
 
 15. Azure ポータルの構成画面の上部にある `保存` ボタンを選択してください。
 
+16. 最後に Function App の Web API を別ドメインの Web アプリから呼び出せるように CORS の設定を行います。`API --> CORS` を選択してください。
+
+17. 許可される元ドメインに `*` (どのドメインからの呼び出しも受け入れるという設定) を入力して `保存` を選択してください。
+
 ### Azure Container Apps にデプロイする
 
 1. 最初に新しい [Azure Container Registry (ACR)](https://learn.microsoft.com/azure/container-registry/container-registry-get-started-azure-cli) リソースを作成します。リソースを作成した後に、イメージをビルドしてレジストリにプッシュします。
