@@ -26,7 +26,7 @@ sidebar_position: 2
     git clone https://github.com/<YOUR_ORG_NAME>/MicrosoftCloud
     ```
 
-1. プロジェクトフォルダ `samples/acs-video-to-teams-meeting/client/react` を Visual Studio Code で開きます。
+1. プロジェクトフォルダ `samples/acs-to-teams-meeting/client/react` を Visual Studio Code で開きます。
 
 1. `package.json` ファイルを VS Code で開いてください。このとき、次の ACS パッケージが含まれていることに注意してください。
 
