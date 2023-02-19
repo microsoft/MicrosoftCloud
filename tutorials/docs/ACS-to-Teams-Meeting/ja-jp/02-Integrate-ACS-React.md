@@ -5,50 +5,51 @@ sidebar_position: 2
 
 # Exercise 2
 
-## Integrate Azure Communication Services Calling into a React App
+## React アプリに Azure Communication Services (ACS) の通話機能を組み込む
 
-In this exercise you'll add the [ACS UI calling composite](https://azure.github.io/communication-ui-library/?path=/docs/composites-call-joinexistingcall--join-existing-call) into a React app to enable making audio/video calls from a custom app into a Microsoft Teams meeting.
+この演習では、[ACS UI 通話コンポジット](https://azure.github.io/communication-ui-library/?path=/docs/composites-call-joinexistingcall--join-existing-call) を React アプリに追加して、カスタム アプリから Microsoft Teams 会議への音声/ビデオ通話を行えるようにします。
+
 
 ![ACS in React](/img/acs-to-teams/2-acs-react.png "ACS in React")
 
-1. Visit https://github.com and sign in. If you don't already have a GitHub account, you can select the `Sign up` option to create one.
+1. https://github.com にアクセスしてサインインします。 (まだ GitHub アカウントを持っていない場合は `Sign up` からどうぞ。)
 
-1. Visit https://github.com/microsoft/MicrosoftCloud.
+1. https://github.com/microsoft/MicrosoftCloud にアクセスしてください。
 
-1. Select the `Fork` option to add the repository to your desired GitHub organization/account.
+1. `Fork` を選択し、目的の GitHub 組織/アカウントに リポジトリを追加します。
 
     ![Fork a Repository](/img/acs-to-teams/fork-repo.png "Fork a Repository")
 
-1. Run the following command to clone this repository to your machine. Replace `<YOUR_ORG_NAME>` with your GitHub organization/account name.
+1. 次のコマンドを実行して、このリポジトリをマシンにクローンします。このとき、`<YOUR_ORG_NAME>` の部分を GitHub 組織/アカウント名に置き換えます。
 
     ```bash
     git clone https://github.com/<YOUR_ORG_NAME>/MicrosoftCloud
     ```
 
-1. Open the `samples/acs-video-to-teams-meeting/client/react` project folder in Visual Studio Code. 
+1. プロジェクトフォルダ `samples/acs-video-to-teams-meeting/client/react` を Visual Studio Code で開きます。
 
-1. Open the `package.json` file in VS Code and note the following ACS packages are included:
+1. `package.json` ファイルを VS Code で開いてください。このとき、次の ACS パッケージが含まれていることに注意してください。
 
     ```
     @azure/communication-common 
     @azure/communication-react
     ``` 
 
-1. Double-check that you have `npm 7` or higher installed by opening a terminal window and running the following command:
+1. ターミナルを開き、`npm 7` 以上がインストール済みであることを再確認しましょう。次のコマンドでチェックできます。
 
-    ```
+    ```bash
     npm --version
     ```
 
     :::tip
     
-    If you don't have `npm 7` or higher installed you can update npm to the latest version by running `npm install -g npm`.
+    もし `npm 7` 以上がインストールされていない場合は、`npm install -g npm` を実行して npm を最新バージョンに更新できます。
 
     :::
 
-1. Open a terminal window and run the `npm install` command in the `react` folder to install the application dependencies. 
+1. ターミナルウィンドウを開き、`react` フォルダで `npm install` コマンドを実行し、アプリケーションの依存関係をインストールします。
 
-1. Open `App.tsx` and take a moment to expore the imports at the top of the file. These handle importing ACS security and audio/video calling symbols that will be used in the app.
+1. `App.tsx` を開き、ファイルの上部にあるインポートを確認してください。これらは、アプリで使用される ACS セキュリティとオーディオ/ビデオ通話シンボルのインポートを処理します。
 
     ```typescript
     import { 
@@ -66,15 +67,15 @@ In this exercise you'll add the [ACS UI calling composite](https://azure.github.
 
     :::note
     
-    You'll see how the `CallComposite` component is used later in this exercise. It provides the core UI functionality for Azure Communication Services to enable making an audio/video call from the app into a Microsoft Teams meeting.
+    `CallComposite` コンポーネントがどのように使用されるかについては、この演習の後半で説明します。Azure Communication Services のコア UI 機能を提供して、アプリから Microsoft Teams 会議への音声/ビデオ通話を行うことができます。
 
     :::
 
-1. Locate the `App` component and perform the following tasks:
-    - Take a moment to examine the `useState` definitions in the component.
-    - Replace the `userId` `useState` function's empty quotes with the ACS user identity value you copied in the previous exercise.
-    - Replace the `token` `useState` function's empty quotes with the ACS token value you copied in the previous exercise.
-    - Replace the `teamsMeetingLink` `useState` function's empty quotes with the Teams meeting link value you copied in the previous exercise.
+1. `App` コンポーネントを見つけて、次のタスクを実行します。
+    - コンポーネント内の `useState` の定義を確認してください。
+    - `userId` `useState` 関数の空の引用符を、前の演習でコピーした ACS ユーザー ID 値に置き換えます。
+    - `token` `useState` 関数の空の引用符を、前の演習でコピーした ACS トークン値に置き換えます。
+    - `teamsMeetingLink` `useState` 関数の空の引用符を、前の演習でコピーした Teams ミーティング リンクの値に置き換えます。
 
     ```typescript
     // Replace '' with the ACS user identity value
@@ -89,13 +90,13 @@ In this exercise you'll add the [ACS UI calling composite](https://azure.github.
 
     :::note
     
-    Later in this tutorial you'll see how to retrieve the `userId`, `token`, and `teamsMeetingLink` values dynamically.
+    このチュートリアルの後半で、`userId`, `token`, `teamsMeetingLink` の値を動的に取得する方法を学びます。
 
     :::
 
-1. Take a moment to explore the `useMemo` functions in the `App` component.
-    - The `credential` `useMemo` function creates a new `AzureCommunicationTokenCredential` instance once the token has a value.
-    - The `callAdapterArgs` `useMemo` function returns an object that has the arguments that are used to make an audio/video call. Notice that is uses the `userId`, `credential`, and `teamsMeetingLink` values in the ACS call arguments.
+1. `App` コンポーネントの中にある、`useMemo` 関数を見てみましょう。
+    -  `credential` の `useMemo` 関数は、`token` の値が入っていると 新しい `AzureCommunicationTokenCredential` インスタンスを作成します。
+    - `callAdapterArgs` `useMemo` 関数は、オーディオ/ビデオ通話をするときに使われる引数を持つオブジェクトを返します。`userId`, `credential`, `teamsMeetingLink` は ACS の通話系の機能で使われる値であることに注意してください。
 
     ```typescript
     const credential = useMemo(() => {
@@ -119,12 +120,14 @@ In this exercise you'll add the [ACS UI calling composite](https://azure.github.
     ```
 
     :::note
-
-    `useMemo` is used in this scenario because we only want the `AzureCommunicationTokenCredential` object and the call adapter args to be created once as the necessary parameters are passed in. View additional details about [useMemo here](https://reactjs.org/docs/hooks-reference.html#usememo).
-
+    
+    `useMemo` がこのシナリオで使われる理由としては、
+    必要なパラメーターが渡されるときに `AzureCommunicationTokenCredential` オブジェクトと `callAdapterArgs` の作成を 1 回だけにするために使用されます。   
+    (`useMemo` の詳細については [こちら](https://reactjs.org/docs/hooks-reference.html#usememo) をご参照ください。)
+    
     :::
 
-1. Once the `credentials` and `callAdapterArgs` are ready, the following line handles creating an ACS call adapter using the `useAzureCommunicationCallAdapter` React hook provided by ACS. The `callAdapter` object will be used later in the UI calling composite component.
+1. `credentials` と `callAdapterArgs` の準備が整ったら、以下のコードが、ACS によって提供されている `useAzureCommunicationCallAdapter` React フックを使った ACS call adapter の作成を処理します。この `callAdapter` オブジェクトは、後の コンポジット コンポーネントを呼び出す UI で使用されます。
 
     ```typescript
     const callAdapter = useAzureCommunicationCallAdapter(callAdapterArgs);
@@ -132,15 +135,15 @@ In this exercise you'll add the [ACS UI calling composite](https://azure.github.
 
     :::note
 
-    Because `useAzureCommunicationCallAdapter` is a React hook, it won't assign a value to `callAdapter` until the `callAdapterArgs` value is valid.
-
+    `useAzureCommunicationCallAdapter` は React フックであるため、 `callAdapterArgs` の値が有効になるまで `callAdapter` に値を割り当てません。
+    
     :::
 
-1. Earlier you assigned the user identity, token, and Teams meeting link to state values in the `App` component. That works fine for now, but in a later exercise you'll see how to dynamically retrieve those values. Since you set the values earlier, comment out the code in the `useEffect` function as shown next. Once you get the Azure Functions running in the next exercises, you'll revisit this code.
+1. 以前、ユーザ ID, token, Teams meeting link を App コンポーネントの state 変数に割り当てましたね。今のところ問題なく動作しますが、後の演習で、これらの値を動的に取得する方法を学びます。次に示すように、`useEffect` 関数をコメントアウトしましょう。次の演習の Azure Functions を走らせたときに、またこのコードに戻ってくることになります。
 
     ```typescript
     useEffect(() => {
-        /* Commenting out for now
+        /* Commenting out for now（今のところコメントアウト）
         const init = async () => {
             setMessage('Getting ACS user');
             //Call Azure Function to get the ACS user identity and token
@@ -162,7 +165,7 @@ In this exercise you'll add the [ACS UI calling composite](https://azure.github.
     }, []);
     ```
 
-1. Locate the following JSX code. It uses the `CallComposite` symbol you saw imported to render the user interface used to make an audio/video call from the React app into a Teams meeting. The `callAdapter` you explored earlier is passed to its `adapter` property to provide the required arguments.
+1. 次の JSX コードを見つけます。これは、`CallComposite` シンボルを使用して、React アプリから Teams ミーティングへの音声/ビデオ通話を行うために使用されるユーザー インターフェイスをレンダリングしています。前に調べた `callAdapter` が `adapter` プロパティに渡され、必要な引数が提供されます。
 
     ```jsx
     if (callAdapter) {
@@ -179,10 +182,10 @@ In this exercise you'll add the [ACS UI calling composite](https://azure.github.
     }
     ```
 
-1. Save the file before continuing.
+1. 続行する前にファイルを保存します。
 
-1. Run `npm start` in your terminal window to run the application. Ensure you run the command within the `react` folder.
+1. ターミナルウィンドウで `npm start` をたたき、アプリケーションを実行します。 （このとき、カレントディレクトリが `react` であることに注意しましょう。）
 
-1. After the applications builds you should see a calling UI displayed. Enable selecting your microphone and camera and initiate the call. You should see that you're placed in a waiting room. If you join the meeting you setup earlier in Microsoft Teams, you can allow the guest to enter the meeting.
+1. アプリケーションがビルドされると、web アプリが立ち上がり、通話 UI が表示されます。マイクとカメラの選択を有効にして、通話を開始すると、ロビーで待機中になります。以前 Teams でセットした会議に (Microsoft Teams アプリから) 参加すると、その待機中のゲストを会議に入れることができます。
 
-1. Press `ctrl+c` to stop the application. Now that you've successfully run it, let's explore how you can dynamically get the ACS user identity and token and automatically create a Microsoft Teams meeting and return the join URL using Microsoft Graph.
+1. `ctrl+c` を押してアプリを停止します。正常に実行できたので、ACS ユーザー ID とトークンを動的に取得し、Microsoft Teams 会議を自動的に作成し、Microsoft Graph を使用して参加 URL を返す方法を見てみましょう。
