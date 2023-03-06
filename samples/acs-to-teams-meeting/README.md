@@ -29,11 +29,11 @@ Technologies used in this scenario include:
 
 ## Setup Steps
 
-To get the solution running you'll need to run the front-end and back-end solutions. You can alternatively go through our [hands-on tutorial](https://microsoft.github.io/MicrosoftCloud/tutorials/docs/ACS-to-Teams-Meeting) as well which will provide many more details.
-
-1. You'll need to create an **Azure Communication Services** resource using the [Azure Portal](https://portal.azure.com). Visit https://learn.microsoft.com/azure/communication-services/quickstarts/create-communication-resource for instructions.
+To get the solution running you'll need to run the front-end and back-end solutions. You can alternatively go through our [hands-on tutorial](https://microsoft.github.io/MicrosoftCloud/tutorials/docs/ACS-to-Teams-Meeting) as well which will provide step-by-step instructions.
 
 1. Follow the steps in the `acs-to-teams-meeting/server/[your-chosen-language]` readme (for example the `acs-to-teams-meeting/server/typescript`) to register an Azure Active Directory application and start the Azure Function.
+
+1. Open the `acs-to-teams-meeting/client/react` folder in a terminal window.
 
 1. Add the following environment variables by opening a command window and running the following commands. Choose the `Bash` or `Powershell` option based on your local setup.
 
@@ -51,7 +51,9 @@ To get the solution running you'll need to run the front-end and back-end soluti
     $Env:REACT_APP_TEAMS_MEETING_FUNCTION = "http://localhost:7071/api/TeamsMeetingFunction"
     ```
 
-1. Run `npm start` in this project.
+1. Run `npm install`.
+
+1. Run `npm start`.
 
     > NOTE: Ensure that you started the server project first as mentioned above.
 
