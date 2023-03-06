@@ -27,9 +27,9 @@ In this exercise, you'll automate the process of creating a Microsoft Teams meet
     1. Copy the value of the secret into a local file. You'll use the value later in this exercise.
     1. Go to the `Overview` tab and copy the `Application (client) ID` and `Directory (tenant) ID` values into the same local file that you used in the previous step.
 
-1. Open the `samples/acs-video-to-teams-meeting/server/typescript` project folder in Visual Studio Code.
+3. Open the `samples/acs-to-teams-meeting/server/csharp/ExerciseACS.sln` in Visual Studio 2022.
 
-1. Go to the `TeamsMeetingFunction` folder and create a `local.settings.json` file with the following values:
+4. Go to the `ExerciseACS` project and create a `local.settings.json` file with the following values:
 
     - Use the values you copied into the local file to update the `TENANT_ID`, `CLIENT_ID` and `CLIENT_SECRET` values.
     - Define `USER_ID` with the user id that you'd like to create a Microsoft Teams Meeting. 
@@ -69,130 +69,94 @@ In this exercise, you'll automate the process of creating a Microsoft Teams meet
 
     :::
 
-1. Open the `package.json` file in VS Code and note that the following Microsoft Graph and Identity packages are included:
+5. Open the `CreateMeetingEventAsync` project in the Solution Explorer to open the project file. Note that the following Microsoft Graph and Identity packages are included by using `PackageReference` tags:
 
-    ```bash
-    @azure/communication-identity
-    @azure/identity
-    @microsoft/microsoft-graph-client
-    ```
-1. Open a terminal window in the `typescript` folder and run the `npm install` command to install the application dependencies.
-
-1. Open `Shared/graph.ts` and take a moment to expore the imports at the top of the file. This code handles importing authentication and client symbols that will be used in the Azure Function to call Microsoft Graph.
-
-    ```typescript
-    import {startDateTimeAsync, endDateTimeAsync} from './dateTimeFormat';
-    import {ClientSecretCredential} from '@azure/identity';
-    import {Client} from '@microsoft/microsoft-graph-client';
-    import {TokenCredentialAuthenticationProvider} from '@microsoft/microsoft-graph-client/authProviders/azureTokenCredentials';
-    import 'isomorphic-fetch';
+    ```xml
+    <PackageReference Include="Azure.Communication.Identity" Version="1.2.0" />
+    <PackageReference Include="Azure.Identity" Version="1.8.2" />
+    <PackageReference Include="Microsoft.Graph" Version="4.53.0" />
     ```
 
-    :::info
+6. Go to `Startup.cs` and check the beginning of the `Configure` method:
+    - This code creates a `GraphServiceClient` for calling Microsoft Graph from Azure Functions.
+    - You can make Microsoft Graph API calls with app-only permissions (such as **Calendars.ReadWrite**) by passing `ClientSecretCredential` to the `GraphServiceClient` constructor. The `ClientSecretCredential` uses the `Tenant Id`, `Client Id` and `Client Secre` values from the Azure Active Directory app.
 
-    You'll also see imports from `dateTimeFormat.ts` which will be used later in this exercise. `startDateTimeAsync` and `endDateTimeAsync` will be used while creating a Microsoft Teams meeting link to define start date and end date for the meeting.
+     ``` csharp
+     var config = p.GetRequiredService<IConfiguration>();
+     var clientSecretCredential = new ClientSecretCredential(
+         config. GetValue<string>("TENANT_ID"),
+         config. GetValue<string>("CLIENT_ID"),
+         config. GetValue<string>("CLIENT_SECRET")
+     );
+    
+     return new GraphServiceClient(
+         client Secret Credential,
+         new[] { "https://graph.microsoft.com/.default" }
+     ```
 
-    ::: 
+7. Open `TeamsMeetingFunctions.cs` and take a moment to examine its constructor. It recieves `GraphServiceClient` specified in `Startup.cs` and sets it to the field property. `IConfiguration` is used to get the `USER_ID` set in `local.settings.json`.
 
-1. Take a moment to examine `clientSecretCredential` and `appGraphClient`, they will be used later in the authentication process and when calling the Microsoft Graph API:
-
-    ```typescript
-    let clientSecretCredential;
-    let appGraphClient;
-    ```
-
-1. Locate the `ensureGraphForAppOnlyAuth` function:
-    - `ClientSecretCredential` uses the `Tenant Id`, `Client Id` and `Client Secret` values from the Azure Active Directory app.
-    - The `authProvider` object is defined as an Azure Active Directory app that will authenticate in the background and use app-only permissions (such as **Calendars.ReadWrite**) to make Microsoft Graph API calls.
-
-    ```typescript
-    function ensureGraphForAppOnlyAuth() {
-        if (!clientSecretCredential) {
-            clientSecretCredential = new ClientSecretCredential(
-                process.env.TENANT_ID,
-                process.env.CLIENT_ID,
-                process.env.CLIENT_SECRET
-            );
-        }
-
-        if (!appGraphClient) {
-            const authProvider = new TokenCredentialAuthenticationProvider(
-            clientSecretCredential, {
-                scopes: [ 'https://graph.microsoft.com/.default' ]
-            });
-
-            appGraphClient = Client.initWithMiddleware({
-                authProvider: authProvider
-            });
-        }
+    ```csharp
+    private readonly GraphServiceClient _graphServiceClient;
+    private readonly IConfiguration _configuration;
+    
+    public TeamsMeetingFunction(GraphServiceClient graphServiceClient, IConfiguration configuration)
+    {
+        _graphServiceClient = graphServiceClient;
+        _configuration = configuration;
     }
-    ``` 
+    ```
+    
+8. Take a moment to explore the `CreateMeetingEventAsync` method.
+    - It posts data to the [Microsoft Graph Calendar Events API](https://learn.microsoft.com/graph/api/calendar-post-events?view=graph-rest-1.0&tabs=http) which dynamically creates an event in a user's calendar and returns the new event details.
+    - It also returns created event data.
 
-1. Take a moment to explore the `createNewMeetingAsync` function. It posts data to the [Microsoft Graph Calendar Events API](https://learn.microsoft.com/graph/api/calendar-post-events?view=graph-rest-1.0&tabs=http) which dynamically creates an event in a user's calendar and returns the new event details:
+    ```csharp
+    private async Task<Event> CreateMeetingEventAsync(string userId) => 
+        await _graphServiceClient
+            .Users[userId]
+            .Calendar
+            .Events
+            .Request()
+            .AddAsync(new()
+            {
+                Subject = "Customer Service Meeting",
+                Start = new()
+                {
+                    DateTime = DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ss"),
+                    TimeZone = "UTC"
+                },
+                End = new()
+                {
+                    DateTime = DateTime.UtcNow.AddHours(1).ToString("yyyy-MM-ddTHH:mm:ss"),
+                    TimeZone = "UTC"
+                },
+                IsOnlineMeeting = true
+            });
+    ```
 
-    ```typescript
-    async function createNewMeetingAsync(userId) {
-        ensureGraphForAppOnlyAuth();
-        let startTime = await startDateTimeAsync();
-        let endTime = await endDateTimeAsync();
-        const newMeeting = `/users/${userId}/calendar/events`;
-        
-        const event = {
-        subject: 'Customer Service Meeting',
-        start: {
-            dateTime: startTime,
-            timeZone: 'UTC'
-        },
-        end: {
-            dateTime: endTime,
-            timeZone: 'UTC'
-        },
-        isOnlineMeeting: true
-        };
-        
-        const newEvent = await appGraphClient.api(newMeeting).post(event);    
-        return newEvent;     
+9. Explore the `Run` method:
+    - `USER_ID` is retrieved from `local.settings.json`, which is done by accessing the "User_ID" environment variable by using `_configuration`.
+    - When the function is triggered, it calls `CreateMeetingEventAsync` and returns the new event link URL as a responce.
+
+    ```csharp
+    [FunctionName("TeamsMeetingFunction")]
+    public async Task<IActionResult> Run(
+        [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)] HttpRequest req,
+        ILogger log)
+    {
+        var userId = _configuration.GetValue<string>("USER_ID");
+        var newEvent = await CreateMeetingEventAsync(userId);
+    
+        return new OkObjectResult(newEvent.OnlineMeeting.JoinUrl);
     }
-
-    export default createNewMeetingAsync;
     ```
+10. Run the program by pressing `F5` in Visual Studio or by selecting `Debug --> Start Debugging` from the menu.
 
-1. Go to `TeamsMeetingFunction/index.ts` and explore the Http Trigger function:
-    - `createNewMeetingAsync` is imported from `graph.ts`. It handles creating and retrieving new event details.
-    - `userId` is retrieved from `local.settings.json` inside the Http Trigger function. This is done by accessing the `USER_ID` environment variable by using `process.env.USER_ID`.
-    - When the function is triggered, it calls `createNewMeetingAsync` with the defined user id and returns the new event details in `teamMeetingLink` parameter.
-    - The function accesses the Teams meeting join URL by calling `meeting.onlineMeeting.joinUrl` and returns the value in the body of the response.
+11. Now that the `TeamsMeetingFunction` is ready to use, let's call the function from the React app.
 
-    ```typescript
-    import { AzureFunction, Context, HttpRequest } from "@azure/functions";
-    import createNewMeetingAsync from '../Shared/graph';
+12. Open the `samples/acs-to-teams-meeting/client/react` folder in VS Code. Change the `.env` file with the following values:
 
-    let teamsMeetingLink;
-
-    const httpTrigger: AzureFunction = async function (context: Context, req: HttpRequest){
-        context.log("Request received");
-        const userId = process.env.USER_ID;
-        context.log('UserId', userId);
-        
-        teamsMeetingLink = await createNewMeetingAsync(userId);
-        const body = JSON.stringify(teamsMeetingLink);
-        const meeting = JSON.parse(body);
-        context.log("meeting:", meeting);
-        
-        context.res = {
-            // status: 200, /* Defaults to 200 */
-            body: meeting.onlineMeeting.joinUrl
-        }    
-    };
-
-    export default httpTrigger;
-    ```
-
-1. Use a terminal window to run `npm start` in the `samples/acs-video-to-teams-meeting/server/typescript` folder to run the function locally. 
-
-1. Now that the `TeamsMeetingFunction` is ready to use, let's call the function from the React app.
-
-1. Go back to the `samples/acs-to-teams-meeting/client/react` folder in VS Code. Add a `.env` file into the folder with the following values:
 
     ```
     REACT_APP_TEAMS_MEETING_FUNCTION=http://localhost:7071/api/TeamsMeetingFunction
@@ -201,20 +165,19 @@ In this exercise, you'll automate the process of creating a Microsoft Teams meet
     ```
 
     :::info
-
-        These values will be passed into React as it builds so that you can easily change them as needed during the build process.
-    
+         These values will be passed into React as it builds so that you can easily change them as needed during the build process.
     :::
 
-1. Open `samples/acs-to-teams-meeting/client/react/App.tsx` file in VS Code.
+13. Open `samples/acs-to-teams-meeting/client/react/App.tsx` file in VS Code.
 
-1. Locate the `teamsMeetingLink` state variable in the component. Remove the hardcoded teams link and replace it with empty quotes:
+14. Locate the `teamsMeetingLink` state variable in the component. Remove the hardcoded teams link and replace it with empty quotes:
 
     ```typescript
     const [teamsMeetingLink, setTeamsMeetingLink] = useState<string>('');
     ```
 
-1. Locate the `useEffect` function and change it to look like the following. This handles calling the Azure Function you looked at earlier which creates a Teams meeting and returns the meeting join link:
+15. Locate the `useEffect` function and change it to look like the following. This handles calling the Azure Function you looked at earlier which creates a Teams meeting and returns the meeting join link:
+
 
     ```typescript
     useEffect(() => {
@@ -230,7 +193,7 @@ In this exercise, you'll automate the process of creating a Microsoft Teams meet
             
             setMessage('Getting Teams meeting link...');
             //Call Azure Function to get the meeting link
-            res = await fetch(process.env.REACT_APP_TEAMS_MEETING_FUNCTION as string);
+            let res = await fetch(process.env.REACT_APP_TEAMS_MEETING_FUNCTION as string); // Please add `let`.
             let link = await res.text();
             setTeamsMeetingLink(link);
             setMessage('');
@@ -242,10 +205,10 @@ In this exercise, you'll automate the process of creating a Microsoft Teams meet
     }, []);
     ```
 
-1. Save the file before continuing.
+16. Save the file before continuing.
 
-1. Open another terminal window, `cd` into the `react` folder, and run `npm start` to build and run the application. 
+17. Open another terminal window, cd into the react folder, and run npm start to build and run the application.
 
-1. After the application builds, you should see the ACS calling UI displayed and can then call into the Teams meeting that was dynamically created by Microsoft Graph.
+18. After the application builds, you should see the ACS calling UI displayed and can then call into the Teams meeting that was dynamically created by Microsoft Graph.
 
-1. Stop both of the terminal processes (React and Azure Functions) by entering `ctrl + c` in each terminal window.
+19. Stop both of the terminal processes (React and Azure Functions) by entering ctrl + c in each terminal window.

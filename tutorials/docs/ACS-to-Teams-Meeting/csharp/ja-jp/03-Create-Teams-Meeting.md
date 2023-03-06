@@ -78,7 +78,7 @@ sidebar_position: 3
     ```
 
 
-6. `Startup.cs` をいて `Configure` メソッドの先頭を確認します:
+6. `Startup.cs` を開いて `Configure` メソッドの先頭を確認します:
    - このコードは Microsoft Graph を Azure Functions から呼び出すための `GraphServiceClient` を作成しています。
    - `Tenant Id`, `Client Id`, `Client Secret` を指定して作成した `ClientSecretCredential` を `GraphServiceClient` のコンストラクタに渡すことでアプリケーションの権限 (**Calendars.ReadWrite** など) を使用して Microsoft Graph を呼び出すことが出来ます。
 
