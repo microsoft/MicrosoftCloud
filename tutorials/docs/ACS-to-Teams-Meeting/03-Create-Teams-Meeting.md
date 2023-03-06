@@ -27,7 +27,7 @@ In this exercise, you'll automate the process of creating a Microsoft Teams meet
     1. Copy the value of the secret into a local file. You'll use the value later in this exercise.
     1. Go to the `Overview` tab and copy the `Application (client) ID` and `Directory (tenant) ID` values into the same local file that you used in the previous step.
 
-1. Open the `samples/acs-video-to-teams-meeting/server/typescript` project folder in Visual Studio Code.
+1. Open the `samples/acs-to-teams-meeting/server/typescript` project folder in Visual Studio Code.
 
 1. Go to the `TeamsMeetingFunction` folder and create a `local.settings.json` file with the following values:
 
@@ -222,16 +222,16 @@ In this exercise, you'll automate the process of creating a Microsoft Teams meet
             /* Commenting out for now
             setMessage('Getting ACS user');
             //Call Azure Function to get the ACS user identity and token
-            let res = await fetch(process.env.REACT_APP_ACS_USER_FUNCTION as string);
-            let user = await res.json();
+            const res = await fetch(process.env.REACT_APP_ACS_USER_FUNCTION as string);
+            const user = await res.json();
             setUserId(user.userId);
             setToken(user.token);
             */
             
             setMessage('Getting Teams meeting link...');
             //Call Azure Function to get the meeting link
-            res = await fetch(process.env.REACT_APP_TEAMS_MEETING_FUNCTION as string);
-            let link = await res.text();
+            const resTeams = await fetch(process.env.REACT_APP_TEAMS_MEETING_FUNCTION as string);
+            const link = await resTeams.text();
             setTeamsMeetingLink(link);
             setMessage('');
             console.log('Teams meeting link', link);

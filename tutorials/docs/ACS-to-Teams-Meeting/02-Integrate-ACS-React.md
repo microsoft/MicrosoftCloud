@@ -25,7 +25,7 @@ In this exercise you'll add the [ACS UI calling composite](https://azure.github.
     git clone https://github.com/<YOUR_ORG_NAME>/MicrosoftCloud
     ```
 
-1. Open the `samples/acs-video-to-teams-meeting/client/react` project folder in Visual Studio Code. 
+1. Open the `samples/acs-to-teams-meeting/client/react` project folder in Visual Studio Code. 
 
 1. Open the `package.json` file in VS Code and note the following ACS packages are included:
 
