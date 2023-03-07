@@ -79,7 +79,7 @@ In this exercise, you'll automate the process of creating a Microsoft Teams meet
 
 6. Go to `Startup.cs` and check the beginning of the `Configure` method:
     - This code creates a `GraphServiceClient` for calling Microsoft Graph from Azure Functions.
-    - You can make Microsoft Graph API calls with app-only permissions (such as **Calendars.ReadWrite**) by passing `ClientSecretCredential` to the `GraphServiceClient` constructor. The `ClientSecretCredential` uses the `Tenant Id`, `Client Id` and `Client Secre` values from the Azure Active Directory app.
+    - You can make Microsoft Graph API calls with app-only permissions (such as **Calendars.ReadWrite**) by passing `ClientSecretCredential` to the `GraphServiceClient` constructor. The `ClientSecretCredential` uses the `Tenant Id`, `Client Id` and `Client Secret` values from the Azure Active Directory app.
 
      ``` csharp
      var config = p.GetRequiredService<IConfiguration>();
