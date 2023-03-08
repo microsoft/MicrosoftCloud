@@ -29,18 +29,7 @@ In this exercise, you'll automate the process of creating a Microsoft Teams meet
 
 1. Open the `samples/acs-to-teams-meeting/server/typescript` project folder in Visual Studio Code.
 
-1. Go to the `TeamsMeetingFunction` folder and create a `local.settings.json` file with the following values:
-
-    - Use the values you copied into the local file to update the `TENANT_ID`, `CLIENT_ID` and `CLIENT_SECRET` values.
-    - Define `USER_ID` with the user id that you'd like to create a Microsoft Teams Meeting. 
-
-    :::note
-
-    You can get your User ID from [Azure Portal](https://portal.azure.com). Select `Azure Active Directory` and navigate to the `Users` tab on the side bar. Search for your user name and select it to see the user details. Inside the user details, Object ID represents the User ID. Copy the `Object ID` value and use it for the `USER_ID` value in `local.settings.json`.
-
-    ![Getting User ID from Azure Active Directory](/img/acs-to-teams/aad-user-id.png "Getting User ID from Azure Active Directory")
-
-    :::
+1. Create a `local.settings.json` file with the following values:
 
     ```json
     {
@@ -63,6 +52,18 @@ In this exercise, you'll automate the process of creating a Microsoft Teams meet
         ]
     }
     ```
+
+    - Use the values you copied into the local file to update the `TENANT_ID`, `CLIENT_ID` and `CLIENT_SECRET` values.
+    - Define `USER_ID` with the user id that you'd like to create a Microsoft Teams Meeting. 
+
+    :::note
+
+    You can get the User ID from the [Azure Portal](https://portal.azure.com). Select `Azure Active Directory` and navigate to the `Users` tab on the side bar. Search for your user name and select it to see the user details. Inside the user details, Object ID represents the User ID. Copy the `Object ID` value and use it for the `USER_ID` value in `local.settings.json`.
+
+    ![Getting User ID from Azure Active Directory](/img/acs-to-teams/aad-user-id.png "Getting User ID from Azure Active Directory")
+
+    :::
+
     :::note
 
     `ACS_CONNECTION_STRING` will be used in the next exercise so you don't need to update it yet.
@@ -76,15 +77,16 @@ In this exercise, you'll automate the process of creating a Microsoft Teams meet
     @azure/identity
     @microsoft/microsoft-graph-client
     ```
+
 1. Open a terminal window in the `typescript` folder and run the `npm install` command to install the application dependencies.
 
 1. Open `Shared/graph.ts` and take a moment to expore the imports at the top of the file. This code handles importing authentication and client symbols that will be used in the Azure Function to call Microsoft Graph.
 
     ```typescript
-    import {startDateTimeAsync, endDateTimeAsync} from './dateTimeFormat';
-    import {ClientSecretCredential} from '@azure/identity';
-    import {Client} from '@microsoft/microsoft-graph-client';
-    import {TokenCredentialAuthenticationProvider} from '@microsoft/microsoft-graph-client/authProviders/azureTokenCredentials';
+    import { startDateTimeAsync, endDateTimeAsync } from './dateTimeFormat';
+    import { ClientSecretCredential } from '@azure/identity';
+    import { Client } from '@microsoft/microsoft-graph-client';
+    import { TokenCredentialAuthenticationProvider } from '@microsoft/microsoft-graph-client/authProviders/azureTokenCredentials';
     import 'isomorphic-fetch';
     ```
 
