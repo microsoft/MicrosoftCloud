@@ -36,23 +36,24 @@ const App = () => {
 
   useEffect(() => {
     const init = async () => {
-      setMessage('Getting ACS user');
-      //Call Azure Function to get the ACS user identity and token
-      const res = await fetch(process.env.REACT_APP_ACS_USER_FUNCTION as string);
-      const user = await res.json();
-      setUserId(user.userId);
-      setToken(user.token);
-
-      setMessage('Getting Teams meeting link...');
-      //Call Azure Function to get the meeting link
-      const resTeams = await fetch(process.env.REACT_APP_TEAMS_MEETING_FUNCTION as string);
-      const link = await resTeams.text();
-      setTeamsMeetingLink(link);
-      setMessage('');
-      console.log('Teams meeting link', link);
+        setMessage('Getting ACS user');
+        //Call Azure Function to get the ACS user identity and token
+        let res = await fetch(process.env.REACT_APP_ACS_USER_FUNCTION as string);
+        let user = await res.json();
+        setUserId(user.userId);
+        setToken(user.token);
+        
+        setMessage('Getting Teams meeting link...');
+        //Call Azure Function to get the meeting link
+        res = await fetch(process.env.REACT_APP_TEAMS_MEETING_FUNCTION as string);
+        let link = await res.text();
+        setTeamsMeetingLink(link);
+        setMessage('');
+        console.log('Teams meeting link', link);
     }
     init();
-  }, []);
+
+}, []);
 
   if (callAdapter) {
     return (
