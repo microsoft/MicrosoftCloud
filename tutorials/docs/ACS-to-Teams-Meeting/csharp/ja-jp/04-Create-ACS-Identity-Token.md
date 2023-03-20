@@ -24,7 +24,7 @@ sidebar_position: 4
     ```
 
 4. `ACSTokenFunction.cs` を開いて `ACSTokenFunction` クラスのコンストラクタとフィールドの定義を確認します。
-   - トークンを取得する際に使用するスコープ (`CommunicationTokenScope.ViIP`) を static フィールドとして定義しています:
+   - トークンを取得する際に使用するスコープ (`CommunicationTokenScope.VoIP`) を static フィールドとして定義しています:
         ```csharp
         private static readonly CommunicationTokenScope[] Scopes = new[]
         {

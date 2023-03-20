@@ -28,9 +28,9 @@ sidebar_position: 3
     9. 追加されたシークレットの値をコピーしてローカルのファイルにコピー。この演習の後ろで使用します。
     10. `概要` に移動して  `アプリケーション (クライアント) ID` と `ディレクトリ (テナント) ID` の値をコピーして、前の手順で使用したローカル ファイルにコピー。
 
-3. `samples/acs-to-teams-meeting/server/csharp/ExerciseACS.sln` を Visual Studio 2022 で開いてください。
+3. `samples/acs-to-teams-meeting/server/csharp/GraphACSFunctions.sln` を Visual Studio 2022 で開いてください。
 
-4. `ExerciseACS` プロジェクトに以下の内容で `local.settings.json` を追加してください:
+4. `GraphACSFunctions` プロジェクトに以下の内容で `local.settings.json` を追加してください:
     - `TENANT_ID` と `CLIENT_ID` と `CLIENT_SECRET` はローカル ファイルにコピーした値を使って更新してください。
     - `USER_ID` には Microsoft Teams 会議を作成したいユーザーの ID を指定します。
 
@@ -69,7 +69,7 @@ sidebar_position: 3
 
     :::
 
-5. ソリューション エクスプローラーで `ExerciseACS` プロジェクトをダブル クリックしてプロジェクト ファイルを開きます。以下の `PackageReference` タグで Microsoft Graph や認証のパッケージが含まれています:
+5. ソリューション エクスプローラーで `GraphACSFunctions` プロジェクトをダブル クリックしてプロジェクト ファイルを開きます。以下の `PackageReference` タグで Microsoft Graph や認証のパッケージが含まれています:
 
     ```xml
     <PackageReference Include="Azure.Communication.Identity" Version="1.2.0" />
@@ -94,63 +94,76 @@ sidebar_position: 3
         clientSecretCredential,
         new[] { "https://graph.microsoft.com/.default" }
     ```
-
-7. `TeamsMeetingFunctions.cs` を開いてコンストラクタを確認します。`Startup.cs` で指定した `GraphServiceClient` を受け取って関数の処理で使用するためにフィールドに設定しています。`IConfiguration` は関数の処理で `local.settings.json` に設定した `USER_ID` を取得するために使用します。
+    
+8. `Services` フォルダーにある `GraphService.cs` を開いて内容を確認します。
+   - コンストラクタで `GraphServiceClient` と `IConfiguration` を受け取ってフィールドに設定しています。
+   - `CreateMeetingAsync` メソッドで [Microsoft Graph Calendar Events API](https://learn.microsoft.com/graph/api/calendar-post-events?view=graph-rest-1.0&tabs=http) にデータを送信して、`IConfiguration` から `local.sttings.json` に設定した `USER_ID` を読み取り、そのユーザーのカレンダーに動的に新しいイベントを作成して、ミーティングに参加するための URL を返しています。
 
     ```csharp
-    private readonly GraphServiceClient _graphServiceClient;
-    private readonly IConfiguration _configuration;
+    using System;
+    using System.Threading.Tasks;
+    using Microsoft.Graph;
+    using Microsoft.Extensions.Configuration;
     
-    public TeamsMeetingFunction(GraphServiceClient graphServiceClient, IConfiguration configuration)
+    namespace GraphACSFunctions.Services;
+    
+    public class GraphService : IGraphService
     {
-        _graphServiceClient = graphServiceClient;
-        _configuration = configuration;
+        private readonly GraphServiceClient _graphServiceClient;
+        private readonly IConfiguration _configuration;
+    
+        public GraphService(GraphServiceClient graphServiceClient, IConfiguration configuration)
+        {
+            _graphServiceClient = graphServiceClient;
+            _configuration = configuration;
+        }
+    
+        public async Task<string> CreateMeetingAsync()
+        {
+            var userId = _configuration.GetValue<string>("USER_ID");
+            var newMeeting = await _graphServiceClient
+                .Users[userId]
+                .Calendar
+                .Events
+                .Request()
+                .AddAsync(new()
+                {
+                    Subject = "Customer Service Meeting",
+                    Start = new()
+                    {
+                        DateTime = DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ss"),
+                        TimeZone = "UTC"
+                    },
+                    End = new()
+                    {
+                        DateTime = DateTime.UtcNow.AddHours(1).ToString("yyyy-MM-ddTHH:mm:ss"),
+                        TimeZone = "UTC"
+                    },
+                    IsOnlineMeeting = true
+                });
+            return newMeeting.OnlineMeeting.JoinUrl;
+        }
     }
     ```
-    
-8. `CreateMeetingEventAsync` メソッドを確認します:
-   - [Microsoft Graph Calendar Events API](https://learn.microsoft.com/graph/api/calendar-post-events?view=graph-rest-1.0&tabs=http) にデータを送信して、引数の `userId` で渡された ID のユーザーのカレンダーに動的に新しいイベントを作成します。
-   - 作成したイベントデータを返します。
+
+7. `TeamsMeetingFunctions.cs` を開いてコンストラクタを確認します。`IGraphService` を受け取って関数の処理で使用するためにフィールドに設定しています。
 
     ```csharp
-    private async Task<Event> CreateMeetingEventAsync(string userId) => 
-        await _graphServiceClient
-            .Users[userId]
-            .Calendar
-            .Events
-            .Request()
-            .AddAsync(new()
-            {
-                Subject = "Customer Service Meeting",
-                Start = new()
-                {
-                    DateTime = DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ss"),
-                    TimeZone = "UTC"
-                },
-                End = new()
-                {
-                    DateTime = DateTime.UtcNow.AddHours(1).ToString("yyyy-MM-ddTHH:mm:ss"),
-                    TimeZone = "UTC"
-                },
-                IsOnlineMeeting = true
-            });
+    private readonly IGraphService _graphService;
+    
+    public TeamsMeetingFunction(IGraphService graphService) => _graphService = graphService;
     ```
 
-9. `Run` メソッドについて確認します:
-   - コンストラクタでフィールドに設定した `_configuration` から `local.settings.json` の `USER_ID` を読み込み `CreateMeetingEventAsync` を呼び出してカレンダーに新しいイベントを作成しています。
+9.  `Run` メソッドについて確認します:
+   - コンストラクタでフィールドに設定した `_graphService` の `CreateMeetingAsync` を呼び出してカレンダーに新しいイベントを作成しています。
    - イベントの Teams 会議リンクをレスポンスとして返しています。 
 
     ```csharp
     [FunctionName("TeamsMeetingFunction")]
     public async Task<IActionResult> Run(
         [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)] HttpRequest req,
-        ILogger log)
-    {
-        var userId = _configuration.GetValue<string>("USER_ID");
-        var newEvent = await CreateMeetingEventAsync(userId);
-    
-        return new OkObjectResult(newEvent.OnlineMeeting.JoinUrl);
-    }
+        ILogger log) => 
+        new OkObjectResult(await _graphService.CreateMeetingAsync());
     ```
     
 10. Visual Studio で `F5` キーを押すか、メニューの `デバッグ --> デバッグの開始` を選択してプログラムを実行します。

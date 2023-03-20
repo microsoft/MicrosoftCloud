@@ -18,8 +18,9 @@ public class GraphService : IGraphService
 
     public async Task<string> CreateMeetingAsync()
     {
+        var userId = _configuration.GetValue<string>("USER_ID");
         var newMeeting = await _graphServiceClient
-            .Users[_configuration["USER_ID"]]
+            .Users[userId]
             .Calendar
             .Events
             .Request()

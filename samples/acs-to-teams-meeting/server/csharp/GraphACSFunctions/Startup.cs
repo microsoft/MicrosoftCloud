@@ -30,13 +30,13 @@ public class Startup : FunctionsStartup
             );
         });
 
-        builder.Services.AddSingleton<IGraphService, GraphService>();
-
         builder.Services.AddSingleton(static p =>
         {
             var config = p.GetRequiredService<IConfiguration>();
             var connectionString = config.GetValue<string>("ACS_CONNECTION_STRING");
             return new CommunicationIdentityClient(connectionString);
         });
+
+        builder.Services.AddSingleton<IGraphService, GraphService>();
     }
 }

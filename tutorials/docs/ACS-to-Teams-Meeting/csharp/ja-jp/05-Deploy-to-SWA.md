@@ -36,7 +36,7 @@ sidebar_position: 5
 7. `ビルドの詳細` セクションで以下のタスクを行ってください:
     - ビルドのプリセット: `React`
     - アプリの場所: `/samples/acs-to-teams-meeting/client/react`
-    - API の場所: `/samples/acs-to-teams-meeting/server/typescript`
+    - API の場所: `/samples/acs-to-teams-meeting/server/csharp`
     - 出力先: `build`
 
 8. `確認および作成` を選択してください。
@@ -47,7 +47,7 @@ sidebar_position: 5
 
 11. Static Web Apps の `設定 --> 構成` を選択してください。
 
-12. `+ 追加` ボタンを押して以下のキーと値を `アプリケーション設定` に追加してください。これらの値は Visual Studio の `ExerciseACS` プロジェクトの `local.settings.json` から取得してください。
+12. `+ 追加` ボタンを押して以下のキーと値を `アプリケーション設定` に追加してください。これらの値は Visual Studio の `GraphACSFunctions` プロジェクトの `local.settings.json` から取得してください。
 
     ```
     # これらの値を local.settings.json ファイルから取得
