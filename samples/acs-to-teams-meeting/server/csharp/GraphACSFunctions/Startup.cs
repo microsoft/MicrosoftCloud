@@ -1,6 +1,7 @@
 ﻿using Azure.Communication.Identity;
 using Azure.Identity;
-using ExerciseACS;
+using GraphACSFunctions;
+using GraphACSFunctions.Services;
 using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -8,7 +9,8 @@ using Microsoft.Graph;
 
 [assembly: FunctionsStartup(typeof(Startup))]
 
-namespace ExerciseACS;
+namespace GraphACSFunctions;
+
 public class Startup : FunctionsStartup
 {
     public override void Configure(IFunctionsHostBuilder builder)
@@ -27,6 +29,8 @@ public class Startup : FunctionsStartup
                 new[] { "https://graph.microsoft.com/.default" }
             );
         });
+
+        builder.Services.AddSingleton<IGraphService, GraphService>();
 
         builder.Services.AddSingleton(static p =>
         {

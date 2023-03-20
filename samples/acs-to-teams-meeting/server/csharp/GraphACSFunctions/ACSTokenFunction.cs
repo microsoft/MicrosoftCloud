@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Azure.Communication.Identity;
 
-namespace ExerciseACS;
+namespace GraphACSFunctions;
 
 public class ACSTokenFunction
 {
