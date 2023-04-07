@@ -27,9 +27,9 @@ In this exercise, you'll automate the process of creating a Microsoft Teams meet
     1. Copy the value of the secret into a local file. You'll use the value later in this exercise.
     1. Go to the `Overview` tab and copy the `Application (client) ID` and `Directory (tenant) ID` values into the same local file that you used in the previous step.
 
-3. Open the `samples/acs-to-teams-meeting/server/csharp/ExerciseACS.sln` in Visual Studio 2022.
+3. Open the `samples/acs-to-teams-meeting/server/csharp/GraphACSFunctions.sln` in Visual Studio 2022.
 
-4. Go to the `ExerciseACS` project and create a `local.settings.json` file with the following values:
+4. Go to the `GraphACSFunctions` project and create a `local.settings.json` file with the following values:
 
     - Use the values you copied into the local file to update the `TENANT_ID`, `CLIENT_ID` and `CLIENT_SECRET` values.
     - Define `USER_ID` with the user id that you'd like to create a Microsoft Teams Meeting. 
@@ -92,64 +92,81 @@ In this exercise, you'll automate the process of creating a Microsoft Teams meet
      return new GraphServiceClient(
          client Secret Credential,
          new[] { "https://graph.microsoft.com/.default" }
+     );
      ```
-
-7. Open `TeamsMeetingFunctions.cs` and take a moment to examine its constructor. It recieves `GraphServiceClient` specified in `Startup.cs` and sets it to the field property. `IConfiguration` is used to get the `USER_ID` set in `local.settings.json`.
-
-    ```csharp
-    private readonly GraphServiceClient _graphServiceClient;
-    private readonly IConfiguration _configuration;
-    
-    public TeamsMeetingFunction(GraphServiceClient graphServiceClient, IConfiguration configuration)
-    {
-        _graphServiceClient = graphServiceClient;
-        _configuration = configuration;
-    }
-    ```
     
 8. Take a moment to explore the `CreateMeetingEventAsync` method.
+
+    - It recieves `GraphServiceClient` and `IConfiguration`, sets them to the field property. 
     - It posts data to the [Microsoft Graph Calendar Events API](https://learn.microsoft.com/graph/api/calendar-post-events?view=graph-rest-1.0&tabs=http) which dynamically creates an event in a user's calendar and returns the new event details.
     - It also returns created event data.
 
     ```csharp
-    private async Task<Event> CreateMeetingEventAsync(string userId) => 
-        await _graphServiceClient
-            .Users[userId]
-            .Calendar
-            .Events
-            .Request()
-            .AddAsync(new()
-            {
-                Subject = "Customer Service Meeting",
-                Start = new()
+    using System;
+    using System.Threading.Tasks;
+    using Microsoft.Graph;
+    using Microsoft.Extensions.Configuration;
+    
+    namespace GraphACSFunctions.Services;
+    
+    public class GraphService : IGraphService
+    {
+        private readonly GraphServiceClient _graphServiceClient;
+        private readonly IConfiguration _configuration;
+    
+        public GraphService(GraphServiceClient graphServiceClient, IConfiguration configuration)
+        {
+            _graphServiceClient = graphServiceClient;
+            _configuration = configuration;
+        }
+    
+        public async Task<string> CreateMeetingAsync()
+        {
+            var userId = _configuration.GetValue<string>("USER_ID");
+            var newMeeting = await _graphServiceClient
+                .Users[userId]
+                .Calendar
+                .Events
+                .Request()
+                .AddAsync(new()
                 {
-                    DateTime = DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ss"),
-                    TimeZone = "UTC"
-                },
-                End = new()
-                {
-                    DateTime = DateTime.UtcNow.AddHours(1).ToString("yyyy-MM-ddTHH:mm:ss"),
-                    TimeZone = "UTC"
-                },
-                IsOnlineMeeting = true
-            });
+                    Subject = "Customer Service Meeting",
+                    Start = new()
+                    {
+                        DateTime = DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ss"),
+                        TimeZone = "UTC"
+                    },
+                    End = new()
+                    {
+                        DateTime = DateTime.UtcNow.AddHours(1).ToString("yyyy-MM-ddTHH:mm:ss"),
+                        TimeZone = "UTC"
+                    },
+                    IsOnlineMeeting = true
+                });
+            return newMeeting.OnlineMeeting.JoinUrl;
+        }
+    }
     ```
 
-9. Explore the `Run` method:
-    - `USER_ID` is retrieved from `local.settings.json`, which is done by accessing the "User_ID" environment variable by using `_configuration`.
-    - When the function is triggered, it calls `CreateMeetingEventAsync` and returns the new event link URL as a responce.
+
+7. Open `TeamsMeetingFunctions.cs` and take a moment to examine its constructor. It recieves `GraphServiceClient` specified in `Startup.cs` and sets it to the field property. `IConfiguration` is used to get the `USER_ID` set in `local.settings.json`.
+
+    ```csharp
+    private readonly IGraphService _graphService;
+    
+    public TeamsMeetingFunction(IGraphService graphService) => _graphService = graphService;
+    ```
+
+8. Explore the `Run` method:
+    - It calls `CreateMeetingAsync` from `_graphService`, and creates a new event in the user's calendar. 
+    - It returns the `JoinUrl` of the newly created event.
 
     ```csharp
     [FunctionName("TeamsMeetingFunction")]
     public async Task<IActionResult> Run(
         [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)] HttpRequest req,
-        ILogger log)
-    {
-        var userId = _configuration.GetValue<string>("USER_ID");
-        var newEvent = await CreateMeetingEventAsync(userId);
-    
-        return new OkObjectResult(newEvent.OnlineMeeting.JoinUrl);
-    }
+        ILogger log) => 
+        new OkObjectResult(await _graphService.CreateMeetingAsync());
     ```
 10. Run the program by pressing `F5` in Visual Studio or by selecting `Debug --> Start Debugging` from the menu.
 
