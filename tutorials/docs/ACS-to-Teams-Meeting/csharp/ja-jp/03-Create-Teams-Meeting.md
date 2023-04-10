@@ -93,6 +93,7 @@ sidebar_position: 3
     return new GraphServiceClient(
         clientSecretCredential,
         new[] { "https://graph.microsoft.com/.default" }
+    );
     ```
     
 8. `Services` フォルダーにある `GraphService.cs` を開いて内容を確認します。
