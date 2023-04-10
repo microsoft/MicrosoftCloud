@@ -23,52 +23,70 @@ to Azure Functions. You'll also build a container image and deploy it to Azure C
 
 ### Deploy to Azure Functions
 
-Let's get started by using VS Code to deploy the functions code to Azure Functions.
+Let's get started by using Visual Studio 2022 to deploy the functions code to Azure Functions.
 
-1. Open the `samples/acs-video-to-teams-meeting/server/typescript` project folder in Visual Studio Code.
+1. Open the `samples/acs-video-to-teams-meeting/server/csharp/GraphACSFunctions.sln` project in Visual Studio 2022.
 
-1. You should already have run `npm install` and see a `node_modules` folder in the project root. If not, open a command window and run `npm install` to install the dependencies.
+2. Right-click on the `GraphACSFunctions` project and select `Publish`.
 
-1. Open the VS Code command pallet (`shift + cmd + p` on Mac | `shift + ctrl + p` on Windows), and select **Azure Functions: Create Function App in Azure**.
+4. Select `Azure` in the target section, then click `Next`.
 
-    ![Create Function App in Azure](/img/automate-data-azure-functions-power-automate/create-function-app-in-azure.png "Create Function App in Azure")
+5. Select `Azure Function App (Windows)`, then click `Next`.
 
-1. You'll be prompted to enter the following information:
+6. Select your subscription to deploy to, then click `+ Create New`.
 
-    - Your Azure subscription name.
-    - The function name - enter `acsFunctions<YOUR_LAST_NAME>`.
+7. Enter the following information:
+
+    - Function name: A globally unique name is required. Example: `acsFunctions<YOUR_LAST_NAME>`.
+    - Subscription: Select your subscription.
+    - Resource Group: Select a resource group you created earlier in this tutorial, or you can also create a new one.
+    - Hosting Plan: Consumption plan.
+    - Location: Select the region you'd like to deploy to.
+    - Azure Storage: Create a new one. (You can also select an existing storage account.)
+    - Azure Insights: Create a new one. (You can also select an existing storage account.)
 
     :::note 
     A globally unique name is required. You can make the name more unique by adding a number or your last name to the end of the name.
     :::
 
-    - The runtime stack - Select the latest `Node.js LTS` version.
-    - The region (select any region you'd like).
+8. Once the Azure Function App is created you'll see a confirmation screen. Make sure the `Run from package` option is selected, then click `Finish`.
 
-1. Once the Azure Function App is created you'll see a message about viewing the details. 
+9. Click `Publish` to deploy the function to Azure.
 
-1. Go back to the command pallet in VS Code and select **Azure Functions: Deploy to Function App**. You'll be asked to select your subscription and the Function App name you created earlier.
+11. Once the function is deployed to Azure, go to the Azure portal and select the Function App you created. You'll see the function you deployed in the portal.
 
-1. Once the function is deployed to Azure, do the following:
+12. Copy the URL for the function you deployed. You'll use the value later in this exercise.
 
-    - Select the Azure extension in VS Code (click the Azure icon in the sidebar).
-    - Expand your subscription.
-    - Expand your Function App.
-    - Right-click on the function and select **Browse Website**. Ensure the function app is working correctly before proceeding.
+13. Select `Settings --> Configuration` in the left menu.
 
-1. Copy the Azure Function domain to a local file. You'll use the value later in this exercise.
+14. Click `+ New application setting` button and add the following keys and values in the `Application settings`. You can retreive these values from `local.settings.json` in the `GraphACSFunctions` project in Visual Studio.
+
+    ```
+    # Retrieve these values from local.settings.json
+    TENANT_ID: <YOUR_VALUE>
+    CLIENT_ID: <YOUR_VALUE>
+    CLIENT_SECRET: <YOUR_VALUE>
+    USER_ID: <YOUR_VALUE>
+    ACS_CONNECTION_STRING: <YOUR_VALUE>
+    ```
+
+15. Click `Save` button to save the settings.
+
+16. Finally, you need to enable CORS (Cross-Origin Resource Sharing) for the function app to make the function app's APIs accessible from outside of your domain. Select `Settings --> CORS` in the left menu.
+
+17. Enter `*` (accessible from any domains) in the `Allowed Origins` textbox, then click `Save` button.
 
 ### Deploy to Azure Container Apps
 
 1. The first task you'll perform is to create a new [Azure Container Registry (ACR)](https://learn.microsoft.com/azure/container-registry/container-registry-get-started-azure-cli) resource. Once the registry is created, you'll build an image and push it to the registry.
 
-1. Open a command window and run the following command to login to your Azure subscription:
+2. Open a command window and run the following command to login to your Azure subscription:
 
     ```bash
     az login
     ```
 
-1. Add the following shell variables substituting your values for the placeholders. Add your `<GITHUB_USERNAME>` as a lowercase value and subsitute your Azure Functions domain for the `<AZURE_FUNCTIONS_DOMAIN>` value (include the `https://` in the domain value).
+3. Add the following shell variables substituting your values for the placeholders. Add your `<GITHUB_USERNAME>` as a lowercase value and subsitute your Azure Functions domain for the `<AZURE_FUNCTIONS_DOMAIN>` value (include the `https://` in the domain value).
 
     <Tabs>
     <TabItem value="bash" label="Bash">
@@ -120,12 +138,12 @@ Let's get started by using VS Code to deploy the functions code to Azure Functio
     </TabItem>
     </Tabs>
 
-1. Open the `samples/acs-video-to-teams-meeting/client/react/Dockerfile` file in your editor and notice that the following tasks are performed:
+5. Open the `samples/acs-video-to-teams-meeting/client/react/Dockerfile` file in your editor and notice that the following tasks are performed:
 
     - The React application is built and assigned to the `build` stage.
     - The nginx server is configured and the output of the `build` stage is copied into the nginx server image.
 
-1. Build the container image in Azure by running the following command from the root of the `samples/acs-video-to-teams-meeting/client/react` folder. Replace `<YOUR_FUNCTIONS_DOMAIN>` with your Azure Functions domain that you copied to a local file earlier in this exercise.
+6. Build the container image in Azure by running the following command from the root of the `samples/acs-video-to-teams-meeting/client/react` folder. 
 
     <Tabs>
     <TabItem value="bash" label="Bash">
@@ -141,32 +159,33 @@ Let's get started by using VS Code to deploy the functions code to Azure Functio
 
     ```powershell
     az acr build --registry $ACR_NAME --image acs-to-teams-meeting `
-      --build-arg REACT_APP_ACS_USER_FUNCTION=+$AZURE_FUNCTIONS_DOMAIN+/api/ACSTokenFunction `
-      --build-arg REACT_APP_TEAMS_MEETING_FUNCTION=+$AZURE_FUNCTIONS_DOMAIN+/api/TeamsMeetingFunction .
+      --build-arg REACT_APP_ACS_USER_FUNCTION="$AZURE_FUNCTIONS_DOMAIN/api/ACSTokenFunction" `
+      --build-arg REACT_APP_TEAMS_MEETING_FUNCTION="$AZURE_FUNCTIONS_DOMAIN/api/TeamsMeetingFunction" .
     ```
 
     </TabItem>
     </Tabs>
 
-1. Run the following command to list the images in your registry. You should see your new image listed.
+
+7. Run the following command to list the images in your registry. You should see your new image listed.
     
     ```bash
     az acr repository list --name $ACR_NAME --output table
     ```
 
-1. Now that the image is deployed, you need to create an Azure Container App that can run the container.
+8. Now that the image is deployed, you need to create an Azure Container App that can run the container.
 
-1. Visit https://portal.azure.com in your browser and sign in.
+9. Visit https://portal.azure.com in your browser and sign in.
 
-1. Type `container apps` in the top search bar and select `Container Apps` from the options that appear.
+10. Type `container apps` in the top search bar and select `Container Apps` from the options that appear.
 
-1. Select `Create` in the toolbar.
+11. Select `Create` in the toolbar.
 
     :::note
     Although you're using the Azure Portal, a Container App can also be created by using the Azure CLI. For more information, see [Quickstart: Deploy your first container app](https://learn.microsoft.com/azure/container-apps/get-started). You'll see an example of how the Azure CLI can be used at the end of this exercise as well.
     :::
 
-1. Perform the following tasks:
+12. Perform the following tasks:
     - Select your subscription.
     - Select the resource group to use (create a new one if needed). You can use the same resource group that you used for your ACS resource if you'd like. Copy your resource group name to the same local file where you stored your Azure Functions domain.
     - Enter a Container app name of `acs-to-teams-meeting`.
@@ -176,7 +195,7 @@ Let's get started by using VS Code to deploy the functions code to Azure Functio
     - Select the **Create** button.
     - Select **Next: App settings >**.
 
-1. Enter the following values in the **Create Container App** screen:
+13. Enter the following values in the **Create Container App** screen:
 
     - Deselect the **Use quickstart image** checkbox.
     - **Name**: `acs-to-teams-meeting`
@@ -186,7 +205,7 @@ Let's get started by using VS Code to deploy the functions code to Azure Functio
     - **Image tag**: `latest`
     - **CPU and Memory**: `0.25 CPU cores, -.5 Gi memory`
 
-1. In the **Application ingress settings** section, do the following:
+14. In the **Application ingress settings** section, do the following:
 
     - Select the **Enabled** checkbox.
     - Select the **Accepting traffic from anywhere** radio button.
@@ -201,7 +220,7 @@ Let's get started by using VS Code to deploy the functions code to Azure Functio
     This is the default port for the nginx server.
     :::
 
-1. Select **Review + create**. Once validation passes, select the **Create** button.
+15. Select **Review + create**. Once validation passes, select the **Create** button.
 
    :::info
    If you get an error it may be due to your container apps environment being inactive for too long. The simplest solution will be to go through the process of creating the container app again. Alternatively, you can run the following command to create the container app using the Azure CLI:
@@ -232,4 +251,4 @@ Let's get started by using VS Code to deploy the functions code to Azure Functio
     </Tabs>
    :::
 
-1. Once your container app deployment completes, navigate to it in the Azure Portal and select the **Application Url** on the **Overview** screen to view the application running in the nginx container!
+16. Once your container app deployment completes, navigate to it in the Azure Portal and select the **Application Url** on the **Overview** screen to view the application running in the nginx container!
