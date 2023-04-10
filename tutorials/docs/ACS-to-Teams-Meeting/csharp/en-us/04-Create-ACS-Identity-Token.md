@@ -13,77 +13,69 @@ In this exercise you'll learn how to dynamically retrieve user identity and toke
 
 1. Open `local.settings.json` and update the `ACS_CONNECTION_STRING` value with the ACS connection string you saved in an earlier exercise.
 
-1. Open `samples/acs-to-teams-meeting/server/typescript/ACSTokenFunction/index.ts` in VS Code. It has the following code:
+2. Open `Startup.cs` in Visual Studio 2022 and explore the second `AddSingleton` calling in `Configure` method.
 
-    ```typescript
-    import { CommunicationIdentityClient } from '@azure/communication-identity';
+3. This process generates `CommunicationIdentityClient` using the connection string set to `ACS_CONNECTION_STRING` in `local.settings.json`. `CommunicationIdentityClient` is used for creating ACS user ID and tokens.
 
-    module.exports = async function (context, req) {
-        // Get ACS connection string from local.settings.json (or App Settings when in Azure)
-        const connectionString = process.env.ACS_CONNECTION_STRING;
-        let tokenClient = new CommunicationIdentityClient(connectionString);
-        const user = await tokenClient.createUser();
-        const userToken = await tokenClient.getToken(user, ["voip"]);
-        context.res = {
-            body: { userId: user.communicationUserId, ...userToken }
+    ```csharp
+    builder.Services.AddSingleton(static p =>
+    {
+        var config = p.GetRequiredService<IConfiguration>();
+        var connectionString = config.GetValue<string>("ACS_CONNECTION_STRING");
+        return new CommunicationIdentityClient(connectionString);
+    });
+    ```
+4. Open `ACSTokenFunction.cs` to see the `ACSTokenFunction` class constructor and field definitions. 
+    - It defines the scope (`CommunicationTokenScope.VoIP`) as a static field when getting the token :
+        ```csharp
+        private static readonly CommunicationTokenScope[] Scopes = new[]
+        {
+            CommunicationTokenScope.VoIP,
         };
+        ```
+    - The `CommunicationIdentityClient` instance written in `Startup.cs` is set to the `_tokenClient` field at the constructor.
+        ```csharp
+        private readonly CommunicationIdentityClient _tokenClient;
+        
+        public ACSTokenFunction(CommunicationIdentityClient tokenClient)
+        {
+            _tokenClient = tokenClient;
+        }
+        ```
+
+5. Explore the `Run` method in `ACSTokenFunction.cs`. This method is called when the Azure Function is triggered. It creates a new ACS user using `CreateUserAsync` method, and returns the access token for the video calls (`VoIP`) using `GetTokenAsync` method.
+
+    ```csharp
+    [FunctionName("ACSTokenFunction")]
+    public async Task<IActionResult> Run(
+        [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)] HttpRequest req,
+        ILogger log)
+    {
+        var user = await _tokenClient.CreateUserAsync();
+        var userToken = await _tokenClient.GetTokenAsync(user, Scopes);
+    
+        return new OkObjectResult(new 
+        { 
+            userId = user.Value.Id, 
+            userToken.Value.Token, 
+            userToken.Value.ExpiresOn 
+        });
     }
     ```
+6. Run the program by pressing `F5` or `debug` on the menu bar. The Azure Functions will start running locally.
 
-1. The function performs the following tasks:
-    - Imports `CommunicationIdentityClient` which will be used to create the user identity and token.
+7. Now that the Azure Functions are running locally, the client needs to be able to call into them to get the ACS user identity and token values.
 
-        ```typescript
-        import { CommunicationIdentityClient } from '@azure/communication-identity';
-        ```
+8. Open `App.tsx` in the `client` folder. (`samples/acs-to-teams-meeting/client/react/App.tsx`). This file contains the React code for the ACS calling UI composite.
 
-    - Gets the ACS connection string from an environment variable named `ACS_CONNECTION_STRING`.
-
-        ```typescript
-        const connectionString = process.env.ACS_CONNECTION_STRING;
-        ```
-
-    :::note
-
-    This is the connection string value you added into the `local.settings.json` file earlier.
-
-    :::
-    
-    - Creates a new `CommunicationIdentityClient` instance and passes the ACS connection string to it.
-
-        ```typescript
-        let tokenClient = new CommunicationIdentityClient(connectionString);
-        ```
-
-    - Creates an ACS user and gets a Voice Over IP token.
-
-        ```typescript
-        const user = await tokenClient.createUser();
-        const userToken = await tokenClient.getToken(user, ["voip"]);
-        ```
-
-    - Sends the userId and token values back to the caller.
-
-        ```typescript
-        context.res = {
-            body: { userId: user.communicationUserId, ...userToken }
-        };
-        ```
-
-1. Go to the `samples/acs-to-teams-meeting/server/typescript` folder in a terminal window and run `npm start`.
-
-1. Now that the Azure Functions are running locally, the client needs to be able to call into them to get the ACS user identity and token values.
-
-1. Open `samples/acs-to-teams-meeting/client/react/App.tsx` file in your editor.
-
-1. Locate the `userId` and `token` state variables in the component. Remove the hardcoded values and replace them with empty quotes:
+9. Locate the `userId` and `token` state variables in the component. Remove the hardcoded values and replace them with empty quotes:
 
     ```typescript
     const [userId, setUserId] = useState<string>('');
     const [token, setToken] = useState<string>('');
     ```
 
-1.  Locate the `useEffect` function and change it to look like the following to enable calling the Azure Function to retrieve an ACS user identity and token: 
+10. Locate the `useEffect` function and change it to look like the following to enable calling the Azure Function to retrieve an ACS user identity and token: 
 
     ```typescript
     useEffect(() => {
@@ -97,7 +89,7 @@ In this exercise you'll learn how to dynamically retrieve user identity and toke
             
             setMessage('Getting Teams meeting link...');
             //Call Azure Function to get the meeting link
-            res = await fetch(process.env.REACT_APP_TEAMS_MEETING_FUNCTION as string);
+            res = await fetch(process.env.REACT_APP_TEAMS_MEETING_FUNCTION as string); // Please remove let
             let link = await res.text();
             setTeamsMeetingLink(link);
             setMessage('');
@@ -108,13 +100,13 @@ In this exercise you'll learn how to dynamically retrieve user identity and toke
     }, []);
     ```
 
-1. Save the file before continuing.
+11. Save the file before continuing.
 
-1. Open a separate terminal and run `npm start` in the `react` folder. After it builds you should see the ACS calling UI displayed and you can call into the Teams meeting that was dynamically created by Microsoft Graph.
+12. Open a terminal and run `npm start` in the `react` folder. After it builds you should see the ACS calling UI displayed and you can call into the Teams meeting that was dynamically created by Microsoft Graph.
 
-1. Stop both of the terminal processes (React and Azure Functions) by selecting `ctrl + c`.
+13. Terminate the React app by pressing `Ctrl+C` in the terminal. You can also terminate the Azure Functions by pressing `Shift + F5` or `Stop Debugging` in the debug menu in Visual Studio.
 
-1. Commit your git changes and push them to your GitHub repository using VS Code:
+14. Commit your git changes and push them to your GitHub repository using VS Code:
     - Select the git icon (3rd one down in the VS Code toolbar).
     - Enter a commit message and select `Commit`.
-    - Select `Sync Changes`.
+    - Select `Sync Changes`
