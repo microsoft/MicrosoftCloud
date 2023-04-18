@@ -47,7 +47,7 @@ In this exercise you'll learn how to deploy the ACS React app and the Azure Func
 
 11. Select `Settings --> Configuration` for your new static web app.
 
-12. Add all of the following key/value pairs into the `Application settings` by selecting the `+ Add` button. Get the values from your `local.settings.json` in the `GraphACSFunctions` project in Visal Studio.
+12. Add all of the following key/value pairs into the `Application settings` by selecting the `+ Add` button. Get the values from your `local.settings.json` in the `GraphACSFunctions` project in Visual Studio.
 
     ```
     # Get the values from your local.settings.json file

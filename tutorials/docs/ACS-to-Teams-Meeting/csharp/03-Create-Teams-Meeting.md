@@ -69,7 +69,7 @@ In this exercise, you'll automate the process of creating a Microsoft Teams meet
 
     :::
 
-5. Open the `CreateMeetingEventAsync` project in the Solution Explorer to open the project file. Note that the following Microsoft Graph and Identity packages are included by using `PackageReference` tags:
+5. Open the `GraphACSFunctions` project in the Solution Explorer. Note that the following Microsoft Graph and Identity packages are included by using `PackageReference` tags:
 
     ```xml
     <PackageReference Include="Azure.Communication.Identity" Version="1.2.0" />
@@ -81,19 +81,19 @@ In this exercise, you'll automate the process of creating a Microsoft Teams meet
     - This code creates a `GraphServiceClient` for calling Microsoft Graph from Azure Functions.
     - You can make Microsoft Graph API calls with app-only permissions (such as **Calendars.ReadWrite**) by passing `ClientSecretCredential` to the `GraphServiceClient` constructor. The `ClientSecretCredential` uses the `Tenant Id`, `Client Id` and `Client Secret` values from the Azure Active Directory app.
 
-     ``` csharp
-     var config = p.GetRequiredService<IConfiguration>();
-     var clientSecretCredential = new ClientSecretCredential(
-         config. GetValue<string>("TENANT_ID"),
-         config. GetValue<string>("CLIENT_ID"),
-         config. GetValue<string>("CLIENT_SECRET")
-     );
-    
-     return new GraphServiceClient(
-         client Secret Credential,
-         new[] { "https://graph.microsoft.com/.default" }
-     );
-     ```
+    ```csharp
+    var config = p.GetRequiredService<IConfiguration>();
+    var clientSecretCredential = new ClientSecretCredential(
+        config. GetValue<string>("TENANT_ID"),
+        config. GetValue<string>("CLIENT_ID"),
+        config. GetValue<string>("CLIENT_SECRET")
+    );
+
+    return new GraphServiceClient(
+        client Secret Credential,
+        new[] { "https://graph.microsoft.com/.default" }
+    );
+    ```
     
 8. Take a moment to explore the `CreateMeetingEventAsync` method.
 
@@ -168,6 +168,7 @@ In this exercise, you'll automate the process of creating a Microsoft Teams meet
         ILogger log) => 
         new OkObjectResult(await _graphService.CreateMeetingAsync());
     ```
+    
 10. Run the program by pressing `F5` in Visual Studio or by selecting `Debug --> Start Debugging` from the menu.
 
 11. Now that the `TeamsMeetingFunction` is ready to use, let's call the function from the React app.
@@ -175,15 +176,15 @@ In this exercise, you'll automate the process of creating a Microsoft Teams meet
 12. Open the `samples/acs-to-teams-meeting/client/react` folder in VS Code. Change the `.env` file with the following values:
 
 
-    ```
-    REACT_APP_TEAMS_MEETING_FUNCTION=http://localhost:7071/api/TeamsMeetingFunction
+```
+REACT_APP_TEAMS_MEETING_FUNCTION=http://localhost:7071/api/TeamsMeetingFunction
 
-    REACT_APP_ACS_USER_FUNCTION=http://localhost:7071/api/ACSTokenFunction
-    ```
+REACT_APP_ACS_USER_FUNCTION=http://localhost:7071/api/ACSTokenFunction
+```
 
-    :::info
-         These values will be passed into React as it builds so that you can easily change them as needed during the build process.
-    :::
+:::info
+These values will be passed into React as it builds so that you can easily change them as needed during the build process.
+:::
 
 13. Open `samples/acs-to-teams-meeting/client/react/App.tsx` file in VS Code.
 
@@ -194,7 +195,6 @@ In this exercise, you'll automate the process of creating a Microsoft Teams meet
     ```
 
 15. Locate the `useEffect` function and change it to look like the following. This handles calling the Azure Function you looked at earlier which creates a Teams meeting and returns the meeting join link:
-
 
     ```typescript
     useEffect(() => {
@@ -224,8 +224,8 @@ In this exercise, you'll automate the process of creating a Microsoft Teams meet
 
 16. Save the file before continuing.
 
-17. Open another terminal window, cd into the react folder, and run npm start to build and run the application.
+17. Open another terminal window, `cd` into the react folder, and run `npm start` to build and run the application.
 
 18. After the application builds, you should see the ACS calling UI displayed and can then call into the Teams meeting that was dynamically created by Microsoft Graph.
 
-19. Stop both of the terminal processes (React and Azure Functions) by entering ctrl + c in each terminal window.
+19. Stop both of the terminal processes (React and Azure Functions) by entering `ctrl + c` in each terminal window.

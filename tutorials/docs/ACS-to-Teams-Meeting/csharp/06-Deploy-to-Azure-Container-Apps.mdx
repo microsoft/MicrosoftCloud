@@ -27,13 +27,15 @@ Let's get started by using Visual Studio 2022 to deploy the functions code to Az
 
 1. Open the `samples/acs-video-to-teams-meeting/server/csharp/GraphACSFunctions.sln` project in Visual Studio 2022.
 
-2. Right-click on the `GraphACSFunctions` project and select `Publish`.
+2. Right-click on the `GraphACSFunctions` project.
+
+3. Select `Publish` in the context menu.
 
 4. Select `Azure` in the target section, then click `Next`.
 
 5. Select `Azure Function App (Windows)`, then click `Next`.
 
-6. Select your subscription to deploy to, then click `+ Create New`.
+6. Select your subscription to deploy to, then click `+ Create New`. (You need to sign in to Azure in Visual Studio).
 
 7. Enter the following information:
 
@@ -44,10 +46,6 @@ Let's get started by using Visual Studio 2022 to deploy the functions code to Az
     - Location: Select the region you'd like to deploy to.
     - Azure Storage: Create a new one. (You can also select an existing storage account.)
     - Azure Insights: Create a new one. (You can also select an existing storage account.)
-
-    :::note 
-    A globally unique name is required. You can make the name more unique by adding a number or your last name to the end of the name.
-    :::
 
 8. Once the Azure Function App is created you'll see a confirmation screen. Make sure the `Run from package` option is selected, then click `Finish`.
 
@@ -70,9 +68,9 @@ Let's get started by using Visual Studio 2022 to deploy the functions code to Az
     ACS_CONNECTION_STRING: <YOUR_VALUE>
     ```
 
-15. Click `Save` button to save the settings.
+15. Click `Save` button in the Azure Portal screen to save the settings.
 
-16. Finally, you need to enable CORS (Cross-Origin Resource Sharing) for the function app to make the function app's APIs accessible from outside of your domain. Select `Settings --> CORS` in the left menu.
+16. Finally, you need to enable CORS (Cross-Origin Resource Sharing) for the function app to make the function app's APIs accessible from outside of your domain. Select `API --> CORS` in the left menu.
 
 17. Enter `*` (accessible from any domains) in the `Allowed Origins` textbox, then click `Save` button.
 

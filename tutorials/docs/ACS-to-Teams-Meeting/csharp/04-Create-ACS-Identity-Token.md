@@ -15,7 +15,7 @@ In this exercise you'll learn how to dynamically retrieve user identity and toke
 
 2. Open `Startup.cs` in Visual Studio 2022 and explore the second `AddSingleton` calling in `Configure` method.
 
-3. This process generates `CommunicationIdentityClient` using the connection string set to `ACS_CONNECTION_STRING` in `local.settings.json`. `CommunicationIdentityClient` is used for creating ACS user ID and tokens.
+3. This process creates `CommunicationIdentityClient` using the connection string set to `ACS_CONNECTION_STRING` in `local.settings.json`. The `CommunicationIdentityClient` is used for creating ACS user ID and tokens.
 
     ```csharp
     builder.Services.AddSingleton(static p =>
@@ -43,7 +43,7 @@ In this exercise you'll learn how to dynamically retrieve user identity and toke
         }
         ```
 
-5. Explore the `Run` method in `ACSTokenFunction.cs`. This method is called when the Azure Function is triggered. It creates a new ACS user using `CreateUserAsync` method, and returns the access token for the video calls (`VoIP`) using `GetTokenAsync` method.
+5. Explore the `Run` method in `ACSTokenFunction.cs`. This method is called when the Azure Function is triggered. It creates a new ACS user using `CreateUserAsync` method, and creates the access token for the video calls (`VoIP`) using `GetTokenAsync` method. Then it returns the user ID and token as a JSON object.
 
     ```csharp
     [FunctionName("ACSTokenFunction")]
@@ -64,9 +64,9 @@ In this exercise you'll learn how to dynamically retrieve user identity and toke
     ```
 6. Run the program by pressing `F5` or `debug` on the menu bar. The Azure Functions will start running locally.
 
-7. Now that the Azure Functions are running locally, the client needs to be able to call into them to get the ACS user identity and token values.
+7. Now that the Azure Functions are running locally, the client (React app) needs to be updated to call the Azure Functions.
 
-8. Open `App.tsx` in the `client` folder. (`samples/acs-to-teams-meeting/client/react/App.tsx`). This file contains the React code for the ACS calling UI composite.
+8. Open `App.tsx` in the `client` folder with VSCode. (`samples/acs-to-teams-meeting/client/react/App.tsx`). 
 
 9. Locate the `userId` and `token` state variables in the component. Remove the hardcoded values and replace them with empty quotes:
 
