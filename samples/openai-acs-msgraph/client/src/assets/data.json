@@ -1,0 +1,30 @@
+[
+      {
+            "id": 1,
+            "company": "Tailwind Traders",
+            "city": " Phoenix ",
+            "email": "jane.doe@example.com",
+            "order-total": 400214.99
+      },
+      {
+            "id": 2,
+            "company": "Adatum Corporation",
+            "city": "Los Angeles ",
+            "email": "john.smith@example.com",
+            "order-total": 89553.99
+      },
+      {
+            "id": 3,
+            "company": "Adventure Works Cycles",
+            "city": " Las Vegas ",
+            "email": "peter.gibbons@example.com",
+            "order-total": 9451.99
+      },
+      {
+            "id": 4,
+            "company": "Contoso Pharmaceuticals",
+            "city": "Seattle",
+            "email": "gene.david@example.com",
+            "order-total": 15850.99
+      }
+]

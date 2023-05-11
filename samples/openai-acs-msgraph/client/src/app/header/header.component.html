@@ -1,0 +1,7 @@
+<mat-toolbar color="primary">
+    <mat-icon class="home-icon">home</mat-icon>
+    <span class="title">Customers App</span>
+    <span class="spacer"></span>
+    <app-phone-call [hidden]="!callVisible" [customerPhoneNumber]="callData.phone!" (hangup)="hangup()"></app-phone-call>
+    <mgt-login *ngIf="featureFlags.microsoft365Enabled" class="mgt-dark" (loginCompleted)="loginCompleted()"></mgt-login>
+</mat-toolbar>

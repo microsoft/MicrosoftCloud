@@ -1,0 +1,61 @@
+.phone-container {
+    margin-top: 12px;
+    margin-right: 25px;
+}
+
+.phone-number-input {
+    margin-bottom:1em; 
+    font-size: .75em;
+}
+
+button[mat-button].call-button {
+    color: #fff;
+    background-color: #14ad00;
+}
+
+button[mat-button].call-button:disabled {
+    color: rgba(255, 255, 255, 0.5);
+    background-color: #b0b0b0;
+    cursor: not-allowed;
+  }
+
+button[mat-button].hangup-button {
+    color: #fff;
+    background-color: red;
+}
+
+.dialer {
+    background-color: #fff;
+    position: absolute;
+    z-index: 1000;
+    top: 100;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .dialer-input {
+        width: 200px;
+        margin-bottom: 10px;
+    }
+
+    .dialer-buttons {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-gap: 5px;
+    }
+
+    .dialer-button {
+        background-color: #fafafa;
+        color: #000;
+        border: 1px solid #c9c9c9;
+        width: 60px;
+        height: 60px;
+        font-size: 24px;
+    }
+
+    .call-button {
+        margin-top: 10px;
+        width: 200px;
+        height: 40px;
+    }
+}

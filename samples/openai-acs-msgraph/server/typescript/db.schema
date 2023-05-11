@@ -1,0 +1,4 @@
+- customers (id, company, city, email)
+- orders (id, customer_id, date, total)
+- order_items (id, order_id, product_id, quantity, price)
+- reviews (id, customer_id, review, date, comment)

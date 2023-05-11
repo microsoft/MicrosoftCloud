@@ -1,0 +1,36 @@
+<section *ngIf="data">
+  <h2>Email</h2>
+  <div class="scroller">
+
+    <mgt-search-results 
+      class="search-results" 
+      entity-types="message" 
+      [queryString]="searchText"
+      (dataChange)="dataChange($any($event))">
+      <template data-type="result-message"></template>
+    </mgt-search-results>
+
+    <!-- 
+      mgt-search-results provides the ability to define custom templates (see above).
+      However, the template binding syntax would need to be changed to avoid conflicts with
+      Angular bindings. Instead of using that, we're using the mgt-search-results component to retrieve
+      the data, handle the dataChange event, update a property named data in our component, and then render it 
+      using standard Angular bindings.
+    -->
+    <div *ngIf="data.length">
+      <mat-card *ngFor="let email of data">
+        <mat-card-header>
+          <mat-card-title>{{email.resource.subject}}</mat-card-title>
+          <mat-card-subtitle [innerHTML]="email.resource.bodyPreview"></mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-actions>
+          <a mat-stroked-button color="basic" [href]="email.resource.webLink" target="_blank">View Email Message</a>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+
+  </div>
+  <div *ngIf="!data.length">
+    <h3>No email messages found</h3>
+  </div>
+</section>

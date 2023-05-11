@@ -1,0 +1,33 @@
+mat-card {
+    margin-bottom: 10px;
+}
+
+.mat-mdc-card-title {
+    font-size: 1.2em;
+}
+
+mat-panel-title {
+    margin-top: 4px;
+    margin-left: 15px;
+    font-size: 1.2em;
+    height: 50px;
+}
+
+mat-icon[svgIcon] {
+    margin-right: 5px;
+    width: 1.4em;
+}
+
+.panel-title {
+    margin-left: 18px;
+    font-size: 1em;
+}
+
+.mat-badge-medium.mat-badge-after .mat-badge-content {
+    top: -10px;
+    right: -10px;
+}
+
+.mat-badge-accent .mat-badge-content {
+    background-color: #ff0000;
+}

@@ -1,0 +1,20 @@
+<div class="phone-container">
+    <input [(ngModel)]="customerPhoneNumber" 
+        (click)="showDialer()"
+        class="phone-number-input"
+        placeholder="Customer phone number" 
+        title="Customer Phone Number" 
+        #phoneInput>
+    <!-- <app-dialer [visible]="dialerVisible" class="dialer"></app-dialer> -->
+    &nbsp; 
+    <button mat-button class="call-button" (click)="startCall()" [disabled]="inCall"><mat-icon>phone</mat-icon> Call</button>
+    &nbsp;
+    <button mat-button class="hangup-button" (click)="endCall()"><mat-icon>close</mat-icon> {{ inCall ? 'Hang Up' : 'Close' }}</button>
+</div>
+<div class="dialer" [hidden]="!dialerVisible" #dialer>  
+    <div class="dialer-buttons">
+      <button *ngFor="let num of numbers" (click)="addNumber(num)" class="dialer-button">
+        {{ num }}
+      </button>
+    </div>
+</div>

@@ -1,0 +1,15 @@
+<h2 mat-dialog-title>{{ title }}</h2>
+
+<div>
+    <mat-dialog-content class="mat-typography">
+        <button mat-dialog-close class="close-button">
+            <mat-icon>close</mat-icon>
+        </button>
+        <span class="message-label">Message:</span> <textarea type="text" [(ngModel)]="message" title="Message"></textarea>
+    </mat-dialog-content>
+
+    <div mat-dialog-actions align="end">
+        <button mat-stroked-button mat-dialog-close>Cancel</button>
+        <button mat-stroked-button cdkFocusInitial (click)="send()">Send</button>
+    </div>
+</div>
