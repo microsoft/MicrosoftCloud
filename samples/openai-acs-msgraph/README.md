@@ -6,18 +6,18 @@ This application demonstrates how Microsoft Graph and the Microsoft Graph Toolki
 - **Communication**: Enable in-app phone calling to customers and SMS functionality using Azure Communication Services.
 - **Organizational Data**: Pull in related organizational data that users may need (documents, chats, emails, calendar events) as they work with customers to avoid context switching. Adding these features reduces the need for the user to switch to Outlook, Teams, OneDrive, other custom apps, their phone, etc. since the specific data and functionality they need is provided directly in the app.
 
-![App Demo](/images/demo.gif)
+[View the full tutorial](https://learn.microsoft.com/microsoft-cloud/dev/tutorials/openai-acs-msgraph) to learn how to build this application and the code that is used to enable the AI, Communication, and Organizational Data features.
 
 ## Prequisites
 
 You'll need the following to run the full version of the sample:
 
-- [Node.js](https://nodejs.org)
-- [VS Code](https://code.visualstudio.com) (while we'll reference VS Code, any editor can be used)
+- [Node](https://nodejs.org) - Node 16+ and npm 7+ will be used for this project
+- [git](https://learn.microsoft.com/devops/develop/git/install-and-set-up-git)
+- [Visual Studio Code](https://code.visualstudio.com) (while we'll reference Visual Studio Code in this tutorial, any editor can be used)
+- [Azure subscription](https://azure.microsoft.com/free/search)
 - [Microsoft 365 developer tenant](https://developer.microsoft.com/microsoft-365/dev-program)
-- [Azure subscription](https://azure.microsoft.com/free/)
-- [Docker Desktop](https://www.docker.com/get-started/) (or an equivalent container runtime environment capable of running `docker-compose up`)
-- [OpenAI](https://platform.openai.com/account) account
+- [Docker Desktop](https://www.docker.com/get-started/), [Podman](https://podman-desktop.io/downloads), [nerdctl](https://github.com/containerd/nerdctl) or another Open Container Initiative (OCI) compliant container runtime.
 
 
 ## Running the App
@@ -38,12 +38,14 @@ To start, rename the provided *.env.example* file to *.env* in the *tutorials/op
     CHANNEL_ID=
     OPENAI_API_KEY=
     OPENAI_ENDPOINT=
+    OPENAI_API_VERSION=2023-03-15-preview
+    OPENAI_MODEL=gpt-35-turbo
     POSTGRES_USER=
     POSTGRES_PASSWORD=
     ACS_CONNECTION_STRING=
     ACS_PHONE_NUMBER=
     ACS_EMAIL_ADDRESS=
-    CUSTOMER_EMAIL_ADDRESS=>
+    CUSTOMER_EMAIL_ADDRESS=
     CUSTOMER_PHONE_NUMBER=
     API_BASE_URL=http://localhost:3000/api/
     ```
@@ -57,7 +59,15 @@ To start, rename the provided *.env.example* file to *.env* in the *tutorials/op
 
 ## Enable the AI Feature (OpenAI Service)
 
-1. If you'd like to try the natural language to SQL OpenAI functionality, and email/SMS completions, add your [OpenAI](https://platform.openai.com/account/api-keys) secret key into the `.env` file:
+1. If you'd like to try the natural language to SQL OpenAI functionality and email/SMS completions, add your [Azure OpenAI](https://learn.microsoft.com/azure/cognitive-services/openai/) key and endpoint into the `.env` file. You'll also need to create a model in your Azure OpenAI resource (such as a `gpt-35-turbo` model) and assign the model name to `OPENAI_MODEL` in the `.env` file.
+
+    ```
+    OPENAI_API_KEY=<AZURE_OPENAI_SECRET_KEY>
+    OPENAI_ENDPOINT=<AZURE_OPENAI_ENDPOINT>
+    OPENAI_MODEL=<AZURE_OPENAI_MODEL_NAME>
+    ```
+
+    Alternatively, you can use OpenAI instead by adding your [OpenAI](https://platform.openai.com/account/api-keys) secret key into the `.env` file and leaving the other associated values blank.
 
     ```
     OPENAI_API_KEY=<OPENAI_SECRET_KEY>
@@ -100,14 +110,9 @@ To start, rename the provided *.env.example* file to *.env* in the *tutorials/op
 
 1. Create a new Azure Active Directory (AAD) app registration using the [Azure Portal](https://portal.azure.com/#view/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/~/RegisteredApps).
 
-    - Give the app a name such as `Microsoft Graph App`.
+    - Give the app a name such as `microsoft-graph-app`.
     - Select `Accounts in any organizational directory (Any Azure AD directory - Multitenant)`
     - Redirect URI: Single-page application (SPA) with a redirect URL of http://localhost:4200
-
-1. In the `API permissions` section of the AAD app you'll need to add the following permissions:
-
-    - `Chat.ReadWrite`
-    - `Files.Read.All`
 
 1. After creating the app registration, go to the `Overview` screen and copy the `Application (client) ID` to your clipboard. Replace the <AAD_CLIENT_ID> value in the `.env` file with the value.
 
@@ -115,24 +120,21 @@ To start, rename the provided *.env.example* file to *.env* in the *tutorials/op
         AAD_CLIENT_ID=<AAD_CLIENT_ID>
         ```
 
-1. To send a message from the app into a Teams Channel (optional feature that is included), view a Team in [Microsoft Teams](https://teams.microsoft.com) using your Microsoft 365 dev tenant account.
+1. To send a message from the app into a Teams Channel (optional feature that is included), open [Microsoft Teams](https://teams.microsoft.com) using your Microsoft 365 dev tenant account.
 
-1. Go to the Teams application, expand a team, and find a channel that you want to send messages to from the app.
+1. Expand a team and find a channel that you want to send messages to from the app.
 
-1. In the channel header, click on the three dots (...) and select `Get link to channel.`
+1. In the team header, click on the three dots (...) and select `Get link to team`.
 
-1. A pop-up window will appear with a link to the channel. The link will contain the Team ID and Channel ID.
+1. In the link that appears in the popup window, the team ID is the string of letters and numbers after `team/`. For example, in the link "https://teams.microsoft.com/l/team/19%3ae9b9.../", the team ID is *19%3ae9b9...* up to the following `/` character. 
 
-1. The Team ID is the string of letters and numbers after `teams/` in the link. For example, in the link "https://teams.microsoft.com/l/team/19%3ae9b9...", the Team ID is "19:e9b9...".
+1. Copy the team ID and assign it to `TEAM_ID` in the *.env* file.
 
-1. The Channel ID is the string of letters and numbers after `/channel/` in the link. For example, in the link "https://teams.microsoft.com/l/channel/19%3a....", the Channel ID is "19:...".
+1. In the channel header, click on the three dots (...) and select `Get link to channel`.
 
-1. Add the Team ID and Channel ID values into the `.env` file.
+1. In the link that appears in the popup window, the channel ID is the string of letters and numbers after `channel/`. For example, in the link "https://teams.microsoft.com/l/channel/19%3aQK02.../", the channel ID is *19%3aQK02...* up to the following `/` character.
 
-    ```
-    TEAM_ID=<TEAMS_TEAM_ID>
-    CHANNEL_ID=<TEAMS_CHANNEL_ID>
-    ```
+1. Copy the channel ID and assign it to `CHANNEL_ID` in the *.env* file.
 
 ## Install App Dependencies and Start the App
 
@@ -154,4 +156,4 @@ To start, rename the provided *.env.example* file to *.env* in the *tutorials/op
 
 1. Go to the browser and login using your Microsoft 365 Developer tenant account. 
 
-    **NOTE**: You'll have to add files, Teams chats, emails, calendar events, etc. that use the company names shown in the app such as "Adatum Corporation", "Adventure Works Cycles", "Contoso Pharmaceuticals", "Tailwind Traders" manually to see them pulled into the app. You won't see any Microsoft 365 organizational data results at all when you load the app otherwise - aside from the app's customers. I'm hoping to provide an automated way to add these types of items in the future.
+    **NOTE**: You'll have to add files, Teams chats, emails, calendar events, etc. that use the company names shown in the app such as "Adatum Corporation", "Adventure Works Cycles", "Contoso Pharmaceuticals", "Tailwind Traders" manually to see them pulled into the app. You won't see any Microsoft 365 organizational data results at all when you load the app otherwise - aside from the app's customers. [View the full tutorial](https://learn.microsoft.com/microsoft-cloud/dev/tutorials/openai-acs-msgraph) to learn more about doing this.

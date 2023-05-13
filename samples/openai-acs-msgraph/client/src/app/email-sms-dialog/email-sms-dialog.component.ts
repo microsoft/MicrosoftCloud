@@ -71,7 +71,8 @@ We're sorry.`
     if (this.featureFlags.acsEmailEnabled) {
       // Using CUSTOMER_EMAIL_ADDRESS instead of this.data.email for testing purposes
       this.subscriptions.push(
-        this.acsService.sendEmail(this.emailSubject, this.emailBody, this.getFirstName(this.data.customerName), CUSTOMER_EMAIL_ADDRESS /* this.data.email */)
+        this.acsService.sendEmail(this.emailSubject, this.emailBody, 
+            this.getFirstName(this.data.customerName), CUSTOMER_EMAIL_ADDRESS /* this.data.email */)
           .subscribe(res => {
             console.log('Email sent:', res);
             if (res.status) {

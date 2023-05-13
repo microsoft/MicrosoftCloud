@@ -102,6 +102,7 @@ export class CustomersListComponent implements OnInit, OnDestroy {
 
     openEmailSmsDialog(data: any) {
         if (data.phone && data.email) {
+            // Create the data for the dialog
             let dialogData: EmailSmsDialogData = {
                 prompt: '',
                 title: `Contact ${data.company}`,
@@ -111,10 +112,12 @@ export class CustomersListComponent implements OnInit, OnDestroy {
                 customerPhoneNumber: data.phone
             }
 
+            // Open the dialog
             const dialogRef = this.dialog.open(EmailSmsDialogComponent, {
                 data: dialogData
             });
 
+            // Subscribe to the dialog afterClosed observable to get the dialog result
             this.subscriptions.push(
                 dialogRef.afterClosed().subscribe((response: EmailSmsDialogData) => {
                     console.log('SMS dialog result:', response);

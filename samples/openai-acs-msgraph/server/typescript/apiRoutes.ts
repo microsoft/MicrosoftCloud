@@ -39,7 +39,7 @@ router.post('/generatesql', async (req, res) => {
     }
 
     try {
-        // Call OpenAI to convert the user query into a SQL query
+        // Call Azure OpenAI to convert the user query into a SQL query
         const sqlCommandObject = await getSQL(userQuery);
 
         let result: any[] = [];
