@@ -324,6 +324,18 @@
                 "51af92476dc24a9ca26acd85cb37d389",
                 "51af92476dc24a9ca26acd85cb30f48g"
             ]
+        },
+        {
+            "id": "556f92476dc24f8ca26acd85cb39h248",
+            "title": "Java + Power Apps Workshop",
+            "url": "https://github.com/microsoft/PowerPlatformAdvocates/tree/main/Workshops/JavaAndPowerApps",
+            "type": "Hands-On Lab",
+            "cloudCategories": ["Azure", "Power Platform"],
+            "services": ["GitHub"],
+            "technologies": ["Azure App Service", "Azure Monitor", "Cosmos DB", "Java", "Power Apps", "React"],
+            "description": "Learn how to integrate an OpenAPI backend built with Java and a Power Apps frontend.",
+            "relatedContentItems": [
+            ]
         }
 
     ]
