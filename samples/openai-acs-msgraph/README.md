@@ -1,6 +1,6 @@
-# Angular, OpenAI, Microsoft Graph and Microsoft Graph Toolkit, and Azure Communication Services
+# Using OpenAI, Azure Communication Services, and Microsoft Graph/Microsoft Graph Toolkit to Build a Line of Business (LOB) Application
 
-This application demonstrates how Microsoft Graph and the Microsoft Graph Toolkit, OpenAI, and Azure Communication Services can be used in Line of Business (LOB) applications to improve the user experience and take LOB apps to the next level.
+This application demonstrates how OpenAI, Azure Communication Services, and Microsoft Graph/Microsoft Graph Toolkit can be used in Line of Business (LOB) applications to improve the user experience, increase productivity, and take LOB apps to the next level.
 
 - **AI**: Enable natural language to SQL queries using OpenAI to enable users to ask questions in natural language and get answers back in SQL. Automatically generate email and SMS messages using OpenAI completions.
 - **Communication**: Enable in-app phone calling to customers and SMS functionality using Azure Communication Services.
