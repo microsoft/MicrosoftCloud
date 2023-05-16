@@ -1,0 +1,17 @@
+{
+    "name": "Node.js & PostgreSQL",
+    "dockerComposeFile": "docker-compose.yml",
+    "service": "app",
+    "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+    "forwardPorts": [
+        3000,
+        4200,
+        5432
+    ],
+    "postAttachCommand": "/bin/bash .devcontainer/setup.sh",
+    "hostRequirements": {
+        "cpus": 8,
+        "memory": "8gb",
+        "storage": "32gb"
+    }
+}

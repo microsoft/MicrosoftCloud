@@ -145,6 +145,8 @@ async function getSQL(userPrompt: string): Promise<QueryData> {
 }
 
 function isProhibitedQuery(query: string): boolean {
+    if (!query) return false;
+
     const prohibitedKeywords = [
         'insert', 'update', 'delete', 'drop', 'truncate', 'alter', 'create', 'replace',
         'information_schema', 'pg_catalog', 'pg_tables', 'pg_namespace', 'pg_class',
