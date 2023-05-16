@@ -13,7 +13,7 @@ module.exports = {
             "ACS_EMAIL_ADDRESS": (process.env.ACS_EMAIL_ADDRESS) ? true : false,
             "CUSTOMER_EMAIL_ADDRESS": JSON.stringify(process.env.CUSTOMER_EMAIL_ADDRESS),
             "CUSTOMER_PHONE_NUMBER": JSON.stringify(process.env.CUSTOMER_PHONE_NUMBER),
-            "API_BASE_URL": JSON.stringify(process.env.API_BASE_URL)
+            "API_PORT": JSON.stringify(process.env.API_PORT)
         })
     ]
 }

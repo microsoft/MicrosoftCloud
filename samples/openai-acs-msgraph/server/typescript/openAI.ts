@@ -1,6 +1,6 @@
 import fs from 'fs';
 import { OpenAIApi, Configuration } from 'openai';
-import { QueryData, AzureOpenAIResponse } from './interfaces';
+import { QueryData, AzureOpenAIResponse, EmailSmsResponse } from './interfaces';
 import fetch from 'cross-fetch';
 import './config';
 
@@ -9,7 +9,7 @@ const OPENAI_ENDPOINT = process.env.OPENAI_ENDPOINT;
 const OPENAI_MODEL = process.env.OPENAI_MODEL;
 const OPENAI_API_VERSION = process.env.OPENAI_API_VERSION;
 
-async function getAzureOpenAICompletion(prompt: string, temperature = 0) : Promise<string> {
+async function getAzureOpenAICompletion(systemPrompt: string, userPrompt: string, temperature = 0): Promise<string> {
 
     if (!OPENAI_API_KEY || !OPENAI_ENDPOINT || !OPENAI_MODEL) {
         throw new Error('Missing Azure OpenAI API key, endpoint, or model in environment variables.');
@@ -21,7 +21,10 @@ async function getAzureOpenAICompletion(prompt: string, temperature = 0) : Promi
     const data = {
         max_tokens: 1024,
         temperature,
-        messages: [{ role: 'user', content: prompt }]
+        messages: [
+            { role: 'system', content: systemPrompt },
+            { role: 'user', content: userPrompt }
+        ]
     };
 
     try {
@@ -35,10 +38,10 @@ async function getAzureOpenAICompletion(prompt: string, temperature = 0) : Promi
         });
 
         const completion = await response.json() as AzureOpenAIResponse;
-        let content = '';
-        if (completion.choices.length) {
-            content = completion.choices[0].message?.content.trim();
-            console.log('Output:', content);
+        let content = (completion.choices[0]?.message?.content?.trim() ?? '') as string;
+        console.log('Azure OpenAI Output: \n', content);
+        if (content && content.includes('{') && content.includes('}')) {
+            content = extractJson(content);
         }
         return content;
     }
@@ -48,7 +51,7 @@ async function getAzureOpenAICompletion(prompt: string, temperature = 0) : Promi
     }
 }
 
-async function getOpenAICompletion(prompt: string, temperature = 0) : Promise<string> {
+async function getOpenAICompletion(systemPrompt: string, userPrompt: string, temperature = 0): Promise<string> {
 
     if (!OPENAI_API_KEY) {
         throw new Error('Missing OpenAI API key in environment variables.');
@@ -62,13 +65,16 @@ async function getOpenAICompletion(prompt: string, temperature = 0) : Promise<st
             model: 'gpt-3.5-turbo', // gpt-3.5-turbo, gpt-4
             max_tokens: 1024,
             temperature,
-            messages: [{ role: 'user', content: prompt }]
+            messages: [
+                { role: 'system', content: systemPrompt },
+                { role: 'user', content: userPrompt }
+            ]
         });
 
-        let content = '';
-        if (completion.data.choices.length) {
-            content = completion.data.choices[0].message?.content.trim() as string;
-            console.log('Output:', content);
+        let content = extractJson(completion.data.choices[0]?.message?.content?.trim() ?? '') as string;
+        console.log('OpenAI Output: \n', content);
+        if (content && content.includes('{') && content.includes('}')) {
+            content = extractJson(content);
         }
         return content;
     }
@@ -78,13 +84,24 @@ async function getOpenAICompletion(prompt: string, temperature = 0) : Promise<st
     }
 }
 
-function callOpenAI(prompt: string, temperature = 0) {
+function callOpenAI(systemPrompt: string, userPrompt: string, temperature = 0) {
     const isAzureOpenAI = OPENAI_API_KEY && OPENAI_ENDPOINT && OPENAI_MODEL;
     if (isAzureOpenAI) {
-        return getAzureOpenAICompletion(prompt, temperature);
+        return getAzureOpenAICompletion(systemPrompt, userPrompt, temperature);
     }
     else {
-        return getOpenAICompletion(prompt, temperature);
+        return getOpenAICompletion(systemPrompt, userPrompt, temperature);
+    }
+}
+
+function extractJson(content: string) {
+    const regex = /\{(?:[^{}]|{[^{}]*})*\}/g;
+    const match = content.match(regex);
+
+    if (match) {
+        return match[0];
+    } else {
+        return '';
     }
 }
 
@@ -94,32 +111,33 @@ async function getSQL(userPrompt: string): Promise<QueryData> {
     // schema could be dynamically retrieved.
     const dbSchema = await fs.promises.readFile('db.schema', 'utf8');
 
-    const prompt = `
-    PostgreSQL tables, with their properties:
+    const systemPrompt = `
+    Assistant is a natural language to SQL bot that returns a JSON object with the SQL query and 
+    the parameter values in it. The SQL will query a PostgreSQL database.
+
+    PostgreSQL tables, with their columns:
 
     ${dbSchema}
 
-    User prompt: ${userPrompt}
-
     Rules:
     - Convert any strings to a PostgreSQL parameterized query value to avoid SQL injection attacks.
+    - Always return a JSON object with the SQL query and the parameter values in it. 
     
-    Return a JSON object with the SQL query and the parameter values in it. 
-    
-    Example: { "sql": "", "paramValues": [] }
+    Example JSON object to return: { "sql": "", "paramValues": [] }
     `;
 
-    let queryData: QueryData = { sql: '', paramValues: [] };
+    let queryData: QueryData = { sql: '', paramValues: [], error: '' };
     try {
-        const results = await callOpenAI(prompt);
-        if (results) {
-            queryData = JSON.parse(results);
-            if (isProhibitedQuery(queryData.sql)) {
-                queryData.sql = '';
-            }
+        const results = await callOpenAI(systemPrompt, userPrompt);
+    
+        queryData = (results && results.startsWith('{') && results.endsWith('}')) ? 
+            JSON.parse(results) : { ...queryData, error: results };
+    
+        if (isProhibitedQuery(queryData.sql) || isProhibitedQuery(queryData.error)) {
+            queryData.sql = '';
+            queryData.error = 'Prohibited query.';
         }
-    }
-    catch (e) {
+    } catch (e) {
         console.log(e);
     }
 
@@ -139,20 +157,19 @@ function isProhibitedQuery(query: string): boolean {
     return prohibitedKeywords.some(keyword => queryLower.includes(keyword));
 }
 
-async function completeEmailSMSMessages(userPrompt: string, company: string, contactName: string) {
-    console.log('Inputs:', userPrompt, company, contactName);
-    const prompt =
-        `Create Email and SMS messages from the following data:
-
-    User Prompt: ${userPrompt}
-    Contact Name: ${contactName}
+async function completeEmailSMSMessages(prompt: string, company: string, contactName: string) {
+    console.log('Inputs:', prompt, company, contactName);
+    
+    const systemPrompt = `
+    Assistant is a bot designed to help users create email and SMS messages from data and 
+    return a JSON object with the message information in it.
 
     Rules:
     - Generate a subject line for the email message.
-    - Use the User Prompt to generate the messages. 
-    - All messages should have a friendly tone. 
+    - Use the User Rules to generate the messages. 
+    - All messages should have a friendly tone and never use inappropriate language.
     - SMS messages should be in plain text format and no more than 160 characters. 
-    - Start the message with "Hi <Contact Name>,\n\n". 
+    - Start the message with "Hi <Contact Name>,\n\n". Contact Name can be found in the user prompt.
     - Add carriage returns to the email message to make it easier to read. 
     - End with a signature line that says "Sincerely,\nCustomer Service".
     - Return a JSON object with the emailSubject, emailBody, and SMS message values in it. 
@@ -160,7 +177,26 @@ async function completeEmailSMSMessages(userPrompt: string, company: string, con
     Example JSON object: { "emailSubject": "", "emailBody": "", "sms": "" }
     `;
 
-    const content =  await callOpenAI(prompt, 0.5);
+    const userPrompt = `
+        User Rules: ${prompt}
+        Contact Name: ${contactName}
+    `;
+
+    let content: EmailSmsResponse = { status: false, email: '', sms: '', error: '' };
+    try {
+        const results = await callOpenAI(systemPrompt, userPrompt, 0.5);
+        if (results && results.startsWith('{') && results.endsWith('}')) {
+            content = { content, ...JSON.parse(results) };
+            content.status = true;
+        }
+        else {
+            content.error = results;
+        }
+    }
+    catch (e) {
+        console.log(e);
+    }
+
     return content;
 }
 

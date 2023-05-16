@@ -1,6 +1,14 @@
 export interface QueryData {
     sql: string;
     paramValues: any[];
+    error: string;
+}
+
+export interface EmailSmsResponse {
+    status: boolean;
+    email: string;
+    sms: string;
+    error: string;
 }
 
 export interface AzureOpenAIResponse {

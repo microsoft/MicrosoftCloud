@@ -6,16 +6,18 @@ import { map, catchError } from 'rxjs/operators';
 
 import { Customer } from '../../app/shared/interfaces';
 import { EmailSmsCompletion } from '../shared/interfaces';
-
-declare const API_BASE_URL: string;
+import { ApiUrlService } from './api-url.service';
 
 @Injectable({ providedIn: 'root' })
 export class DataService {
 
+  apiUrlService = inject(ApiUrlService);
   http = inject(HttpClient);
 
+  apiUrl = this.apiUrlService.getApiUrl();
+
   getCustomers(): Observable<Customer[]> {
-    return this.http.get<Customer[]>(API_BASE_URL + 'customers')
+    return this.http.get<Customer[]>(this.apiUrl + 'customers')
       .pipe(
         map(data => {
           // Sort by name
@@ -35,7 +37,7 @@ export class DataService {
   }
 
   getCustomer(id: number): Observable<Customer> {
-    return this.http.get<Customer[]>(API_BASE_URL + 'customers/' + id)
+    return this.http.get<Customer[]>(this.apiUrl + 'customers/' + id)
       .pipe(
         map(customers => {
           const customer = customers.filter((cust: Customer) => cust.id === id);
@@ -48,14 +50,14 @@ export class DataService {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   generateSql(query: string): Observable<any> {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return this.http.post<any>(API_BASE_URL + 'generatesql', { query })
+    return this.http.post<any>(this.apiUrl + 'generatesql', { query })
       .pipe(
         catchError(this.handleError)
       );
   }
 
   completeEmailSmsMessages(query: string, company: string, contactName: string): Observable<EmailSmsCompletion> {
-    return this.http.post<EmailSmsCompletion>(API_BASE_URL + 'completeEmailSmsMessages', { query, company, contactName })
+    return this.http.post<EmailSmsCompletion>(this.apiUrl + 'completeEmailSmsMessages', { query, company, contactName })
       .pipe(
         catchError(this.handleError)
       );

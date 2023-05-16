@@ -44,8 +44,11 @@ router.post('/generatesql', async (req, res) => {
 
         let result: any[] = [];
         // Execute the SQL query
-        if (sqlCommandObject) {
+        if (sqlCommandObject && !sqlCommandObject.error) {
             result = await queryDb(sqlCommandObject) as any[];
+        }
+        else {
+            result = [ { query_error : sqlCommandObject.error } ];
         }
         res.json(result);
     } catch (e) {
@@ -118,14 +121,10 @@ router.post('/completeEmailSmsMessages', async (req, res) => {
         });
     }
 
-    let result = { status: false, email: '', sms: '' };
+    let result;
     try {
         // Call OpenAI to get the email and SMS message completions
-        const content = await completeEmailSMSMessages(query, company, contactName);
-        console.log(content);
-        if (content) {
-            result = {status: true, ...JSON.parse(content) };
-        }
+       result = await completeEmailSMSMessages(query, company, contactName);
     }
     catch (e: unknown) {
         console.error('Error parsing JSON:', e);

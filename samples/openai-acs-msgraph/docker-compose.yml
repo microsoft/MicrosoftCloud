@@ -13,6 +13,9 @@ services:
       - "5432:5432"
 
 # Alternatively, you can use the following command to run the container:
-# Mac/Linux: docker run --name postgresDb -e POSTGRES_USER=web -e POSTGRES_PASSWORD=web-password -e POSTGRES_DB=CustomersDB -v "$(pwd)/data:/var/lib/postgresql/data" -p 5432:5432 postgres
-# Windows with PowerShell: docker run --name postgresDb -e POSTGRES_USER=web -e POSTGRES_PASSWORD=web-password -e POSTGRES_DB=CustomersDB -v ${PWD}/data:/var/lib/postgresql/data -p 5432:5432 postgres
+# Mac/Linux: 
+# docker run --name postgresDb -e POSTGRES_USER=web -e POSTGRES_PASSWORD=web-password -e POSTGRES_DB=CustomersDB -v "$(pwd)/data:/var/lib/postgresql/data" -p 5432:5432 postgres
+
+# Windows with PowerShell: 
+# docker run --name postgresDb -e POSTGRES_USER=web -e POSTGRES_PASSWORD=web-password -e POSTGRES_DB=CustomersDB -v ${PWD}/data:/var/lib/postgresql/data -p 5432:5432 postgres
 

@@ -3,8 +3,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { AcsUser, EmailSmsResponse } from '../shared/interfaces';
-
-declare const API_BASE_URL: string;
+import { ApiUrlService } from './api-url.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,23 +11,25 @@ declare const API_BASE_URL: string;
 export class AcsService {
 
   http = inject(HttpClient);
+  apiUrlService = inject(ApiUrlService);
+  apiUrl = this.apiUrlService.getApiUrl();
 
   getAcsToken(): Observable<AcsUser> {
-    return this.http.get<AcsUser>(API_BASE_URL + 'acstoken')
+    return this.http.get<AcsUser>(this.apiUrl + 'acstoken')
       .pipe(
         catchError(this.handleError)
       );
   }
 
   sendSms(message: string, customerPhoneNumber: string) : Observable<EmailSmsResponse> {
-    return this.http.post<EmailSmsResponse>(API_BASE_URL + 'sendsms', { message, customerPhoneNumber })
+    return this.http.post<EmailSmsResponse>(this.apiUrl + 'sendsms', { message, customerPhoneNumber })
     .pipe(
       catchError(this.handleError)
     );
   }  
 
   sendEmail(subject: string, message: string, customerName: string, customerEmailAddress: string) : Observable<EmailSmsResponse> {
-    return this.http.post<EmailSmsResponse>(API_BASE_URL + 'sendemail', { subject, message, customerName, customerEmailAddress })
+    return this.http.post<EmailSmsResponse>(this.apiUrl + 'sendemail', { subject, message, customerName, customerEmailAddress })
     .pipe(
       catchError(this.handleError)
     );

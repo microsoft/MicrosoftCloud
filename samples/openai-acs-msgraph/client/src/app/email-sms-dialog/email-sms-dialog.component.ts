@@ -27,6 +27,7 @@ export class EmailSmsDialogComponent implements OnInit, OnDestroy {
   emailSubject = '';
   emailBody = '';
   emailAddress = '';
+  error = '';
   smsMessage = '';
   emailSent = false;
   smsSent = false;
@@ -56,13 +57,20 @@ We're sorry.`
   }
 
   async generateEmailSmsMessages() {
+    this.error = '';
+    
     this.subscriptions.push(
       this.dataService.completeEmailSmsMessages(this.prompt, this.data.company, this.getFirstName(this.data.customerName))
         .subscribe((data) => {
-          this.emailSubject = data.emailSubject;
-          this.emailBody = data.emailBody;
-          this.smsMessage = data.sms;
-          this.tabGroup.selectedIndex = 1;
+          if (data.status) {
+            this.emailSubject = data.emailSubject;
+            this.emailBody = data.emailBody;
+            this.smsMessage = data.sms;
+            this.tabGroup.selectedIndex = 1;
+          }
+          else {
+            this.error = data.error;
+          }
         })
     );
   }

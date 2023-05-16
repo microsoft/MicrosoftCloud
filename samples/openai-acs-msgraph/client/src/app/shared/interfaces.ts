@@ -5,6 +5,7 @@ export interface Phone {
 export interface EmailSmsCompletion {
     emailSubject: string;
     emailBody: string;
+    error: string;
     sms: string;
     status: boolean;
 }
