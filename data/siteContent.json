@@ -328,7 +328,7 @@
         {
             "id": "556f92476dc24f8ca26acd85cb39h248",
             "title": "Java + Power Apps Workshop",
-            "url": "https://github.com/microsoft/PowerPlatformAdvocates/tree/main/Workshops/JavaAndPowerApps",
+            "url": "https://aka.ms/JavaPowerWorkshop",
             "type": "Hands-On Lab",
             "cloudCategories": ["Azure", "Power Platform"],
             "services": ["Azure App Service", "Azure Monitor", "Cosmos DB", "Power Apps"],
