@@ -112,33 +112,45 @@ async function getSQL(userPrompt: string): Promise<QueryData> {
     const dbSchema = await fs.promises.readFile('db.schema', 'utf8');
 
     const systemPrompt = `
-    Assistant is a natural language to SQL bot that returns a JSON object with the SQL query and 
+    Assistant is a natural language to SQL bot that returns only a JSON object with the SQL query and 
     the parameter values in it. The SQL will query a PostgreSQL database.
-
-    PostgreSQL tables, with their columns:
+    
+    PostgreSQL tables, with their columns:    
 
     ${dbSchema}
 
     Rules:
     - Convert any strings to a PostgreSQL parameterized query value to avoid SQL injection attacks.
-    - Always return a JSON object with the SQL query and the parameter values in it. 
-    
-    Example JSON object to return: { "sql": "", "paramValues": [] }
+    - Always return a JSON object with the SQL query and the parameter values in it.
+    - Only return a JSON object. Do NOT include any text outside of the JSON object. Do not provide any additional explanations or context. 
+      Just the JSON object is needed.
+    - Example JSON object to return: { "sql": "", "paramValues": [] }
     `;
 
     let queryData: QueryData = { sql: '', paramValues: [], error: '' };
+    let results = '';
     try {
-        const results = await callOpenAI(systemPrompt, userPrompt);
-    
-        queryData = (results && results.startsWith('{') && results.endsWith('}')) ? 
-            JSON.parse(results) : { ...queryData, error: results };
-    
-        if (isProhibitedQuery(queryData.sql) || isProhibitedQuery(queryData.error)) {
+        results = await callOpenAI(systemPrompt, userPrompt);
+        if (results) {
+            const parsedResults = JSON.parse(results);
+            queryData = { ...queryData, ...parsedResults };
+            if (isProhibitedQuery(queryData.sql)) {
+                queryData.sql = '';
+                queryData.error = 'Prohibited query.';
+            }
+        }
+    } 
+    catch (e) {
+        console.log(e);
+        // Completion results may still contain SQL information we don't want to expose.
+        // so check to ensure it's OK to return it to client.
+        if (isProhibitedQuery(results)) {
             queryData.sql = '';
             queryData.error = 'Prohibited query.';
         }
-    } catch (e) {
-        console.log(e);
+        else {
+            queryData.error = results;
+        }
     }
 
     return queryData;
@@ -161,10 +173,10 @@ function isProhibitedQuery(query: string): boolean {
 
 async function completeEmailSMSMessages(prompt: string, company: string, contactName: string) {
     console.log('Inputs:', prompt, company, contactName);
-    
+
     const systemPrompt = `
     Assistant is a bot designed to help users create email and SMS messages from data and 
-    return a JSON object with the message information in it.
+    return a JSON object with the email and SMS message information in it.
 
     Rules:
     - Generate a subject line for the email message.
@@ -177,26 +189,32 @@ async function completeEmailSMSMessages(prompt: string, company: string, contact
     - Return a JSON object with the emailSubject, emailBody, and SMS message values in it. 
 
     Example JSON object: { "emailSubject": "", "emailBody": "", "sms": "" }
+
+    - Only return a JSON object. Do NOT include any text outside of the JSON object. Do not provide any additional explanations or context. 
+    Just the JSON object is needed.
     `;
 
     const userPrompt = `
-        User Rules: ${prompt}
-        Contact Name: ${contactName}
+    User Rules: 
+    ${prompt}
+
+    Contact Name: 
+    ${contactName}
     `;
 
-    let content: EmailSmsResponse = { status: false, email: '', sms: '', error: '' };
+    let content: EmailSmsResponse = { status: true, email: '', sms: '', error: '' };
+    let results = '';
     try {
-        const results = await callOpenAI(systemPrompt, userPrompt, 0.5);
-        if (results && results.startsWith('{') && results.endsWith('}')) {
-            content = { content, ...JSON.parse(results) };
-            content.status = true;
-        }
-        else {
-            content.error = results;
+        results = await callOpenAI(systemPrompt, userPrompt, 0.5);
+        if (results) {
+            const parsedResults = JSON.parse(results);
+            content = { ...content, ...parsedResults, status: true };
         }
     }
     catch (e) {
         console.log(e);
+        content.status = false;
+        content.error = results;
     }
 
     return content;
