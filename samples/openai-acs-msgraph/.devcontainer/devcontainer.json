@@ -8,9 +8,22 @@
         4200,
         5432
     ],
-    "postAttachCommand": "/bin/bash .devcontainer/setup.sh",
+    "features": {
+        "ghcr.io/devcontainers/features/github-cli:1": {
+            "version": "latest"
+        }
+    },
+    // Configure tool-specific properties.
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "angular.ng-template"
+            ]
+        }
+    },
+    "postCreateCommand": "/bin/bash .devcontainer/setup.sh",
     "hostRequirements": {
-        "cpus": 8,
+        "cpus": 4,
         "memory": "8gb",
         "storage": "32gb"
     }

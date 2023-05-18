@@ -1,9 +1,10 @@
 version: '3.8'
 services:
   app:
-    build: 
-      context: .
-      dockerfile: Dockerfile
+    image: mcr.microsoft.com/devcontainers/javascript-node:0-18
+    # build: 
+    #   context: .
+    #   dockerfile: Dockerfile
 
     volumes:
       - ../..:/workspaces:cached

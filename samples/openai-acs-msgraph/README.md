@@ -47,7 +47,7 @@ To start, rename the provided *.env.example* file to *.env* in the *tutorials/op
     ACS_EMAIL_ADDRESS=
     CUSTOMER_EMAIL_ADDRESS=
     CUSTOMER_PHONE_NUMBER=
-    API_BASE_URL=http://localhost:3000/api/
+    API_PORT=3000
     ```
 
 1. Assign the following values to `POSTGRES_USER` and `POSTGRES_PASSWORD`.
