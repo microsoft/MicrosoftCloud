@@ -1,6 +1,6 @@
 {
   "name": "microsoft-cloud-integrations",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "private": true,
   "homepage": "https://microsoft.github.io/MicrosoftCloud",
   "scripts": {
