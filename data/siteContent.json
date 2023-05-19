@@ -336,7 +336,18 @@
             "description": "Learn how to integrate an OpenAPI backend built with Java and a Power Apps frontend.",
             "relatedContentItems": [
             ]
+        },
+        {
+            "id": "c159be8fcac24030bf3e7ba5f56e2689",
+            "title": "Power BI and Azure Synapse Workshop using SerengetiDataLab",
+            "url": "https://aka.ms/PBISynapseWorkshop",
+            "type": "Hands-On Lab",
+            "cloudCategories": ["Azure", "Power Platform"],
+            "services": ["Azure Synapse", "Azure Key Vault", "Azure Storage", "Azure Machine Learning", "Azure Insights", "Azure SQL", "Power BI"],
+            "technologies": ["Business Intelligence", "Machine Learning", "SerengetiDataLab"],
+            "description": "An E2E solution of the Data Resources on Azure using the Snapshot Serengeti dataset. This E2E solution focuses Azure Synapse Analytics and Power BI.",
+            "relatedContentItems": [
+            ]
         }
-
     ]
 }
