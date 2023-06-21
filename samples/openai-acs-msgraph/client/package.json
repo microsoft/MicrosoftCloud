@@ -23,7 +23,7 @@
     "@angular/router": "^16.1.1",
     "@azure/communication-calling": "^1.13.1",
     "@azure/communication-common": "^2.2.0",
-    "@microsoft/mgt": "^3.0.0-preview.2-next.fluentui.c007abc",
+    "@microsoft/mgt": "3.0.0-preview.2-next.fluentui.c007abc",
     "dotenv": "^16.0.3",
     "ngx-build-plus": "^16.0.0",
     "rxjs": "~7.5.0",
