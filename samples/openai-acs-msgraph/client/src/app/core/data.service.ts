@@ -4,7 +4,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
-import { Customer } from '../../app/shared/interfaces';
+import { BYODCompletion, Customer } from '../../app/shared/interfaces';
 import { EmailSmsCompletion } from '../shared/interfaces';
 import { ApiUrlService } from './api-url.service';
 
@@ -48,16 +48,23 @@ export class DataService {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  generateSql(query: string): Observable<any> {
+  generateSql(prompt: string): Observable<any> {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return this.http.post<any>(this.apiUrl + 'generatesql', { query })
+    return this.http.post<any>(this.apiUrl + 'generateSql', { prompt })
       .pipe(
         catchError(this.handleError)
       );
   }
 
-  completeEmailSmsMessages(query: string, company: string, contactName: string): Observable<EmailSmsCompletion> {
-    return this.http.post<EmailSmsCompletion>(this.apiUrl + 'completeEmailSmsMessages', { query, company, contactName })
+  completeBYOD(prompt: string): Observable<string> {
+    return this.http.post<string>(this.apiUrl + 'completeBYOD', { prompt })
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  completeEmailSmsMessages(prompt: string, company: string, contactName: string): Observable<EmailSmsCompletion> {
+    return this.http.post<EmailSmsCompletion>(this.apiUrl + 'completeEmailSmsMessages', { prompt, company, contactName })
       .pipe(
         catchError(this.handleError)
       );

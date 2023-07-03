@@ -1,0 +1,16 @@
+<h2 mat-dialog-title>Chat Help</h2>
+
+<div>
+    <mat-dialog-content class="mat-typography">
+        <button mat-dialog-close class="close-button">
+            <mat-icon>close</mat-icon>
+        </button>
+        <textarea type="text" [(ngModel)]="prompt" title="Message" [placeholder]="placeholder"></textarea>
+        <div *ngIf="response" class="response">
+            {{ response }}
+        </div>
+        <div mat-dialog-actions align="end">
+            <button mat-stroked-button cdkFocusInitial (click)="getHelp()" [disabled]="!prompt">Get Help</button>
+        </div>
+    </mat-dialog-content>
+</div>

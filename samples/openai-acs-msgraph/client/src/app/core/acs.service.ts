@@ -22,14 +22,14 @@ export class AcsService {
   }
 
   sendSms(message: string, customerPhoneNumber: string) : Observable<EmailSmsResponse> {
-    return this.http.post<EmailSmsResponse>(this.apiUrl + 'sendsms', { message, customerPhoneNumber })
+    return this.http.post<EmailSmsResponse>(this.apiUrl + 'sendSms', { message, customerPhoneNumber })
     .pipe(
       catchError(this.handleError)
     );
   }  
 
   sendEmail(subject: string, message: string, customerName: string, customerEmailAddress: string) : Observable<EmailSmsResponse> {
-    return this.http.post<EmailSmsResponse>(this.apiUrl + 'sendemail', { subject, message, customerName, customerEmailAddress })
+    return this.http.post<EmailSmsResponse>(this.apiUrl + 'sendEmail', { subject, message, customerName, customerEmailAddress })
     .pipe(
       catchError(this.handleError)
     );

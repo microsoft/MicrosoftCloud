@@ -1,24 +1,23 @@
 import fs from 'fs';
 import { OpenAIApi, Configuration } from 'openai';
-import { QueryData, AzureOpenAIResponse, EmailSmsResponse } from './interfaces';
+import { QueryData, AzureOpenAIResponse, EmailSmsResponse, OpenAIHeadersBody, ChatGPTData } from './interfaces';
 import fetch from 'cross-fetch';
 import './config';
 
-const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
-const OPENAI_ENDPOINT = process.env.OPENAI_ENDPOINT;
-const OPENAI_MODEL = process.env.OPENAI_MODEL;
-const OPENAI_API_VERSION = process.env.OPENAI_API_VERSION;
+const OPENAI_API_KEY = process.env.OPENAI_API_KEY as string;
+const OPENAI_ENDPOINT = process.env.OPENAI_ENDPOINT as string;
+const OPENAI_MODEL = process.env.OPENAI_MODEL as string;
+const OPENAI_API_VERSION = process.env.OPENAI_API_VERSION as string;
+const AZURE_COGNITIVE_SEARCH_ENDPOINT = process.env.AZURE_COGNITIVE_SEARCH_ENDPOINT as string;
+const AZURE_COGNITIVE_SEARCH_KEY = process.env.AZURE_COGNITIVE_SEARCH_KEY as string;
+const AZURE_COGNITIVE_SEARCH_INDEX = process.env.AZURE_COGNITIVE_SEARCH_INDEX as string;
 
-async function getAzureOpenAICompletion(systemPrompt: string, userPrompt: string, temperature = 0): Promise<string> {
+async function getAzureOpenAICompletion(systemPrompt: string, userPrompt: string, temperature: number): Promise<string> {
+    checkRequiredEnvVars(['OPENAI_API_KEY', 'OPENAI_ENDPOINT', 'OPENAI_MODEL']);
 
-    if (!OPENAI_API_KEY || !OPENAI_ENDPOINT || !OPENAI_MODEL) {
-        throw new Error('Missing Azure OpenAI API key, endpoint, or model in environment variables.');
-    }
+    const fetchUrl = `${OPENAI_ENDPOINT}/openai/deployments/${OPENAI_MODEL}/chat/completions?api-version=${OPENAI_API_VERSION}`;
 
-    // While it's possible to use the OpenAI SDK (as of today) with a little work, we'll use the REST API directly for Azure OpenAI calls.
-    // https://learn.microsoft.com/en-us/azure/cognitive-services/openai/reference
-    const url = `${OPENAI_ENDPOINT}/openai/deployments/${OPENAI_MODEL}/chat/completions?api-version=${OPENAI_API_VERSION}`;
-    const data = {
+    const messageData: ChatGPTData = {
         max_tokens: 1024,
         temperature,
         messages: [
@@ -27,35 +26,89 @@ async function getAzureOpenAICompletion(systemPrompt: string, userPrompt: string
         ]
     };
 
-    try {
-        const response = await fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'api-key': `${OPENAI_API_KEY}`,
-            },
-            body: JSON.stringify(data),
-        });
+    const headersBody: OpenAIHeadersBody = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'api-key': OPENAI_API_KEY
+        },
+        body: JSON.stringify(messageData),
+    };
 
-        const completion = await response.json() as AzureOpenAIResponse;
-        let content = (completion.choices[0]?.message?.content?.trim() ?? '') as string;
-        console.log('Azure OpenAI Output: \n', content);
-        if (content && content.includes('{') && content.includes('}')) {
-            content = extractJson(content);
-        }
-        return content;
+    const completion = await fetchAndParse(fetchUrl, headersBody);
+    console.log(completion);
+
+    let content = (completion.choices[0]?.message?.content?.trim() ?? '') as string;
+    console.log('Azure OpenAI Output: \n', content);
+
+    if (content && content.includes('{') && content.includes('}')) {
+        content = extractJson(content);
     }
-    catch (e) {
-        console.error('Error getting data:', e);
-        throw e;
+
+    return content;
+}
+
+async function getAzureOpenAIBYODCompletion(systemPrompt: string, userPrompt: string, temperature: number): Promise<string> {
+    checkRequiredEnvVars([ 
+        'OPENAI_API_KEY',
+        'OPENAI_ENDPOINT',
+        'OPENAI_MODEL',
+        'AZURE_COGNITIVE_SEARCH_ENDPOINT',
+        'AZURE_COGNITIVE_SEARCH_KEY',
+        'AZURE_COGNITIVE_SEARCH_INDEX',
+    ]);
+
+    const fetchUrl = `${OPENAI_ENDPOINT}/openai/deployments/${OPENAI_MODEL}/extensions/chat/completions?api-version=${OPENAI_API_VERSION}`;
+
+    const messageData: ChatGPTData = {
+        max_tokens: 1024,
+        temperature,
+        messages: [
+            { role: 'system', content: systemPrompt },
+            { role: 'user', content: userPrompt }
+        ],
+        dataSources: [
+            {
+                type: 'AzureCognitiveSearch',
+                parameters: {
+                    endpoint: AZURE_COGNITIVE_SEARCH_ENDPOINT,
+                    key: AZURE_COGNITIVE_SEARCH_KEY,
+                    indexName: AZURE_COGNITIVE_SEARCH_INDEX
+                }
+            }
+        ]
+    };
+
+    const headersBody: OpenAIHeadersBody = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'api-key': OPENAI_API_KEY,
+            chatgpt_url: fetchUrl.replace('extensions/', ''),
+            chatgpt_key: OPENAI_API_KEY
+        },
+        body: JSON.stringify(messageData),
+    };
+
+    const completion = await fetchAndParse(fetchUrl, headersBody);
+    console.log(completion);
+
+    if (completion.error) {
+        console.error('Azure OpenAI BYOD Error: \n', completion.error);
+        return completion.error.message;
     }
+
+    const citations = (completion.choices[0]?.messages[0]?.content?.trim() ?? '') as string;
+    console.log('Azure OpenAI BYOD Citations: \n', citations);
+
+    let content = (completion.choices[0]?.messages[1]?.content?.trim() ?? '') as string;
+    console.log('Azure OpenAI BYOD Output: \n', content);
+
+    return content;
 }
 
 async function getOpenAICompletion(systemPrompt: string, userPrompt: string, temperature = 0): Promise<string> {
-
-    if (!OPENAI_API_KEY) {
-        throw new Error('Missing OpenAI API key in environment variables.');
-    }
+    await checkRequiredEnvVars(['OPENAI_API_KEY']);
 
     const configuration = new Configuration({ apiKey: OPENAI_API_KEY });
 
@@ -71,7 +124,7 @@ async function getOpenAICompletion(systemPrompt: string, userPrompt: string, tem
             ]
         });
 
-        let content = extractJson(completion.data.choices[0]?.message?.content?.trim() ?? '') as string;
+        let content = extractJson(completion.data.choices[0]?.message?.content?.trim() ?? '');
         console.log('OpenAI Output: \n', content);
         if (content && content.includes('{') && content.includes('}')) {
             content = extractJson(content);
@@ -84,14 +137,39 @@ async function getOpenAICompletion(systemPrompt: string, userPrompt: string, tem
     }
 }
 
-function callOpenAI(systemPrompt: string, userPrompt: string, temperature = 0) {
+function checkRequiredEnvVars(requiredEnvVars: string[]) {
+    for (const envVar of requiredEnvVars) {
+        if (!process.env[envVar]) {
+            throw new Error(`Missing ${envVar} in environment variables.`);
+        }
+    }
+}
+
+async function fetchAndParse(url: string, headersBody: Record<string, any>): Promise<any> {
+    try {
+        const response = await fetch(url, headersBody);
+        return await response.json();
+    } catch (error) {
+        console.error(`Error fetching data from ${url}:`, error);
+        throw error;
+    }
+}
+
+function callOpenAI(systemPrompt: string, userPrompt: string, temperature = 0, useBYOD = false) {
     const isAzureOpenAI = OPENAI_API_KEY && OPENAI_ENDPOINT && OPENAI_MODEL;
+
+    if (isAzureOpenAI && useBYOD) {
+        // Azure OpenAI + Cognitive Search: Bring Your Own Data
+        return getAzureOpenAIBYODCompletion(systemPrompt, userPrompt, temperature);
+    }
+
     if (isAzureOpenAI) {
+        // Azure OpenAI
         return getAzureOpenAICompletion(systemPrompt, userPrompt, temperature);
     }
-    else {
-        return getOpenAICompletion(systemPrompt, userPrompt, temperature);
-    }
+
+    // OpenAI
+    return getOpenAICompletion(systemPrompt, userPrompt, temperature);
 }
 
 function extractJson(content: string) {
@@ -105,33 +183,61 @@ function extractJson(content: string) {
     }
 }
 
-async function getSQL(userPrompt: string): Promise<QueryData> {
+async function completeBYOD(userPrompt: string): Promise<string> {
+    const systemPrompt = 'You are an AI assistant that helps people find information.';
+    // Pass that we're using Cognitive Search along with Azure OpenAI.
+    return await callOpenAI(systemPrompt, userPrompt, 0, true);
+}
+
+async function getSQLFromNLP(userPrompt: string): Promise<QueryData> {
     // Get the high-level database schema summary to be used in the prompt.
     // The db.schema file could be generated by a background process or the 
     // schema could be dynamically retrieved.
     const dbSchema = await fs.promises.readFile('db.schema', 'utf8');
 
     const systemPrompt = `
-    Assistant is a natural language to SQL bot that returns only a JSON object with the SQL query and 
-    the parameter values in it. The SQL will query a PostgreSQL database.
-    
-    PostgreSQL tables, with their columns:    
+      Assistant is a natural language to SQL bot that returns only a JSON object with the SQL query and 
+      the parameter values in it. The SQL will query a PostgreSQL database.
+      
+      PostgreSQL tables, with their columns:    
+  
+      ${dbSchema}
+  
+      Rules:
+      - Convert any strings to a PostgreSQL parameterized query value to avoid SQL injection attacks.
+      - Always return a JSON object with the SQL query and the parameter values in it.
+      - Return a JSON object. Do NOT include any text outside of the JSON object.
+      - Example JSON object to return: { "sql": "", "paramValues": [] }
 
-    ${dbSchema}
+      User: "Display all company reviews. Group by company."      
+      Assistant: { "sql": "SELECT * FROM reviews", "paramValues": [] }
 
-    Rules:
-    - Convert any strings to a PostgreSQL parameterized query value to avoid SQL injection attacks.
-    - Always return a JSON object with the SQL query and the parameter values in it.
-    - Only return a JSON object. Do NOT include any text outside of the JSON object. Do not provide any additional explanations or context. 
-      Just the JSON object is needed.
-    - Example JSON object to return: { "sql": "", "paramValues": [] }
+      User: "Display all reviews for companies located in cities that start with 'L'."
+      Assistant: { "sql": "SELECT r.* FROM reviews r INNER JOIN customers c ON r.customer_id = c.id WHERE c.city LIKE 'L%'", "paramValues": [] }
+
+      User: "Display revenue for companies located in London. Include the company name and city."
+      Assistant: { 
+        "sql": "SELECT c.company, c.city, SUM(o.total) AS revenue FROM customers c INNER JOIN orders o ON c.id = o.customer_id WHERE c.city = $1 GROUP BY c.company, c.city", 
+        "paramValues": ["London"] 
+      }
+
+      User: "Get the total revenue for Adventure Works Cycles. Include the contact information as well."
+      Assistant: { 
+        "sql": "SELECT c.company, c.city, c.email, SUM(o.total) AS revenue FROM customers c INNER JOIN orders o ON c.id = o.customer_id WHERE c.company = $1 GROUP BY c.company, c.city, c.email", 
+        "paramValues": ["Adventure Works Cycles"] 
+      }
+
+      - Convert any strings to a PostgreSQL parameterized query value to avoid SQL injection attacks.
+      - Do NOT include any text outside of the JSON object. Do not provide any additional explanations or context. Just the JSON object is needed.
     `;
 
     let queryData: QueryData = { sql: '', paramValues: [], error: '' };
     let results = '';
+
     try {
         results = await callOpenAI(systemPrompt, userPrompt);
         if (results) {
+            console.log('results', results);
             const parsedResults = JSON.parse(results);
             queryData = { ...queryData, ...parsedResults };
             if (isProhibitedQuery(queryData.sql)) {
@@ -139,16 +245,12 @@ async function getSQL(userPrompt: string): Promise<QueryData> {
                 queryData.error = 'Prohibited query.';
             }
         }
-    } 
-    catch (e) {
-        console.log(e);
-        // Completion results may still contain SQL information we don't want to expose.
-        // so check to ensure it's OK to return it to client.
+    } catch (error) {
+        console.log(error);
         if (isProhibitedQuery(results)) {
             queryData.sql = '';
             queryData.error = 'Prohibited query.';
-        }
-        else {
+        } else {
             queryData.error = results;
         }
     }
@@ -175,31 +277,39 @@ async function completeEmailSMSMessages(prompt: string, company: string, contact
     console.log('Inputs:', prompt, company, contactName);
 
     const systemPrompt = `
-    Assistant is a bot designed to help users create email and SMS messages from data and 
-    return a JSON object with the email and SMS message information in it.
+      Assistant is a bot designed to help users create email and SMS messages from data and 
+      return a JSON object with the email and SMS message information in it.
 
-    Rules:
-    - Generate a subject line for the email message.
-    - Use the User Rules to generate the messages. 
-    - All messages should have a friendly tone and never use inappropriate language.
-    - SMS messages should be in plain text format and no more than 160 characters. 
-    - Start the message with "Hi <Contact Name>,\n\n". Contact Name can be found in the user prompt.
-    - Add carriage returns to the email message to make it easier to read. 
-    - End with a signature line that says "Sincerely,\nCustomer Service".
-    - Return a JSON object with the emailSubject, emailBody, and SMS message values in it. 
+      Rules:
+      - Generate a subject line for the email message.
+      - Use the User Rules to generate the messages. 
+      - All messages should have a friendly tone and never use inappropriate language.
+      - SMS messages should be in plain text format and NO MORE than 160 characters. 
+      - Start the message with "Hi <Contact Name>,\n\n". Contact Name can be found in the user prompt.
+      - Add carriage returns to the email message to make it easier to read. 
+      - End with a signature line that says "Sincerely,\nCustomer Service".
+      - Return a JSON object with the emailSubject, emailBody, and SMS message values in it:
 
-    Example JSON object: { "emailSubject": "", "emailBody": "", "sms": "" }
+      { "emailSubject": "", "emailBody": "", "sms": "" }
 
-    - Only return a JSON object. Do NOT include any text outside of the JSON object. Do not provide any additional explanations or context. 
-    Just the JSON object is needed.
+      User: "Order delayed 2 days. Give a 5% discount."
+      Assistant:  {
+        "emailSubject": "Your Order has been Delayed",
+        "emailBody": "Hi [Customer Name], We wanted to inform you that there has been a delay in processing your order. We apologize for any inconvenience this may have caused. Your order will now be delivered in 2 days. As a token of our appreciation for your patience, we would like to offer you a 5% discount on your next purchase. Please use the code 'DELAY5' at checkout to redeem your discount. If you have any further questions or concerns, please don't hesitate to reach out to our customer service team. Sincerely, Customer Service",
+        "sms": "Hi [Customer Name], we apologize but your order is delayed 2 days. Use code 'DELAY5' for 5% off your next purchase. Contact us for any questions. Thanks!"
+      }
+
+      - The sms property value should be in plain text format and NO MORE than 160 characters. 
+      - Only return a JSON object. Do NOT include any text outside of the JSON object. Do not provide any additional explanations or context. 
+      Just the JSON object is needed.
     `;
 
     const userPrompt = `
-    User Rules: 
-    ${prompt}
+      User Rules: 
+      ${prompt}
 
-    Contact Name: 
-    ${contactName}
+      Contact Name: 
+      ${contactName}
     `;
 
     let content: EmailSmsResponse = { status: true, email: '', sms: '', error: '' };
@@ -220,4 +330,4 @@ async function completeEmailSMSMessages(prompt: string, company: string, contact
     return content;
 }
 
-export { completeEmailSMSMessages, getSQL };
+export { completeBYOD, completeEmailSMSMessages, getSQLFromNLP as getSQL };

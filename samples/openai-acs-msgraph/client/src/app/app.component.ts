@@ -39,6 +39,7 @@ export class AppComponent implements OnInit, OnDestroy {
     { name: 'reset', icon: RESET_ICON }, 
     { name: 'contact', icon: CONTACT_ICON }, 
     { name: 'sms', icon: SMS_ICON }
+
   ];
   relatedContentComponentRef?: ComponentRef<RelatedContentComponent>;
 

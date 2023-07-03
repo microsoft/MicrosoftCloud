@@ -3,6 +3,12 @@
     margin-right: 5px;
 }
 
+.chat-help-icon {
+    margin-top: 0px;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
 .title {
     margin-top: 3px;
 }
@@ -20,10 +26,10 @@ mgt-login {
     --login-signed-in-background: transparent;
     --login-signed-in-hover-background: #565656;
     --login-popup-background-color: #3f51b5;
-    --login-button-padding:5px;
+    --login-button-padding: 5px;
     --login-popup-padding: 8px;
 
     /** person component tokens **/
     --person-line1-text-color: whitesmoke;
     --person-line2-text-color: white;
-  }
+}

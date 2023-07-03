@@ -48,7 +48,7 @@ export class CustomersListComponent implements OnInit, OnDestroy {
     filteredData: any[] = [];
     queryText = 'Get the total revenue for all orders. Group by company and include the city.';
     phonePipe = new PhonePipe();
-    private subscriptions: Subscription[] = [];
+    subscription = new Subscription();
     @Output() customerSelected = new EventEmitter<any>();
 
     dialog = inject(MatDialog);
@@ -62,7 +62,7 @@ export class CustomersListComponent implements OnInit, OnDestroy {
      }
 
     getData() {
-        this.subscriptions.push(
+        this.subscription.add(
             this.dataService.getCustomers().subscribe((data: any[]) => this.data = this.filteredData = data)
         );
     }
@@ -73,7 +73,7 @@ export class CustomersListComponent implements OnInit, OnDestroy {
     }
 
     getQueryData() {
-        this.subscriptions.push(
+        this.subscription.add(
             this.dataService.generateSql(this.queryText).subscribe((data: any) => {
                 this.data = data;
             })
@@ -118,7 +118,7 @@ export class CustomersListComponent implements OnInit, OnDestroy {
             });
 
             // Subscribe to the dialog afterClosed observable to get the dialog result
-            this.subscriptions.push(
+            this.subscription.add(
                 dialogRef.afterClosed().subscribe((response: EmailSmsDialogData) => {
                     console.log('SMS dialog result:', response);
                     if (response) {
@@ -133,6 +133,6 @@ export class CustomersListComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        this.subscriptions.forEach(s => s.unsubscribe());
+        this.subscription.unsubscribe();
     }
 }

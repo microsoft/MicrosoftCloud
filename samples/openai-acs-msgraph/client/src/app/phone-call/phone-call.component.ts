@@ -27,7 +27,7 @@ export class PhoneCallComponent implements OnInit, OnDestroy {
   dialerVisible = false;
   numbers: string[] = ['1', '2', '3', '4', '5', '6', '7', '8', '9', ' ', '0', ' '];
   cursorPosition = 0;
-  subscriptions: Subscription[] = [];
+  subscription = new Subscription();
 
   @Input() customerPhoneNumber = '';
   @Output() hangup = new EventEmitter();
@@ -39,7 +39,7 @@ export class PhoneCallComponent implements OnInit, OnDestroy {
 
   async ngOnInit() {
     if (ACS_CONNECTION_STRING) {
-      this.subscriptions.push(
+      this.subscription.add(
         this.acsService.getAcsToken().subscribe(async (user: AcsUser) => {
           const callClient = new CallClient();
           const tokenCredential = new AzureCommunicationTokenCredential(user.token);
@@ -95,7 +95,7 @@ export class PhoneCallComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscriptions.forEach(sub => sub.unsubscribe());
+    this.subscription.unsubscribe();
   }
 
 }

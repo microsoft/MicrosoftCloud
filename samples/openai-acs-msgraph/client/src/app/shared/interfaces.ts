@@ -10,6 +10,12 @@ export interface EmailSmsCompletion {
     status: boolean;
 }
 
+export interface BYODCompletion {
+    status: boolean;
+    content: string;
+    error: string;
+}
+
 export interface Customer {
     id: number;
     company: string;

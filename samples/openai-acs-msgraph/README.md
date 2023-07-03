@@ -13,10 +13,10 @@ This application demonstrates how OpenAI, Azure Communication Services, and Micr
 You'll need the following to run the full version of the sample:
 
 - [Node](https://nodejs.org) - Node 16+ and npm 7+ will be used for this project
-- [git](https://learn.microsoft.com/devops/develop/git/install-and-set-up-git)
-- [Visual Studio Code](https://code.visualstudio.com) (while we'll reference Visual Studio Code in this tutorial, any editor can be used)
-- [Azure subscription](https://azure.microsoft.com/free/search)
-- [Microsoft 365 developer tenant](https://developer.microsoft.com/microsoft-365/dev-program)
+- [git](https://learn.microsoft.com/devops/develop/git/install-and-set-up-git?WT.mc_id=m365-94501-dwahlin)
+- [Visual Studio Code](https://code.visualstudio.com?WT.mc_id=m365-94501-dwahlin) (while we'll reference Visual Studio Code in this tutorial, any editor can be used)
+- [Azure subscription](https://azure.microsoft.com/free/search?WT.mc_id=m365-94501-dwahlin)
+- [Microsoft 365 developer tenant](https://developer.microsoft.com/microsoft-365/dev-program?WT.mc_id=m365-94501-dwahlin)
 - [Docker Desktop](https://www.docker.com/get-started/), [Podman](https://podman-desktop.io/downloads), [nerdctl](https://github.com/containerd/nerdctl) or another Open Container Initiative (OCI) compliant container runtime.
 
 
@@ -24,13 +24,13 @@ You'll need the following to run the full version of the sample:
 
 This application has 3 main features that can be individually enabled depending on what you'd like to use. The features include:
 
-- **AI**: OpenAI Service. Used to enable natural language to SQL queries and for email and SMS message generation.
+- **AI**: OpenAI Service. Used to enable natural language to SQL queries, email and SMS message generation, and "bring your own data" functionality.
 - **Communication**: Azure Communication Services (ACS resource, phone number, and email domain). Used to enable in-app phone calling to customers and Email/SMS sending functionality.
-- **Organizational Data**: Azure Active Directory, Microsoft Graph, and (optionally) Teams channels. Used to pull in related company documents, chats, emails, and calendar events and even send a message into a Teams channel.
+- **Organizational Data**: Azure Active Directory, Microsoft Graph, Microsoft Graph Toolkit, and (optionally) Teams channels. Used to pull in related company documents, chats, emails, and calendar events and even send a message into a Teams channel.
 
-Enable the features you'd like, ignore those you don't want, and the app will still run.
+Enable the features you'd like, ignore those you don't want, and the app will still run. You can [View the full tutorial](https://learn.microsoft.com/microsoft-cloud/dev/tutorials/openai-acs-msgraph?WT.mc_id=m365-94501-dwahlin) to learn how to build this application or go through the high-level summary that follows.
 
-To start, rename the provided *.env.example* file to *.env* in the *tutorials/openai-msgraph-acs* folder. Note that it has the following values:
+1. To start, rename the provided *.env.example* file to *.env* in the *tutorials/openai-msgraph-acs* folder. Note that it has the following values:
 
     ```
     AAD_CLIENT_ID=
@@ -38,7 +38,7 @@ To start, rename the provided *.env.example* file to *.env* in the *tutorials/op
     CHANNEL_ID=
     OPENAI_API_KEY=
     OPENAI_ENDPOINT=
-    OPENAI_API_VERSION=2023-03-15-preview
+    OPENAI_API_VERSION=2023-06-01-preview
     OPENAI_MODEL=gpt-35-turbo
     POSTGRES_USER=
     POSTGRES_PASSWORD=
@@ -48,6 +48,9 @@ To start, rename the provided *.env.example* file to *.env* in the *tutorials/op
     CUSTOMER_EMAIL_ADDRESS=
     CUSTOMER_PHONE_NUMBER=
     API_PORT=3000
+    AZURE_COGNITIVE_SEARCH_ENDPOINT=
+    AZURE_COGNITIVE_SEARCH_KEY=
+    AZURE_COGNITIVE_SEARCH_INDEX=
     ```
 
 1. Assign the following values to `POSTGRES_USER` and `POSTGRES_PASSWORD`.
@@ -67,10 +70,18 @@ To start, rename the provided *.env.example* file to *.env* in the *tutorials/op
     OPENAI_MODEL=<AZURE_OPENAI_MODEL_NAME>
     ```
 
-    Alternatively, you can use OpenAI instead by adding your [OpenAI](https://platform.openai.com/account/api-keys) secret key into the `.env` file and leaving the other associated values blank.
+    Alternatively, you can use OpenAI instead by adding your [OpenAI](https://platform.openai.com/account/api-keys) secret key into the `.env` file and leaving the other associated OpenAI values blank.
 
     ```
     OPENAI_API_KEY=<OPENAI_SECRET_KEY>
+    ```
+
+1. If you'd like to enable the "bring your own data" feature, go through the [steps in this tutorial](https://learn.microsoft.com/azure/cognitive-services/openai/use-your-data-quickstart) and update the Cognitive Search properties in the `.env` file with your resource's endpoint, key, and index name.
+
+    ```
+    AZURE_COGNITIVE_SEARCH_ENDPOINT=
+    AZURE_COGNITIVE_SEARCH_KEY=
+    AZURE_COGNITIVE_SEARCH_INDEX=
     ```
 
 ## Enable the Communication Feature (Azure Communication Services)

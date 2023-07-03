@@ -3,7 +3,7 @@ import './config';
 
 import { createACSToken, sendEmail, sendSms } from './acs';
 import { initializeDb } from './initDatabase';
-import { completeEmailSMSMessages, getSQL } from './openAI';
+import { completeBYOD, completeEmailSMSMessages, getSQL } from './openAI';
 import { getCustomers, queryDb } from './postgres';
 
 const router = Router();
@@ -31,16 +31,16 @@ router.get('/customers', async (req, res) => {
     }
 });
 
-router.post('/generatesql', async (req, res) => {
-    const userQuery = req.body.query;
+router.post('/generateSql', async (req, res) => {
+    const userPrompt = req.body.prompt;
 
-    if (!userQuery) {
-        return res.status(400).json({ error: 'Missing parameter "query".' });
+    if (!userPrompt) {
+        return res.status(400).json({ error: 'Missing parameter "prompt".' });
     }
 
     try {
-        // Call Azure OpenAI to convert the user query into a SQL query
-        const sqlCommandObject = await getSQL(userQuery);
+        // Call Azure OpenAI to convert the user prompt into a SQL query
+        const sqlCommandObject = await getSQL(userPrompt);
 
         let result: any[] = [];
         // Execute the SQL query
@@ -57,7 +57,7 @@ router.post('/generatesql', async (req, res) => {
     }
 });
 
-router.post('/sendemail', async (req, res) => {
+router.post('/sendEmail', async (req, res) => {
     const { subject, message, customerName, customerEmailAddress } = req.body;
 
     if (!subject || !message || !customerName || !customerEmailAddress) {
@@ -84,7 +84,7 @@ router.post('/sendemail', async (req, res) => {
     }
 });
 
-router.post('/sendsms', async (req, res) => {
+router.post('/sendSms', async (req, res) => {
     const message = req.body.message;
     const customerPhoneNumber = req.body.customerPhoneNumber;
 
@@ -112,19 +112,41 @@ router.post('/sendsms', async (req, res) => {
 });
 
 router.post('/completeEmailSmsMessages', async (req, res) => {
-    const { query, company, contactName } = req.body;
+    const { prompt, company, contactName } = req.body;
 
-    if (!query || !company || !contactName) {
+    if (!prompt || !company || !contactName) {
         return res.status(400).json({ 
             status: false, 
-            error: 'The query, company, and contactName parameters must be provided.' 
+            error: 'The prompt, company, and contactName parameters must be provided.' 
         });
     }
 
     let result;
     try {
         // Call OpenAI to get the email and SMS message completions
-       result = await completeEmailSMSMessages(query, company, contactName);
+       result = await completeEmailSMSMessages(prompt, company, contactName);
+    }
+    catch (e: unknown) {
+        console.error('Error parsing JSON:', e);
+    }
+
+    res.json(result);
+});
+
+router.post('/completeBYOD', async (req, res) => {
+    const { prompt } = req.body;
+
+    if (!prompt) {
+        return res.status(400).json({ 
+            status: false, 
+            error: 'The prompt parameter must be provided.' 
+        });
+    }
+
+    let result;
+    try {
+        // Call OpenAI to get custom "bring your own data" completion
+       result = await completeBYOD(prompt);
     }
     catch (e: unknown) {
         console.error('Error parsing JSON:', e);

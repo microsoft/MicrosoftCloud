@@ -17,7 +17,7 @@ import { NgIf, NgFor } from '@angular/common';
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class ChatsComponent extends RelatedContentBaseComponent implements OnDestroy {
-  subscription: Subscription = new Subscription();
+  subscription = new Subscription();
   dialog = inject(MatDialog);
   dialogData: TeamsDialogData = {
     id: '',
