@@ -1,5 +1,5 @@
 import fs from 'fs';
-import { OpenAIApi, Configuration } from 'openai';
+import { OpenAI } from 'openai';
 import { QueryData, AzureOpenAIResponse, EmailSmsResponse, OpenAIHeadersBody, ChatGPTData } from './interfaces';
 import fetch from 'cross-fetch';
 import './config';
@@ -110,11 +110,11 @@ async function getAzureOpenAIBYODCompletion(systemPrompt: string, userPrompt: st
 async function getOpenAICompletion(systemPrompt: string, userPrompt: string, temperature = 0): Promise<string> {
     await checkRequiredEnvVars(['OPENAI_API_KEY']);
 
-    const configuration = new Configuration({ apiKey: OPENAI_API_KEY });
-
     try {
-        const openai = new OpenAIApi(configuration);
-        const completion = await openai.createChatCompletion({
+        // v4+ OpenAI API. 
+        // On v3? View the migration guide here: https://github.com/openai/openai-node/discussions/217
+        const openai = new OpenAI({ apiKey: OPENAI_API_KEY });
+        const completion = await openai.chat.completions.create({
             model: 'gpt-3.5-turbo', // gpt-3.5-turbo, gpt-4
             max_tokens: 1024,
             temperature,
@@ -124,7 +124,7 @@ async function getOpenAICompletion(systemPrompt: string, userPrompt: string, tem
             ]
         });
 
-        let content = extractJson(completion.data.choices[0]?.message?.content?.trim() ?? '');
+        let content = completion.choices[0]?.message?.content?.trim() ?? '';
         console.log('OpenAI Output: \n', content);
         if (content && content.includes('{') && content.includes('}')) {
             content = extractJson(content);
