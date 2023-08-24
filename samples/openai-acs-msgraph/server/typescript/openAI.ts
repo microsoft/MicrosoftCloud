@@ -292,11 +292,11 @@ async function completeEmailSMSMessages(prompt: string, company: string, contact
 
       { "emailSubject": "", "emailBody": "", "sms": "" }
 
-      User: "Order delayed 2 days. Give a 5% discount."
+      User: "Your order has been delayed"
       Assistant:  {
         "emailSubject": "Your Order has been Delayed",
-        "emailBody": "Hi [Customer Name], We wanted to inform you that there has been a delay in processing your order. We apologize for any inconvenience this may have caused. Your order will now be delivered in 2 days. As a token of our appreciation for your patience, we would like to offer you a 5% discount on your next purchase. Please use the code 'DELAY5' at checkout to redeem your discount. If you have any further questions or concerns, please don't hesitate to reach out to our customer service team. Sincerely, Customer Service",
-        "sms": "Hi [Customer Name], we apologize but your order is delayed 2 days. Use code 'DELAY5' for 5% off your next purchase. Contact us for any questions. Thanks!"
+        "emailBody": "Hi [Customer Name], We wanted to inform you that there has been a delay in processing your order. We apologize for any inconvenience this may have caused. Sincerely, Customer Service",
+        "sms": "Hi [Customer Name], we apologize but your order has been delayed. Contact us for any questions. Thanks!"
       }
 
       - The sms property value should be in plain text format and NO MORE than 160 characters. 
