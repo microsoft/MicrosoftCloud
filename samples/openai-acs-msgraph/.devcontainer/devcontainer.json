@@ -1,5 +1,5 @@
 {
-    "name": "Node.js & PostgreSQL",
+    "name": "Angular, Node.js & PostgreSQL",
     "dockerComposeFile": "docker-compose.yml",
     "service": "app",
     "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
@@ -8,6 +8,11 @@
         4200,
         5432
     ],
+    "portsAttributes": {
+		"3000": { "label": "Node port", "onAutoForward": "notify" },
+		"4200": { "label": "Angular port", "onAutoForward": "notify" },
+		"5432": { "label": "PostgreSQL port", "onAutoForward": "silent" }
+	},
     "features": {
         "ghcr.io/devcontainers/features/github-cli:1": {
             "version": "latest"

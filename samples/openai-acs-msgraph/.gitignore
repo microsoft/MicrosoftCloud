@@ -1,9 +1,14 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
+# Environment variables
 .env
+
+# Postgres data folder
 data/*
 
 # Compiled output
+obj
+bin
 **/dist/
 **/tmp
 **/out-tsc
@@ -43,3 +48,43 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*.pyo
+*.egg-info/
+*.egg
+*.spec
+
+# Virtual environment directory
+venv/
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+
+# PyInstaller
+# Usually these files are written by a python script from a template
+# before PyInstaller builds the exe, so as to inject date/other infos into it.
+*.manifest
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# Rope project settings
+.ropeproject

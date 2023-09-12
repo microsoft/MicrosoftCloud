@@ -45,6 +45,8 @@ async function getAzureOpenAICompletion(systemPrompt: string, userPrompt: string
         content = extractJson(content);
     }
 
+    console.log('After parse: \n', content);
+
     return content;
 }
 
@@ -177,7 +179,10 @@ function extractJson(content: string) {
     const match = content.match(regex);
 
     if (match) {
-        return match[0];
+        // If we get back pure text it can have invalid carriage returns
+        return match[0].replace(/"([^"]+)"/g, function(match, group1) {
+            return '"' + group1.replace(/\n/g, "\\n") + '"';
+        });
     } else {
         return '';
     }
@@ -206,7 +211,7 @@ async function getSQLFromNLP(userPrompt: string): Promise<QueryData> {
       Rules:
       - Convert any strings to a PostgreSQL parameterized query value to avoid SQL injection attacks.
       - Always return a JSON object with the SQL query and the parameter values in it.
-      - Return a JSON object. Do NOT include any text outside of the JSON object.
+      - Return a valid JSON object. Do NOT include any text outside of the JSON object.
       - Example JSON object to return: { "sql": "", "paramValues": [] }
 
       User: "Display all company reviews. Group by company."      
@@ -288,19 +293,12 @@ async function completeEmailSMSMessages(prompt: string, company: string, contact
       - Start the message with "Hi <Contact Name>,\n\n". Contact Name can be found in the user prompt.
       - Add carriage returns to the email message to make it easier to read. 
       - End with a signature line that says "Sincerely,\nCustomer Service".
-      - Return a JSON object with the emailSubject, emailBody, and SMS message values in it:
+      - Return a valid JSON object with the emailSubject, emailBody, and SMS message values in it:
 
       { "emailSubject": "", "emailBody": "", "sms": "" }
 
-      User: "Your order has been delayed"
-      Assistant:  {
-        "emailSubject": "Your Order has been Delayed",
-        "emailBody": "Hi [Customer Name], We wanted to inform you that there has been a delay in processing your order. We apologize for any inconvenience this may have caused. Sincerely, Customer Service",
-        "sms": "Hi [Customer Name], we apologize but your order has been delayed. Contact us for any questions. Thanks!"
-      }
-
       - The sms property value should be in plain text format and NO MORE than 160 characters. 
-      - Only return a JSON object. Do NOT include any text outside of the JSON object. Do not provide any additional explanations or context. 
+      - Only return a valid JSON object. Do NOT include any text outside of the JSON object. Do not provide any additional explanations or context. 
       Just the JSON object is needed.
     `;
 
