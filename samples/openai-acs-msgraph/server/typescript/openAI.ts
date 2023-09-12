@@ -180,9 +180,7 @@ function extractJson(content: string) {
 
     if (match) {
         // If we get back pure text it can have invalid carriage returns
-        return match[0].replace(/"([^"]+)"/g, function(match, group1) {
-            return '"' + group1.replace(/\n/g, "\\n") + '"';
-        });
+        return match[0].replace(/"([^"]*)"/g, (match) => match.replace(/\n/g, "\\n"));
     } else {
         return '';
     }
