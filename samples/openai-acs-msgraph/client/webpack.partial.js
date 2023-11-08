@@ -4,7 +4,7 @@ require('dotenv').config({ path: '../.env' })
 module.exports = {
     plugins: [
         new webpack.DefinePlugin({
-            "AAD_CLIENT_ID": JSON.stringify(process.env.AAD_CLIENT_ID),
+            "ENTRAID_CLIENT_ID": JSON.stringify(process.env.ENTRAID_CLIENT_ID),
             "TEAM_ID": JSON.stringify(process.env.TEAM_ID),
             "CHANNEL_ID": JSON.stringify(process.env.CHANNEL_ID),
             "OPENAI_API_KEY": (process.env.OPENAI_API_KEY) ? true : false, 

@@ -15,8 +15,8 @@ import { BYODCompletion } from '../shared/interfaces';
   imports: [CommonModule, FormsModule, MatButtonModule, MatDialogModule, MatIconModule ]
 })
 export class ChatHelpDialogComponent {
-  prompt = 'How should I handle refund requests?';
-  placeholder = 'How should I handle refund requests?';
+  prompt = 'How should I handle a company refund request?';
+  placeholder = 'How should I handle a company refund request?';
   response = '';
   dataService = inject(DataService)
 

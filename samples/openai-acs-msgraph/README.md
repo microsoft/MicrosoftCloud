@@ -33,7 +33,7 @@ Enable the features you'd like, ignore those you don't want, and the app will st
 1. To start, rename the provided *.env.example* file to *.env* in the *tutorials/openai-msgraph-acs* folder. Note that it has the following values:
 
     ```
-    AAD_CLIENT_ID=
+    ENTRAID_CLIENT_ID=
     TEAM_ID=
     CHANNEL_ID=
     OPENAI_API_KEY=
@@ -119,16 +119,16 @@ Enable the features you'd like, ignore those you don't want, and the app will st
 
 1. Create a [Microsoft 365 Developer tenant](https://developer.microsoft.com/en-us/microsoft-365/dev-program) if you don't already have one. 
 
-1. Create a new Azure Active Directory (AAD) app registration using the [Azure Portal](https://portal.azure.com/#view/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/~/RegisteredApps).
+1. Create a new Azure Active Directory (AAD) app registration using the [Azure Portal](https://portal.azure.com/#view/Microsoft_ENTRAID_IAM/ActiveDirectoryMenuBlade/~/RegisteredApps).
 
     - Give the app a name such as `microsoft-graph-app`.
     - Select `Accounts in any organizational directory (Any Azure AD directory - Multitenant)`
     - Redirect URI: Single-page application (SPA) with a redirect URL of http://localhost:4200
 
-1. After creating the app registration, go to the `Overview` screen and copy the `Application (client) ID` to your clipboard. Replace the <AAD_CLIENT_ID> value in the `.env` file with the value.
+1. After creating the app registration, go to the `Overview` screen and copy the `Application (client) ID` to your clipboard. Replace the <ENTRAID_CLIENT_ID> value in the `.env` file with the value.
 
         ```
-        AAD_CLIENT_ID=<AAD_CLIENT_ID>
+        ENTRAID_CLIENT_ID=<ENTRAID_CLIENT_ID>
         ```
 
 1. To send a message from the app into a Teams Channel (optional feature that is included), open [Microsoft Teams](https://teams.microsoft.com) using your Microsoft 365 dev tenant account.
