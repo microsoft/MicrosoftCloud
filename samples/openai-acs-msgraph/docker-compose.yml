@@ -7,6 +7,7 @@ services:
       POSTGRES_USER: web
       POSTGRES_PASSWORD: web-password
       POSTGRES_DB: CustomersDB
+      PGDATA: /var/lib/pg_data
     volumes:
       - ./data:/var/lib/postgresql/data
     ports:
