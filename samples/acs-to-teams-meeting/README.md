@@ -22,7 +22,7 @@ Technologies used in this scenario include:
 
 ## Prerequisites
 
-- [Node](https://nodejs.org)
+- [Node LTS](https://nodejs.org)
 - [Azure Functions Extension for VS Code](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azurefunctions)
 - [Azure subscription](https://azure.microsoft.com/free/search)
 - [Microsoft 365 developer tenant](https://developer.microsoft.com/microsoft-365/dev-program)
@@ -31,7 +31,7 @@ Technologies used in this scenario include:
 
 To get the solution running you'll need to run the front-end and back-end solutions. You can alternatively go through our [hands-on tutorial](https://microsoft.github.io/MicrosoftCloud/tutorials/docs/ACS-to-Teams-Meeting) as well which will provide step-by-step instructions.
 
-1. Follow the steps in the `acs-to-teams-meeting/server/[your-chosen-language]` readme (for example the `acs-to-teams-meeting/server/typescript`) to register an Azure Active Directory application and start the Azure Function.
+1. Follow the steps in the `acs-to-teams-meeting/server/[your-chosen-language]` readme (for example the `acs-to-teams-meeting/server/typescript`) to register a Microsoft Entra ID (Azure Active Directory) application and start the Azure Function.
 
 1. Open the `acs-to-teams-meeting/client/react` folder in a terminal window.
 
@@ -40,15 +40,15 @@ To get the solution running you'll need to run the front-end and back-end soluti
 #### Bash (Mac/Linux/WSL)
 
     ```bash
-    export REACT_APP_ACS_USER_FUNCTION=http://localhost:7071/api/ACSTokenFunction
-    export REACT_APP_TEAMS_MEETING_FUNCTION=http://localhost:7071/api/TeamsMeetingFunction
+    export REACT_APP_ACS_USER_FUNCTION=http://localhost:7071/api/httpTriggerAcsToken
+    export REACT_APP_TEAMS_MEETING_FUNCTION=http://localhost:7071/api/httpTriggerTeamsUrl
     ```
 
 #### Powershell (Windows/Mac/Linux)
 
     ```powershell
-    $Env:REACT_APP_ACS_USER_FUNCTION = "http://localhost:7071/api/ACSTokenFunction"
-    $Env:REACT_APP_TEAMS_MEETING_FUNCTION = "http://localhost:7071/api/TeamsMeetingFunction"
+    $Env:REACT_APP_ACS_USER_FUNCTION = "http://localhost:7071/api/httpTriggerAcsToken"
+    $Env:REACT_APP_TEAMS_MEETING_FUNCTION = "http://localhost:7071/api/httpTriggerTeamsUrl"
     ```
 
 1. Run `npm install`.
