@@ -21,7 +21,7 @@ docker compose up # or if using V1 docker-compose up
  in the package.json of the server 
 
 
-## To run the server in debug mode
+## To run the client in debug mode
 3. Launch the browser in debug mode (here we use chrome):
 
 google-chrome-stable  --remote-debugging-port=9222
