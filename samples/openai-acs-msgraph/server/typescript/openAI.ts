@@ -63,7 +63,7 @@ async function getAzureOpenAIBYODCompletion(systemPrompt: string, userPrompt: st
     const fetchUrl = `${OPENAI_ENDPOINT}/openai/deployments/${OPENAI_MODEL}/extensions/chat/completions?api-version=${OPENAI_API_VERSION}`;
 
     const messageData: ChatGPTData = {
-        max_tokens: 1024,
+        max_tokens: 800,
         temperature,
         messages: [
             { role: 'system', content: systemPrompt },
@@ -100,10 +100,10 @@ async function getAzureOpenAIBYODCompletion(systemPrompt: string, userPrompt: st
         return completion.error.message;
     }
 
-    const citations = (completion.choices[0]?.messages[0]?.content?.trim() ?? '') as string;
-    console.log('Azure OpenAI BYOD Citations: \n', citations);
+    // const citations = (completion.choices[0]?.message?.context?.trim() ?? '') as string;
+    // console.log('Azure OpenAI BYOD Citations: \n', citations);
 
-    let content = (completion.choices[0]?.messages[1]?.content?.trim() ?? '') as string;
+    let content = (completion.choices[0]?.message?.content?.trim() ?? '') as string;
     console.log('Azure OpenAI BYOD Output: \n', content);
 
     return content;

@@ -1,12 +1,13 @@
 {
-    "version": "0.2.0",
-    "configurations": [
-        {
-            "name": "Attach to Node Functions",
-            "type": "node",
-            "request": "attach",
-            "port": 9229,
-            "preLaunchTask": "func: host start"
-        }
-    ]
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Attach to Chrome",
+      "port": 9222,
+      "url": "http://localhost:4200/",
+      "request": "attach",
+      "type": "chrome",
+      "webRoot": "${workspaceFolder}/samples/openai-acs-msgraph/client"
+    }
+  ]
 }
