@@ -1,8 +1,7 @@
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Azure.WebJobs;
-using Microsoft.Azure.WebJobs.Extensions.Http;
-using Microsoft.AspNetCore.Http;
+
+using System.Net;
+using Microsoft.Azure.Functions.Worker;
+using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
 using GraphACSFunctions.Services;
 
@@ -14,10 +13,13 @@ public class TeamsMeetingFunction
 
     public TeamsMeetingFunction(IGraphService graphService) => _graphService = graphService;
 
-    [FunctionName("TeamsMeetingFunction")]
-    public async Task<IActionResult> Run(
-        [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)] HttpRequest req,
-        ILogger log) => 
-        new OkObjectResult(await _graphService.CreateMeetingAsync());
-
+    [Function("HttpTriggerTeamsUrl")]
+    public async Task<HttpResponseData> Run(
+        [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)] HttpRequestData req,
+        ILogger log)
+    {
+        var response = req.CreateResponse(HttpStatusCode.OK);
+        await response.WriteStringAsync(await _graphService.CreateMeetingAsync());
+        return response;
+    }
 }

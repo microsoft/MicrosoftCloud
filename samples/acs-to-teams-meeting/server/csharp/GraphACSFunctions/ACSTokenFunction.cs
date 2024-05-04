@@ -1,19 +1,19 @@
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Azure.WebJobs;
-using Microsoft.Azure.WebJobs.Extensions.Http;
+using System.Net;
+using Microsoft.Azure.Functions.Worker;
+using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Azure.Communication.Identity;
+using Microsoft.AspNetCore.Mvc;
 
 namespace GraphACSFunctions;
 
 public class ACSTokenFunction
 {
-    private static readonly CommunicationTokenScope[] Scopes = new[]
-    {
+    private static readonly CommunicationTokenScope[] Scopes =
+    [
         CommunicationTokenScope.VoIP,
-    };
+    ];
 
     private readonly CommunicationIdentityClient _tokenClient;
 
@@ -22,19 +22,23 @@ public class ACSTokenFunction
         _tokenClient = tokenClient;
     }
 
-    [FunctionName("ACSTokenFunction")]
-    public async Task<IActionResult> Run(
-        [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)] HttpRequest req,
+    [Function("HttpTriggerAcsToken")]
+    public async Task<HttpResponseData> Run(
+        [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)] HttpRequestData req,
         ILogger log)
     {
         var user = await _tokenClient.CreateUserAsync();
         var userToken = await _tokenClient.GetTokenAsync(user, Scopes);
 
-        return new OkObjectResult(new 
-        { 
-            userId = user.Value.Id, 
-            userToken.Value.Token, 
-            userToken.Value.ExpiresOn 
-        });
+        var response = req.CreateResponse(HttpStatusCode.OK);
+        await response.WriteAsJsonAsync(
+            new
+            {
+                userId = user.Value.Id,
+                userToken.Value.Token,
+                userToken.Value.ExpiresOn
+            }
+        );
+        return response;
     }
 }

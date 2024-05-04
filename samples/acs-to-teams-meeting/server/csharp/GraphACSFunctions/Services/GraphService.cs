@@ -23,8 +23,7 @@ public class GraphService : IGraphService
             .Users[userId]
             .Calendar
             .Events
-            .Request()
-            .AddAsync(new()
+            .PostAsync(new()
             {
                 Subject = "Customer Service Meeting",
                 Start = new()
@@ -39,6 +38,6 @@ public class GraphService : IGraphService
                 },
                 IsOnlineMeeting = true
             });
-        return newMeeting.OnlineMeeting.JoinUrl;
+        return newMeeting?.OnlineMeeting?.JoinUrl ?? "";
     }
 }

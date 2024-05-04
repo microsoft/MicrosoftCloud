@@ -1,21 +1,18 @@
-﻿using Azure.Communication.Identity;
+using Azure.Communication.Identity;
 using Azure.Identity;
-using GraphACSFunctions;
 using GraphACSFunctions.Services;
-using Microsoft.Azure.Functions.Extensions.DependencyInjection;
+using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Graph;
 
-[assembly: FunctionsStartup(typeof(Startup))]
-
-namespace GraphACSFunctions;
-
-public class Startup : FunctionsStartup
-{
-    public override void Configure(IFunctionsHostBuilder builder)
-    {
-        builder.Services.AddSingleton(static p =>
+var host = new HostBuilder()
+    .ConfigureFunctionsWebApplication()
+    .ConfigureServices(services => {
+        services.AddApplicationInsightsTelemetryWorkerService();
+        services.ConfigureFunctionsApplicationInsights();
+        services.AddSingleton(static p =>
         {
             var config = p.GetRequiredService<IConfiguration>();
             var clientSecretCredential = new ClientSecretCredential(
@@ -26,17 +23,19 @@ public class Startup : FunctionsStartup
 
             return new GraphServiceClient(
                 clientSecretCredential,
-                new[] { "https://graph.microsoft.com/.default" }
+                ["https://graph.microsoft.com/.default"]
             );
         });
 
-        builder.Services.AddSingleton(static p =>
+        services.AddSingleton(static p =>
         {
             var config = p.GetRequiredService<IConfiguration>();
             var connectionString = config.GetValue<string>("ACS_CONNECTION_STRING");
             return new CommunicationIdentityClient(connectionString);
         });
 
-        builder.Services.AddSingleton<IGraphService, GraphService>();
-    }
-}
+        services.AddSingleton<IGraphService, GraphService>();
+    })
+    .Build();
+
+host.Run();
