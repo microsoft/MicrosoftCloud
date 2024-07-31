@@ -1,0 +1,1 @@
+Copilot_Excel_Training_Data.xlsx.zip contains sensitive info that Microsoft is protecting with a data loss prevention (DLP) policy.  The file was moved to the quarantine folder C:\Users\dwahl\Microsoft DLP\Quarantine\Dropbox\Copilot_Excel_Training_Data.xlsx_20240730_170411.zip.
