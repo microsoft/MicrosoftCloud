@@ -1,22 +1,21 @@
-import { CUSTOM_ELEMENTS_SCHEMA, Component, EventEmitter, OnInit, Output, inject } from '@angular/core';
-import { Providers } from '@microsoft/mgt';
-import { EventBusService, Events } from '../core/eventbus.service';
-import { FeatureFlagsService } from '../core/feature-flags.service';
-import { Phone } from '../shared/interfaces';
-import { Subscription } from 'rxjs';
-import { NgIf } from '@angular/common';
-import { PhoneCallComponent } from '../phone-call/phone-call.component';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, EventEmitter, inject, OnInit, Output } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatDialog } from '@angular/material/dialog';
+import { EventBusService, Events } from '@core/eventbus.service';
+import { FeatureFlagsService } from '@core/feature-flags.service';
+import { Providers } from '@microsoft/mgt';
+import { Phone } from '@shared/interfaces';
+import { Subscription } from 'rxjs';
 import { ChatHelpDialogComponent } from '../chat-help-dialog/chat-help-dialog.component';
+import { PhoneCallComponent } from '../phone-call/phone-call.component';
 
 @Component({
     selector: 'app-header',
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.scss'],
     standalone: true,
-    imports: [MatToolbarModule, MatIconModule, PhoneCallComponent, NgIf],
+    imports: [MatToolbarModule, MatIconModule, PhoneCallComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class HeaderComponent implements OnInit {
@@ -26,8 +25,8 @@ export class HeaderComponent implements OnInit {
   callData = {} as Phone;
   subscription = new Subscription();
   dialog = inject(MatDialog);
-
-  constructor(private eventBus: EventBusService, public featureFlags: FeatureFlagsService) { }
+  eventBus = inject(EventBusService);
+  featureFlags: FeatureFlagsService = inject(FeatureFlagsService);
 
   ngOnInit() {
     this.subscription.add(

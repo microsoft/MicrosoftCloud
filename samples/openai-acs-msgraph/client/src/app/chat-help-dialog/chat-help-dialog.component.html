@@ -6,9 +6,11 @@
             <mat-icon>close</mat-icon>
         </button>
         <textarea type="text" [(ngModel)]="prompt" title="Message" [placeholder]="placeholder"></textarea>
-        <div *ngIf="response" class="response">
-            {{ response }}
-        </div>
+        @if (this.response) {
+            <div class="response">
+                {{ response }}
+            </div>
+        }
         <div mat-dialog-actions align="end">
             <button mat-stroked-button cdkFocusInitial (click)="getHelp()" [disabled]="!prompt">Get Help</button>
         </div>

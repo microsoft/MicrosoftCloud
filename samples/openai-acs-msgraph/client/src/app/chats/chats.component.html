@@ -1,22 +1,31 @@
-<section *ngIf="data">
-  <h2>Chats</h2>
-  <div class="scroller">
-    <button mat-stroked-button color="primary" (click)="openDialog()">New Teams Chat</button>
-    <br /><br />
-
-    <div *ngIf="data.length">
-      <mat-card *ngFor="let chatMessage of data">
-        <mat-card-header>
-          <mat-card-title [innerHTML]="chatMessage.summary"></mat-card-title>
-          <!-- <mat-card-subtitle [innerHTML]="chatMessage.body"></mat-card-subtitle> -->
-        </mat-card-header>
-        <mat-card-actions>
-          <a mat-stroked-button color="basic" [href]="chatMessage.webUrl" target="_blank">View Message</a>
-        </mat-card-actions>
-      </mat-card>
+@if (this.data) {
+  <section>
+    <h2>Chats</h2>
+    <div class="scroller">
+      <button mat-stroked-button color="primary" (click)="openDialog()">New Teams Chat</button>
+      <br /><br />
+      
+      @if (this.data.length) {
+        <div>
+          @for (chatMessage of this.data;track chatMessage.id) {
+            <mat-card>
+              <mat-card-header>
+                <mat-card-title [innerHTML]="chatMessage.summary"></mat-card-title>
+                <!-- <mat-card-subtitle [innerHTML]="chatMessage.body"></mat-card-subtitle> -->
+              </mat-card-header>
+              <mat-card-actions>
+                <a mat-stroked-button color="basic" [href]="chatMessage.webUrl" target="_blank">View Message</a>
+              </mat-card-actions>
+            </mat-card>
+          }
+        </div>
+      }
     </div>
-  </div>
-  <div *ngIf="!data.length">
-    <h3>No chat messages found</h3>
-  </div>
-</section>
+
+    @if (!this.data.length) {
+      <div>
+        <h3>No chat messages found</h3>
+      </div>
+    }
+  </section>
+}

@@ -1,81 +1,73 @@
 <h2><mat-icon svgIcon="people"></mat-icon> Customers</h2>
 <app-filter-textbox (changed)="filter($event)"></app-filter-textbox>
-<br />
-<br />
-<table *ngIf="filteredData.length > 0; else noData" class="table table-hover">
-    <thead class="table-dark">
-        <tr>
-            <th scope="col" (click)="sort(header)" *ngFor="let header of headers">{{ header | titleCaseUnderscore }}
-            </th>
-            <th scope="col">&nbsp;</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let row of filteredData; trackBy: trackBy">
-            <td *ngFor="let header of headers">
-                {{ row[header] | dynamic:header }}
-            </td>
-            <td>
-                <button mat-stroked-button class="button-color"
-                    *ngIf="headers.includes('company') && featureFlags.microsoft365Enabled"
-                    (click)="getRelatedData(row)"><mat-icon svgIcon="content"></mat-icon> View Related Content</button>
-                &nbsp;&nbsp;
-                <span *ngIf="headers.includes('phone')">
-                    <button mat-stroked-button class="button-color" [matMenuTriggerFor]="menu">
-                        <mat-icon svgIcon="contact"></mat-icon>Contact Customer</button>
-                    <mat-menu #menu="matMenu">
-                        <button *ngIf="featureFlags.acsPhoneEnabled" 
-                            mat-menu-item class="button-color"
-                            (click)="openCallDialog(row)">
-                            <mat-icon svgIcon="phone"></mat-icon> Call Customer
-                        </button>
-                        <button mat-menu-item class="button-color" (click)="openEmailSmsDialog(row)">
-                            <mat-icon svgIcon="sms"></mat-icon> Email/SMS Customer
-                        </button>
-                    </mat-menu>
-                </span>
-            </td>
-        </tr>
-    </tbody>
-</table>
-<ng-template #noData>
+<br /><br />
+
+@if (this.filteredData.length > 0) {
+    <table class="table table-hover">
+        <thead class="table-dark">
+            <tr>
+                @for (header of this.headers;track header) {
+                    <th scope="col" (click)="sort(header)">{{ header | titleCaseUnderscore }}
+                    </th>
+                }
+                <th scope="col">&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (row of this.filteredData; track row.id) {
+                <tr>
+                    @for (header of this.headers;track header) {
+                        <td>{{ row[header] | dynamic:header }}</td>
+                    }
+                    <td>
+                        @if (this.headers.includes('company') && this.featureFlags.microsoft365Enabled) {
+                            <button mat-stroked-button class="button-color" (click)="getRelatedData(row)">
+                                <mat-icon svgIcon="content"></mat-icon> 
+                                View Related Content
+                            </button>
+                        }
+                        @if (this.headers.includes('phone')) {
+                            &nbsp;&nbsp;
+                            <span>
+                                <button mat-stroked-button class="button-color" [matMenuTriggerFor]="menu">
+                                    <mat-icon svgIcon="contact"></mat-icon>
+                                    Contact Customer
+                                </button>
+                                <mat-menu #menu="matMenu">
+                                    @if (this.featureFlags.acsPhoneEnabled) {
+                                        <button mat-menu-item class="button-color"
+                                            (click)="openCallDialog(row)">
+                                            <mat-icon svgIcon="phone"></mat-icon> 
+                                            Call Customer
+                                        </button>
+                                    }
+                                    <button mat-menu-item class="button-color" (click)="openEmailSmsDialog(row)">
+                                        <mat-icon svgIcon="sms"></mat-icon> Email/SMS Customer
+                                    </button>
+                                </mat-menu>
+                            </span>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+@else {
     <p>No data available.</p>
-</ng-template>
+}
 
 <br />
-<div *ngIf="featureFlags.openAIEnabled">
-    <label>Custom Query:</label>
-    <div class="three-column">
-        <textarea title="query" [(ngModel)]="queryText"
-            placeholder="Query text (example: Get the total revenue for all orders. Group by company and include the city.)"></textarea>
-        <button mat-stroked-button class="button-color" (click)="getQueryData()"><mat-icon svgIcon="search"></mat-icon> Run
-            Query</button>
-        <button mat-stroked-button class="button-color" (click)="reset()"><mat-icon svgIcon="reset"></mat-icon> Reset
-            Data</button>
+@if (this.featureFlags.openAIEnabled) {
+    <div>
+        <label>Custom Query:</label>
+        <div class="three-column">
+            <textarea title="query" [(ngModel)]="queryText"
+                placeholder="Query text (example: Get the total revenue for all orders. Group by company and include the city.)"></textarea>
+            <button mat-stroked-button class="button-color" (click)="getQueryData()"><mat-icon svgIcon="search"></mat-icon> Run
+                Query</button>
+            <button mat-stroked-button class="button-color" (click)="reset()"><mat-icon svgIcon="reset"></mat-icon> Reset
+                Data</button>
+        </div>
     </div>
-</div>
-
-
-<!-- <table class="table">
-    <thead>
-        <tr>
-            <th (click)="sort('company')">Company</th>
-            <th (click)="sort('city')">City</th>
-            <th (click)="sort('orderTotal')">Order Total</th>
-            <th>&nbsp;</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let cust of filteredData" (click)="getRelatedData(cust)">
-            <td>{{ cust.company }}</td>
-            <td>{{ cust.city }}</td>
-            <td>{{ cust.orderTotal | currency:currencyCode:'symbol' }}</td>
-            <td>
-                <button mat-stroked-button color="basic" (click)="getRelatedData(cust)">View Related Content</button>
-            </td>
-        </tr>
-        <tr *ngIf="!filteredData || !filteredData.length">
-            <td colspan="4">No data found</td>
-        </tr>
-    </tbody>    
-</table> -->
+}

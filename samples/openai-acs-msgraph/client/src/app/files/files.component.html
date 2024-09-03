@@ -1,20 +1,24 @@
-<section *ngIf="data">
-    <h2>Files</h2>
+@if (this.data) {
+    <section>
+        <h2>Files</h2>
 
-    <div class="scroller">
-        <!-- 
-            The mgt-search-results component will render the file data in this example. 
-            You can override the standard template if desired. See the 
-            email and calendar events components for examples.        
-        -->
-        <mgt-search-results 
-            class="search-results" 
-            entity-types="driveItem" 
-            [queryString]="searchText"
-            (dataChange)="dataChange($any($event))" 
-        />
-    </div>
-    <div *ngIf="!data.length">
-        <h3>No files found</h3>
-    </div>
-</section>
+        <div class="scroller">
+            <!-- 
+                The mgt-search-results component will render the file data in this example. 
+                You can override the standard template if desired. See the 
+                email and calendar events components for examples.        
+            -->
+            <mgt-search-results 
+                class="search-results" 
+                entity-types="driveItem" 
+                [queryString]="searchText"
+                (dataChange)="dataChange($any($event))" 
+            />
+        </div>
+        @if (!this.data.length) {
+            <div>
+                <h3>No files found</h3>
+            </div>
+        }
+    </section>
+}

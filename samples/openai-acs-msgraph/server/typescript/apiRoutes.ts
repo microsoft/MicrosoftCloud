@@ -3,7 +3,7 @@ import './config';
 
 import { createACSToken, sendEmail, sendSms } from './acs';
 import { initializeDb } from './initDatabase';
-import { completeBYOD, completeEmailSMSMessages, getSQL } from './openAI';
+import { completeBYOD, completeEmailSMSMessages, getSQLFromNLP } from './openAI';
 import { getCustomers, queryDb } from './postgres';
 
 const router = Router();
@@ -40,7 +40,7 @@ router.post('/generateSql', async (req, res) => {
 
     try {
         // Call Azure OpenAI to convert the user prompt into a SQL query
-        const sqlCommandObject = await getSQL(userPrompt);
+        const sqlCommandObject = await getSQLFromNLP(userPrompt);
 
         let result: any[] = [];
         // Execute the SQL query

@@ -9,10 +9,8 @@ async function createACSToken() {
   if (!connectionString) return { userId: '', token: '' };
 
   const tokenClient = new CommunicationIdentityClient(connectionString);
-  const user = await tokenClient.createUser();
-  const userToken = await tokenClient.getToken(user, ["voip"]);
-  return { userId: user.communicationUserId, ...userToken };
-
+  const { user, token } = await tokenClient.createUserAndToken(["voip"]);
+  return { userId: user.communicationUserId, token };
 }
 
 async function sendEmail(subject: string, message: string,

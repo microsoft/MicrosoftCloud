@@ -1,14 +1,18 @@
 <app-header (userLoggedIn)="userLoggedIn($event)"></app-header>
 
 <main>
-    <div *ngIf="loggedIn || !featureFlags.microsoft365Enabled">
-        <app-customers-list (customerSelected)="customerSelected($event)"></app-customers-list>
-        <br />
-        <div id="related-content"></div>
-    </div>
-    <div *ngIf="featureFlags.microsoft365Enabled && !loggedIn">
-        <h2>{{ signInMessage }}</h2>
-    </div>
+    @if (this.loggedIn || !this.featureFlags.microsoft365Enabled) {
+        <div>
+            <app-customers-list (customerSelected)="customerSelected($event)"></app-customers-list>
+            <br />
+            <div id="related-content"></div>
+        </div>
+    }
+    @if (!this.loggedIn && this.featureFlags.microsoft365Enabled) {
+        <div>
+            <h2>{{ signInMessage }}</h2>
+        </div>
+    }
     <app-overlay [delay]="300">
         <span class="spinner"></span>&nbsp;&nbsp;&nbsp;Working...
     </app-overlay>

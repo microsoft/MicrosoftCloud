@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Msal2Provider, Providers, ProviderState } from '@microsoft/mgt';
 import { TeamsDialogData } from '../textarea-dialog/dialog-data';
 import { FeatureFlagsService } from './feature-flags.service';
-import { ChatMessage, ChatMessageInfo } from '../shared/interfaces';
+import { ChatMessage, ChatMessageInfo } from '@shared/interfaces';
 import { DriveItem } from '@microsoft/microsoft-graph-types';
 
 // Retrieved from .env file value by using webpack.partial.js and ngx-build-plus
@@ -42,7 +42,6 @@ export class GraphService {
 
   async searchFiles(query: string) {
     const files: DriveItem[] = [];
-
     if (!query) return files;
 
     const filter = {

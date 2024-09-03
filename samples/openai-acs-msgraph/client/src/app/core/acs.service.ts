@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { AcsUser, EmailSmsResponse } from '../shared/interfaces';
+import { AcsUser, EmailSmsResponse } from '@shared/interfaces';
 import { ApiUrlService } from './api-url.service';
 
 @Injectable({

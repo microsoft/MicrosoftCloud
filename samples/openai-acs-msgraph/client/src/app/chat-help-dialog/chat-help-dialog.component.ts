@@ -4,8 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { DataService } from '../core/data.service';
-import { BYODCompletion } from '../shared/interfaces';
+import { DataService } from '@core/data.service';
 
 @Component({
   selector: 'app-chat-help-dialog',

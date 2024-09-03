@@ -41,6 +41,9 @@ export interface ChatGPTData {
     max_tokens: number,
     temperature: number,
     dataSources?: CognitiveSearchDataSource[],
+    response_format?: {
+        type: string,
+    },
     messages: ChatGPTMessage[]
 }
 
@@ -68,3 +71,14 @@ export interface OpenAIHeadersBody {
     },
     body: string;
 }
+
+export type AzureOpenAIYourDataResponse = {
+    choices: {
+        message: {
+            content?: string;
+            context?: {
+                citations?: any[];
+            };
+        };
+    }[];
+};

@@ -2,13 +2,12 @@ import { Component, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { MatTabGroup, MatTabsModule } from '@angular/material/tabs';
 import { Subscription } from 'rxjs';
-import { DataService } from 'src/app/core/data.service';
-import { AcsService } from '../core/acs.service';
-import { FeatureFlagsService } from '../core/feature-flags.service';
+import { DataService } from '@core/data.service';
+import { AcsService } from '@core/acs.service';
+import { FeatureFlagsService } from '@core/feature-flags.service';
 import { EmailSmsDialogData } from './email-sms-dialog-data';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
-import { NgIf } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 
 declare const CUSTOMER_EMAIL_ADDRESS: string;
@@ -19,7 +18,7 @@ declare const CUSTOMER_PHONE_NUMBER: string;
     templateUrl: './email-sms-dialog.component.html',
     styleUrls: ['./email-sms-dialog.component.scss'],
     standalone: true,
-    imports: [MatDialogModule, MatIconModule, MatTabsModule, NgIf, FormsModule, MatButtonModule]
+    imports: [MatDialogModule, MatIconModule, MatTabsModule, FormsModule, MatButtonModule]
 })
 export class EmailSmsDialogComponent implements OnInit, OnDestroy {
   title = '';
@@ -98,10 +97,11 @@ We're sorry.`
     if (this.featureFlags.acsPhoneEnabled) {
       // Using CUSTOMER_PHONE_NUMBER instead of this.data.customerPhoneNumber for testing purposes
       this.subscription.add(
-        this.acsService.sendSms(this.smsMessage, CUSTOMER_PHONE_NUMBER /* this.data.customerPhoneNumber */).subscribe(res => {
-          if (res.status) {
-            this.smsSent = true;
-          }
+        this.acsService.sendSms(this.smsMessage, CUSTOMER_PHONE_NUMBER /* this.data.customerPhoneNumber */)
+          .subscribe(res => {
+            if (res.status) {
+              this.smsSent = true;
+            }
         })
       );
     }

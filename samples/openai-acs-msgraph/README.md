@@ -48,9 +48,9 @@ Enable the features you'd like, ignore those you don't want, and the app will st
     CUSTOMER_EMAIL_ADDRESS=
     CUSTOMER_PHONE_NUMBER=
     API_PORT=3000
-    AZURE_COGNITIVE_SEARCH_ENDPOINT=
-    AZURE_COGNITIVE_SEARCH_KEY=
-    AZURE_COGNITIVE_SEARCH_INDEX=
+    AZURE_AI_SEARCH_ENDPOINT=
+    AZURE_AI_SEARCH_KEY=
+    AZURE_AI_SEARCH_INDEX=
     ```
 
 1. Assign the following values to `POSTGRES_USER` and `POSTGRES_PASSWORD`.
@@ -62,7 +62,7 @@ Enable the features you'd like, ignore those you don't want, and the app will st
 
 ## Enable the AI Feature (OpenAI Service)
 
-1. If you'd like to try the natural language to SQL OpenAI functionality and email/SMS completions, add your [Azure OpenAI](https://learn.microsoft.com/azure/cognitive-services/openai/) key and endpoint into the `.env` file. You'll also need to create a model in your Azure OpenAI resource (such as a `gpt-35-turbo` model) and assign the model name to `OPENAI_MODEL` in the `.env` file.
+1. If you'd like to try the natural language to SQL OpenAI functionality and email/SMS completions, add your [Azure OpenAI](https://learn.microsoft.com/azure/ai-services/openai/) key and endpoint into the `.env` file. You'll also need to create a model in your Azure OpenAI resource (such as a `gpt-35-turbo` model) and assign the model name to `OPENAI_MODEL` in the `.env` file.
 
     ```
     OPENAI_API_KEY=<AZURE_OPENAI_SECRET_KEY>
@@ -79,9 +79,9 @@ Enable the features you'd like, ignore those you don't want, and the app will st
 1. If you'd like to enable the "bring your own data" feature, go through the [steps in this tutorial](https://learn.microsoft.com/azure/cognitive-services/openai/use-your-data-quickstart) and update the Cognitive Search properties in the `.env` file with your resource's endpoint, key, and index name.
 
     ```
-    AZURE_COGNITIVE_SEARCH_ENDPOINT=
-    AZURE_COGNITIVE_SEARCH_KEY=
-    AZURE_COGNITIVE_SEARCH_INDEX=
+    AZURE_AI_SEARCH_ENDPOINT=
+    AZURE_AI_SEARCH_KEY=
+    AZURE_AI_SEARCH_INDEX=
     ```
 
 ## Enable the Communication Feature (Azure Communication Services)

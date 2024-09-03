@@ -3,6 +3,10 @@
     <span class="title">Customers App</span>
     <span class="spacer"></span>
     <app-phone-call [hidden]="!callVisible" [customerPhoneNumber]="callData.phone!" (hangup)="hangup()"></app-phone-call>
-    <mgt-login *ngIf="featureFlags.microsoft365Enabled" class="mgt-dark" (loginCompleted)="loginCompleted()"></mgt-login>
-    <mat-icon *ngIf="featureFlags.byodEnabled" class="chat-help-icon" (click)="openChatHelp()">chat</mat-icon>
+    @if (this.featureFlags.microsoft365Enabled) {
+        <mgt-login class="mgt-dark" (loginCompleted)="loginCompleted()"></mgt-login>
+    }
+    @if (this.featureFlags.byodEnabled) {
+        <mat-icon class="chat-help-icon" (click)="openChatHelp()">chat</mat-icon>
+    }
 </mat-toolbar>

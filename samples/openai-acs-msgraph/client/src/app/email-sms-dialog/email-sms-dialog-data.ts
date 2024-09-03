@@ -1,4 +1,4 @@
-import { EmailSmsCompletion } from "../shared/interfaces";
+import { EmailSmsCompletion } from "@shared/interfaces";
 
 export interface EmailSmsDialogData {
   title: string;

@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject, inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
-import { DataService } from 'src/app/core/data.service';
+import { DataService } from '@core/data.service';
 import { DialogBase, TeamsDialogData } from './dialog-data';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';

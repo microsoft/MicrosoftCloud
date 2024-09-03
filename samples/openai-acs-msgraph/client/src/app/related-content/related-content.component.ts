@@ -1,7 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, NO_ERRORS_SCHEMA } from '@angular/core';
 import { MatIconRegistry, MatIconModule } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
-import { Customer } from '../shared/interfaces';
+import { Customer } from '@shared/interfaces';
 import { CalendarEventsComponent } from '../calendar-events/calendar-events.component';
 import { EmailsComponent } from '../emails/emails.component';
 import { ChatsComponent } from '../chats/chats.component';
@@ -10,7 +10,6 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { MatTabsModule } from '@angular/material/tabs';
 import { FilterTextboxComponent } from '../shared/filter-textbox.component';
 import { MatCardModule } from '@angular/material/card';
-import { NgIf } from '@angular/common';
 
 type ContentCounts = {
   files: number;
@@ -26,8 +25,9 @@ type ContentCountType = keyof ContentCounts;
     templateUrl: './related-content.component.html',
     styleUrls: ['./related-content.component.scss'],
     standalone: true,
-    imports: [NgIf, MatCardModule, MatIconModule, FilterTextboxComponent, MatTabsModule, 
-      MatBadgeModule, FilesComponent, ChatsComponent, EmailsComponent, CalendarEventsComponent]
+    imports: [MatCardModule, MatIconModule, FilterTextboxComponent, MatTabsModule, 
+      MatBadgeModule, FilesComponent, ChatsComponent, EmailsComponent, CalendarEventsComponent],
+    schemas: [ NO_ERRORS_SCHEMA ]
 })
 export class RelatedContentComponent {
 
@@ -56,7 +56,7 @@ export class RelatedContentComponent {
     this.selectedQueryText = data.trim();
   }
 
-  dataLoaded(type: ContentCountType, data: unknown[]) {
+  dataLoaded(type: ContentCountType, data: any) {
     this.contentCounts[type] = data.length;
   }
 

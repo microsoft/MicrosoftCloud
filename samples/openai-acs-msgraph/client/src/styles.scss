@@ -18,11 +18,6 @@ th {
     cursor: pointer;
 }
 
-// .table-dark {
-//     --bs-table-bg: #ccc;
-//     color: #000;
-// }
-
 .scroller {
     max-height: 350px;
     overflow-y: auto;
@@ -34,6 +29,10 @@ th {
 .mat-mdc-tab-body-content {
     padding-top: 10px;
 }
+
+.mat-mdc-tab-labels {
+    margin-top: 10px;
+  }
 
 .three-column {
     display: grid;
@@ -80,10 +79,11 @@ th {
     color: #fff;
 }
   
-.button-color.mat-mdc-menu-item:hover {
-    background-color: #3f51b5;
+.mat-mdc-menu-item:hover {
+    background-color: #3f51b5 !important;
+    color: #fff;
 
-    & .mdc-list-item__primary-text, & mat-icon {
+    mat-icon {
         color: #fff;
     }
 }

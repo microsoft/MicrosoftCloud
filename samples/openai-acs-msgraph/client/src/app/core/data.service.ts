@@ -4,8 +4,8 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
-import { BYODCompletion, Customer } from '../../app/shared/interfaces';
-import { EmailSmsCompletion } from '../shared/interfaces';
+import { BYODCompletion, Customer } from '@shared/interfaces';
+import { EmailSmsCompletion } from '@shared/interfaces';
 import { ApiUrlService } from './api-url.service';
 
 @Injectable({ providedIn: 'root' })

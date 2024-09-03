@@ -14,7 +14,7 @@ module.exports = {
             "CUSTOMER_EMAIL_ADDRESS": JSON.stringify(process.env.CUSTOMER_EMAIL_ADDRESS),
             "CUSTOMER_PHONE_NUMBER": JSON.stringify(process.env.CUSTOMER_PHONE_NUMBER),
             "API_PORT": JSON.stringify(process.env.API_PORT),
-            "BYOD_ENABLED": (process.env.AZURE_COGNITIVE_SEARCH_ENDPOINT) ? true : false
+            "BYOD_ENABLED": (process.env.AZURE_AI_SEARCH_ENDPOINT) ? true : false
         })
     ]
 }

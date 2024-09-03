@@ -1,22 +1,21 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Component, EventEmitter, OnDestroy, OnInit, Output, inject } from '@angular/core';
 
-import { SorterService } from '../core/sorter.service';
-import { EventBusService, Events } from 'src/app/core/eventbus.service';
-import { DataService } from '../core/data.service';
+import { SorterService } from '@core/sorter.service';
+import { EventBusService, Events } from '@core/eventbus.service';
+import { DataService } from '@core/data.service';
 import { MatDialog } from '@angular/material/dialog';
 import { PhonePipe } from '../shared/phone.pipe';
 import { EmailSmsDialogData } from '../email-sms-dialog/email-sms-dialog-data';
 import { EmailSmsDialogComponent } from '../email-sms-dialog/email-sms-dialog.component';
 import { Subscription } from 'rxjs';
-import { FeatureFlagsService } from '../core/feature-flags.service';
+import { FeatureFlagsService } from '@core/feature-flags.service';
 import { Phone } from '../shared/interfaces';
 import { DynamicPipe } from '../shared/dynamic.pipe';
 import { TitleCaseUnderscorePipe } from '../shared/titlecase-underscore.pipe';
 import { FormsModule } from '@angular/forms';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
-import { NgIf, NgFor } from '@angular/common';
 import { FilterTextboxComponent } from '../shared/filter-textbox.component';
 import { MatIconModule } from '@angular/material/icon';
 
@@ -25,7 +24,7 @@ import { MatIconModule } from '@angular/material/icon';
     templateUrl: './customers-list.component.html',
     styleUrls: ['./customers-list.component.scss'],
     standalone: true,
-    imports: [MatIconModule, FilterTextboxComponent, NgIf, NgFor, MatButtonModule, 
+    imports: [MatIconModule, FilterTextboxComponent, MatButtonModule, 
         MatMenuModule, FormsModule, TitleCaseUnderscorePipe, DynamicPipe]
 })
 export class CustomersListComponent implements OnInit, OnDestroy {
@@ -86,10 +85,6 @@ export class CustomersListComponent implements OnInit, OnDestroy {
 
     sort(prop: string) {
         this.sorterService.sort(this.filteredData, prop);
-    }
-
-    trackBy(index: number, data: any) {
-        return data.id;
     }
 
     getRelatedData(data: any) {
