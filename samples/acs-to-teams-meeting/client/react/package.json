@@ -3,9 +3,9 @@
   "version": "0.2.0",
   "private": true,
   "dependencies": {
-    "@azure/communication-common": "^2.3.0",
-    "@azure/communication-react": "^1.10.0",
-    "@fluentui/react": "^8.104.5",
+    "@azure/communication-common": "^2.3.1",
+    "@azure/communication-react": "^1.21.0",
+    "@fluentui/react": "^8.121.11",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react-hooks": "^3.4.2",
     "@testing-library/user-event": "^13.5.0",
