@@ -9,6 +9,6 @@
     "build-deploy": "npm run build-tutorials && npm run deploy"
   },
   "devDependencies": {
-    "gh-pages": "^6.0.0"
+    "gh-pages": "^6.2.0"
   }
 }

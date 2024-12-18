@@ -97,6 +97,11 @@
                 document.getElementById('cookieBanner').style.display = 'none';
             });
         });
+
+        // Initialize Clarity with the user's previous choice
+        if (localStorage.getItem('cookiesAccepted') === 'true') {
+            window.clarity('consent');
+        }
     </script>
 </body>
 
