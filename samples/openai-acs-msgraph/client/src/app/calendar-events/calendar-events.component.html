@@ -30,7 +30,7 @@
                             <div class="separator">
                                 <div class="vertical-line top"></div>
                                 <div class="circle">
-                                    @if (!this.event.resource.bodyPreview?.includes('Join Microsoft Teams Meeting')) {
+                                    @if (!event.resource.bodyPreview?.includes('Join Microsoft Teams Meeting')) {
                                         <div class="inner-circle"></div>
                                     }
                                 </div>
@@ -39,23 +39,23 @@
 
                             <div class="details">
                                 <div class="subject">{{ event.resource.subject }}</div>
-                                @if (this.event.resource.location?.displayName) {
+                                @if (event.resource.location?.displayName) {
                                     <div class="location">
                                         at
                                         <a href="https://bing.com/maps/default.aspx?where1={{event.resource.location.displayName}}"
                                             target="_blank" rel="noopener"><b>{{ event.resource.location.displayName }}</b></a>
                                     </div>
                                 }
-                                @if (this.event.resource.attendees?.length) {
+                                @if (event.resource.attendees?.length) {
                                     <div class="attendees">
-                                        @for (attendee of this.event.resource.attendees;track attendee.emailAddress.name) {
+                                        @for (attendee of event.resource.attendees;track attendee.emailAddress.name) {
                                             <span class="attendee">
                                                 <mgt-person person-query="{{attendee.emailAddress.name}}"></mgt-person>
                                             </span>
                                         }
                                     </div>
                                 }
-                                @if (this.event.resource.bodyPreview?.includes('Join Microsoft Teams Meeting')) {
+                                @if (event.resource.bodyPreview?.includes('Join Microsoft Teams Meeting')) {
                                     <div class="online-meeting">
                                         <img class="online-meeting-icon"
                                             src="https://img.icons8.com/color/48/000000/microsoft-teams.png" title="Online Meeting" />

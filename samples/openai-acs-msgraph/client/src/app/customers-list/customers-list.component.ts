@@ -23,8 +23,7 @@ import { MatIconModule } from '@angular/material/icon';
     selector: 'app-customers-list',
     templateUrl: './customers-list.component.html',
     styleUrls: ['./customers-list.component.scss'],
-    standalone: true,
-    imports: [MatIconModule, FilterTextboxComponent, MatButtonModule, 
+    imports: [MatIconModule, FilterTextboxComponent, MatButtonModule,
         MatMenuModule, FormsModule, TitleCaseUnderscorePipe, DynamicPipe]
 })
 export class CustomersListComponent implements OnInit, OnDestroy {

@@ -10,7 +10,6 @@ type CalendarEvent = { isAllDay: boolean, start: { dateTime: Date }, end: { date
   selector: 'app-calendar-events',
   templateUrl: './calendar-events.component.html',
   styleUrls: ['./calendar-events.component.scss'],
-  standalone: true,
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
 })
 export class CalendarEventsComponent extends RelatedContentBaseComponent {

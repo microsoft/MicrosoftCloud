@@ -17,7 +17,6 @@ declare const CUSTOMER_PHONE_NUMBER: string;
     selector: 'app-email-sms-dialog',
     templateUrl: './email-sms-dialog.component.html',
     styleUrls: ['./email-sms-dialog.component.scss'],
-    standalone: true,
     imports: [MatDialogModule, MatIconModule, MatTabsModule, FormsModule, MatButtonModule]
 })
 export class EmailSmsDialogComponent implements OnInit, OnDestroy {

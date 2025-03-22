@@ -7,7 +7,6 @@ import { MatCardModule } from '@angular/material/card';
     selector: 'app-emails',
     templateUrl: './emails.component.html',
     styleUrls: ['./emails.component.scss'],
-    standalone: true,
     imports: [MatCardModule, MatButtonModule],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

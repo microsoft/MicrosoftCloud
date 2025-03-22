@@ -10,7 +10,6 @@ import { MatIconModule } from '@angular/material/icon';
     selector: 'app-textarea-dialog',
     templateUrl: './textarea-dialog.component.html',
     styleUrls: ['./textarea-dialog.component.scss'],
-    standalone: true,
     imports: [MatDialogModule, MatIconModule, FormsModule, MatButtonModule]
 })
 export class TextAreaDialogComponent implements OnInit {

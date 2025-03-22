@@ -1,5 +1,5 @@
 import path from 'path';
-import express from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import apiRoutes from './apiRoutes';
 
@@ -10,17 +10,17 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use('/api', apiRoutes);
-
-app.use((req, res, next) => {
-  // Simple example of blocking specific types of files from being served
+// Middleware to block specific file types
+app.use((req: Request, res: Response, next: NextFunction): void => {
   const fileExtension = path.extname(req.url);
   if (fileExtension === '.schema') {
-    return res.status(403).send('Access to this file is forbidden.');
+    res.status(403).send('Access to this file is forbidden.');
+    return;
   }
   next();
 });
 
+app.use('/api', apiRoutes);
 
 app.listen(port, () => {
   console.log(`API listening at http://localhost:${port}`);

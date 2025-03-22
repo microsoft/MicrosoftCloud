@@ -14,7 +14,6 @@ import { PhoneCallComponent } from '../phone-call/phone-call.component';
     selector: 'app-header',
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.scss'],
-    standalone: true,
     imports: [MatToolbarModule, MatIconModule, PhoneCallComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

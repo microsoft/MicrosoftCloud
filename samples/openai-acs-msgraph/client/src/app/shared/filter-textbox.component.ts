@@ -6,7 +6,6 @@ import { FormsModule } from '@angular/forms';
     template: `
         {{ label }} <input type="text" [(ngModel)]="filter" style="width: 250px" />
     `,
-    standalone: true,
     imports: [FormsModule]
 })
 export class FilterTextboxComponent {

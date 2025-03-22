@@ -15,8 +15,7 @@ import { HeaderComponent } from './header/header.component';
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss'],
-    standalone: true,
-    imports: [HeaderComponent, CustomersListComponent, RelatedContentComponent, OverlayComponent, RouterOutlet]
+    imports: [HeaderComponent, CustomersListComponent, OverlayComponent, RouterOutlet]
 })
 export class AppComponent implements OnInit, OnDestroy {
   get loggedIn() {

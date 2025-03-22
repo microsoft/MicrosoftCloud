@@ -15,7 +15,6 @@ declare const ACS_CONNECTION_STRING: string;
     selector: 'app-phone-call',
     templateUrl: './phone-call.component.html',
     styleUrls: ['./phone-call.component.scss'],
-    standalone: true,
     imports: [FormsModule, MatButtonModule, MatIconModule]
 })
 export class PhoneCallComponent implements OnInit, OnDestroy {

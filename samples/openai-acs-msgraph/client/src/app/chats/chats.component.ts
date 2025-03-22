@@ -11,7 +11,6 @@ import { MatButtonModule } from '@angular/material/button';
     selector: 'app-chats',
     templateUrl: './chats.component.html',
     styleUrls: ['./chats.component.scss'],
-    standalone: true,
     imports: [MatButtonModule, MatCardModule],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

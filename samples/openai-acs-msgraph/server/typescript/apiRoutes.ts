@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import { Router, Request, Response } from 'express';
 import './config';
 
 import { createACSToken, sendEmail, sendSms } from './acs';
@@ -31,11 +31,12 @@ router.get('/customers', async (req, res) => {
     }
 });
 
-router.post('/generateSql', async (req, res) => {
+router.post('/generateSql', async (req: Request, res: Response): Promise<void> => {
     const userPrompt = req.body.prompt;
 
     if (!userPrompt) {
-        return res.status(400).json({ error: 'Missing parameter "prompt".' });
+        res.status(400).json({ error: 'Missing parameter "prompt".' });
+        return;
     }
 
     try {
@@ -57,14 +58,15 @@ router.post('/generateSql', async (req, res) => {
     }
 });
 
-router.post('/sendEmail', async (req, res) => {
+router.post('/sendEmail', async (req: Request, res: Response): Promise<void> => {
     const { subject, message, customerName, customerEmailAddress } = req.body;
 
     if (!subject || !message || !customerName || !customerEmailAddress) {
-        return res.status(400).json({
+        res.status(400).json({
             status: false,
             message: 'The subject, message, customerName, and customerEmailAddress parameters must be provided!'
         });
+        return;
     }
 
     try {
@@ -84,15 +86,16 @@ router.post('/sendEmail', async (req, res) => {
     }
 });
 
-router.post('/sendSms', async (req, res) => {
+router.post('/sendSms', async (req: Request, res: Response): Promise<void> => {
     const message = req.body.message;
     const customerPhoneNumber = req.body.customerPhoneNumber;
 
     if (!message || !customerPhoneNumber) {
-        return res.status(400).json({
+        res.status(400).json({
             status: false,
             message: 'The message and customerPhoneNumber parameters must be provided!'
         });
+        return;
     }
 
     try {
@@ -111,14 +114,15 @@ router.post('/sendSms', async (req, res) => {
     }
 });
 
-router.post('/completeEmailSmsMessages', async (req, res) => {
+router.post('/completeEmailSmsMessages', async (req: Request, res: Response): Promise<void> => {
     const { prompt, company, contactName } = req.body;
 
     if (!prompt || !company || !contactName) {
-        return res.status(400).json({ 
+        res.status(400).json({ 
             status: false, 
             error: 'The prompt, company, and contactName parameters must be provided.' 
         });
+        return;
     }
 
     let result;
@@ -133,14 +137,15 @@ router.post('/completeEmailSmsMessages', async (req, res) => {
     res.json(result);
 });
 
-router.post('/completeBYOD', async (req, res) => {
+router.post('/completeBYOD', async (req: Request, res: Response): Promise<void> => {
     const { prompt } = req.body;
 
     if (!prompt) {
-        return res.status(400).json({ 
+        res.status(400).json({ 
             status: false, 
             error: 'The prompt parameter must be provided.' 
         });
+        return;
     }
 
     let result;

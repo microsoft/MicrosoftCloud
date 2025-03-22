@@ -7,11 +7,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { DataService } from '@core/data.service';
 
 @Component({
-  selector: 'app-chat-help-dialog',
-  standalone: true,
-  templateUrl: './chat-help-dialog.component.html',
-  styleUrls: ['./chat-help-dialog.component.scss'],
-  imports: [CommonModule, FormsModule, MatButtonModule, MatDialogModule, MatIconModule ]
+    selector: 'app-chat-help-dialog',
+    templateUrl: './chat-help-dialog.component.html',
+    styleUrls: ['./chat-help-dialog.component.scss'],
+    imports: [CommonModule, FormsModule, MatButtonModule, MatDialogModule, MatIconModule]
 })
 export class ChatHelpDialogComponent {
   prompt = 'How should I handle a company refund request?';

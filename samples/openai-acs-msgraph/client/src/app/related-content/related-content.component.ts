@@ -24,10 +24,9 @@ type ContentCountType = keyof ContentCounts;
     selector: 'app-related-content',
     templateUrl: './related-content.component.html',
     styleUrls: ['./related-content.component.scss'],
-    standalone: true,
-    imports: [MatCardModule, MatIconModule, FilterTextboxComponent, MatTabsModule, 
-      MatBadgeModule, FilesComponent, ChatsComponent, EmailsComponent, CalendarEventsComponent],
-    schemas: [ NO_ERRORS_SCHEMA ]
+    imports: [MatCardModule, MatIconModule, FilterTextboxComponent, MatTabsModule,
+        MatBadgeModule, FilesComponent, ChatsComponent, EmailsComponent, CalendarEventsComponent],
+    schemas: [NO_ERRORS_SCHEMA]
 })
 export class RelatedContentComponent {
 
