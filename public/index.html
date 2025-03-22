@@ -67,9 +67,9 @@
 
     <!-- Cookie Banner -->
     <div class="cookie-banner" id="cookieBanner" style="display: none;">
-        <p>We use cookies to personalize content, measure performance, and provide you with a better browsing experience. By clicking 'Accept' you agree to our use of cookies.</p>
+        <p>We use cookies to personalize content, measure performance, and provide you with a better experience. Select 'Deny' to change your cookie settings, otherwise, we'll assume you're OK with the site using cookies.</p>
         <div class="buttons">
-            <button id="acceptCookies">Accept</button>
+            <!-- <button id="acceptCookies">Accept</button> -->
             <button id="denyCookies">Deny</button>
         </div>
     </div>
@@ -99,7 +99,7 @@
         });
 
         // Initialize Clarity with the user's previous choice
-        if (localStorage.getItem('cookiesAccepted') === 'true') {
+        if (!localStorage.getItem('cookiesAccepted') || localStorage.getItem('cookiesAccepted') === 'true') {
             window.clarity('consent');
         }
     </script>
