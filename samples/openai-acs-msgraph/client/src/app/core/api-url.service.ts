@@ -1,6 +1,5 @@
 import { Injectable } from "@angular/core";
-
-declare const API_PORT: string;
+import { environment } from '../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class ApiUrlService {
@@ -17,11 +16,11 @@ export class ApiUrlService {
     
         // Handle GitHub Codespaces URLs
         if (window.location.hostname.includes(codespacesUrlSuffix)) {
-          url = url.replace(`-${appPort}.${codespacesUrlSuffix}`, `-${API_PORT}.${codespacesUrlSuffix}`);
+          url = url.replace(`-${appPort}.${codespacesUrlSuffix}`, `-${environment.API_PORT}.${codespacesUrlSuffix}`);
           this.apiUrl =  url + suffix;
         }
         else {
-          this.apiUrl = `${url}:${API_PORT}${suffix}`;
+          this.apiUrl = `${url}:${environment.API_PORT}${suffix}`;
         }
         
         return this.apiUrl;

@@ -7,9 +7,7 @@ import { AcsService } from '@core/acs.service';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
-
-declare const ACS_PHONE_NUMBER: string;
-declare const ACS_CONNECTION_STRING: string;
+import { environment } from '../../environments/environment';
 
 @Component({
     selector: 'app-phone-call',
@@ -21,7 +19,7 @@ export class PhoneCallComponent implements OnInit, OnDestroy {
   inCall = false;
   call: Call | undefined;
   callAgent: CallAgent | undefined;
-  fromNumber = ACS_PHONE_NUMBER; // From .env file
+  fromNumber = environment.ACS_PHONE_NUMBER; // From .env file
   dialerVisible = false;
   numbers: string[] = ['1', '2', '3', '4', '5', '6', '7', '8', '9', ' ', '0', ' '];
   cursorPosition = 0;
@@ -36,7 +34,7 @@ export class PhoneCallComponent implements OnInit, OnDestroy {
   acsService = inject(AcsService);
 
   async ngOnInit() {
-    if (ACS_CONNECTION_STRING) {
+    if (environment.ACS_CONNECTION_STRING) {
       this.subscription.add(
         this.acsService.getAcsToken().subscribe(async (user: AcsUser) => {
           const callClient = new CallClient();

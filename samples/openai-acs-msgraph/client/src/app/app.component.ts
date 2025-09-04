@@ -24,7 +24,7 @@ export class AppComponent implements OnInit, OnDestroy {
   name = '';
   signInMessage = '';
   selectedCustomer: Customer | null = null;
-  timer: NodeJS.Timeout | null = null;
+  timer: ReturnType<typeof setTimeout> | null = null;
   iconList = [ 
     { name: 'people', icon: PEOPLE_ICON }, 
     { name: 'file', icon: FILE_ICON }, 

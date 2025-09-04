@@ -4,11 +4,7 @@ import { TeamsDialogData } from '../textarea-dialog/dialog-data';
 import { FeatureFlagsService } from './feature-flags.service';
 import { ChatMessage, ChatMessageInfo } from '@shared/interfaces';
 import { DriveItem } from '@microsoft/microsoft-graph-types';
-
-// Retrieved from .env file value by using webpack.partial.js and ngx-build-plus
-declare const ENTRAID_CLIENT_ID: string;
-declare const TEAM_ID: string;
-declare const CHANNEL_ID: string;
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +19,7 @@ export class GraphService {
     if (!Providers.globalProvider) {
       console.log('Initializing Microsoft Graph global provider...');
       Providers.globalProvider = new Msal2Provider({
-        clientId: ENTRAID_CLIENT_ID,
+        clientId: environment.ENTRAID_CLIENT_ID,
         scopes: ['User.Read', 'Presence.Read', 'Chat.ReadWrite', 'Calendars.Read', 
                  'ChannelMessage.Read.All', 'ChannelMessage.Send', 'Files.Read.All', 'Mail.Read']
       });
@@ -156,9 +152,9 @@ export class GraphService {
 
   async sendTeamsChat(message: string): Promise<TeamsDialogData> {
     if (!message) new Error('No message to send.');
-    if (!TEAM_ID || !CHANNEL_ID) new Error('Team ID or Channel ID not set in environment variables. Please set TEAM_ID and CHANNEL_ID in the .env file.');
+    if (!environment.TEAM_ID || !environment.CHANNEL_ID) new Error('Team ID or Channel ID not set in environment variables. Please set TEAM_ID and CHANNEL_ID in the .env file.');
 
-    const url = `https://graph.microsoft.com/v1.0/teams/${TEAM_ID}/channels/${CHANNEL_ID}/messages`;
+    const url = `https://graph.microsoft.com/v1.0/teams/${environment.TEAM_ID}/channels/${environment.CHANNEL_ID}/messages`;
     const body = {
       "body": {
         "contentType": "html",

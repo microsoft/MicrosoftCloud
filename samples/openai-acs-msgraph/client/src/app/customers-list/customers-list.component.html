@@ -14,7 +14,7 @@
             </tr>
         </thead>
         <tbody>
-            @for (row of this.filteredData; track row.id) {
+            @for (row of this.filteredData; track row.id || $index) {
                 <tr>
                     @for (header of this.headers;track header) {
                         <td>{{ row[header] | dynamic:header }}</td>
