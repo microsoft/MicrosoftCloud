@@ -34,3 +34,8 @@ Publish:
 
 1. `npm install`
 1. Build and deploy the project by running `npm run build-deploy`.
+
+## Additional Resources
+
+If you get stuck or have any questions about building AI apps, join our [Azure AI Foundry Community Discord](https://discord.com/invite/kzRShWzttr).
+If you have product feedback or errors while building visit our [Azure AI Foundry Developer Forum](https://github.com/orgs/azure-ai-foundry/discussions).
